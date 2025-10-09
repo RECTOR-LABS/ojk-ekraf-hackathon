@@ -220,8 +220,8 @@ When implementing features that touch financial services:
 ## Resources
 
 ### Official Documentation
-- Hackathon Details: `hackathon-overview.md`
-- Sepolia Research: `sepolia-testnet-research.md`
+- Hackathon Details: `docs/hackathon-overview.md`
+- Sepolia Research: `docs/sepolia-testnet-research.md`
 - Registration: https://infinityhackathon.id/hackathon/OJKRAF/submission
 
 ### Ethereum Development

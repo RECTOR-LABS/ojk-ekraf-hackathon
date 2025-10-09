@@ -255,8 +255,8 @@ See [SECURITY.md](./docs/SECURITY.md) for full security documentation.
 ### Documentation
 - [Product Requirements (PRD)](./docs/PRD.md)
 - [Technical Architecture](./docs/ARCHITECTURE.md)
-- [Hackathon Overview](./hackathon-overview.md)
-- [Sepolia Testnet Research](./sepolia-testnet-research.md)
+- [Hackathon Overview](./docs/hackathon-overview.md)
+- [Sepolia Testnet Research](./docs/sepolia-testnet-research.md)
 
 ### Sepolia Testnet
 - **Chain ID**: 11155111
