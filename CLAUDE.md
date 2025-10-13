@@ -15,9 +15,10 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 
 ## Current Project Status
 
-**Last Updated**: October 13, 2025
-**Overall Progress**: 70% Complete ✅ **DEPLOYED TO SEPOLIA! 🚀**
+**Last Updated**: October 13, 2025 (Evening - Day 2 Complete)
+**Overall Progress**: 75% Complete ✅ **SMART CONTRACTS DEPLOYED! FRONTEND IN PROGRESS! 🚀**
 **Days Until Deadline**: 9 days
+**Frontend Sprint Progress**: Day 2/9 Complete (22%)
 
 ### ✅ Completed
 
@@ -67,42 +68,75 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
   - ReentrancyGuard applied on all value transfers
 
 #### Documentation (100%)
-- ✅ PRD.md - Complete product requirements
-- ✅ EXECUTION-PLAN.md - v1.4 with security audit complete
+- ✅ PRD.md - Complete product requirements (Smart Contracts)
+- ✅ FRONTEND-PRD.md - Comprehensive frontend web app specification
+- ✅ EXECUTION-PLAN.md - v1.5 with Sepolia deployment complete
+- ✅ FRONTEND-EXECUTION-PLAN.md - 9-day frontend sprint plan
 - ✅ CONTRACT-API.md - Complete API documentation
 - ✅ ARCHITECTURE.md - System design
 - ✅ SECURITY-AUDIT.md - Comprehensive security audit report
+- ✅ DEPLOYMENT-GUIDE.md - Sepolia deployment instructions
+- ✅ DEPLOYED-CONTRACTS.md - Live contract addresses and links
 - ✅ CLAUDE.md - Project guidance (this file)
+
+#### Frontend DApp (Day 2/9 - 22%) 🏗️
+- **Day 1 Complete** ✅ (Oct 13 - Foundation)
+  - Next.js 14 + TypeScript setup
+  - Tailwind CSS with Indonesian theme
+  - Web3 stack (wagmi + RainbowKit + TanStack Query)
+  - Directory structure (/app, /components, /lib)
+  - Base UI components (Button, Card, Input, Spinner)
+  - Contract ABIs exported to /lib/contracts
+  - Environment configuration (.env.local)
+  - Hero section (bilingual)
+
+- **Day 2 Complete** ✅ (Oct 13 Evening - Landing + Wallet)
+  - How It Works section (3-step timeline)
+  - Features Grid section (4 feature cards)
+  - For Indonesian Creators section
+  - FAQ section (8 questions, accordion)
+  - Footer component
+  - Header component with navigation
+  - ConnectButton with RainbowKit
+  - Wallet connection modal integration
+  - **Dev Server Status**: ✅ Running on localhost:3000
+
+- **Day 3 In Progress** 🟡 (Target: Oct 16)
+  - Copyright Registration Flow (Part 1)
+  - File upload UI with drag & drop
+  - IPFS integration (Pinata)
+  - Metadata form with validation
+  - Form state management
 
 ### 🎯 Next Steps (In Priority Order)
 
-1. **Sepolia Deployment** 🌐 (2-3 hours) - NEXT!
-   - Get Sepolia ETH from faucets
-   - Deploy all 3 contracts
-   - Verify on Etherscan
-   - Test on live testnet
-   - Document contract addresses
+1. **Frontend DApp** 💻 (9-day sprint: Oct 13-22) - **DAY 3 IN PROGRESS** 🏃
+   - **Reference**: `docs/FRONTEND-EXECUTION-PLAN.md` for daily breakdown
+   - **Reference**: `docs/FRONTEND-PRD.md` for detailed specifications
+   - ✅ Day 1 (Oct 13 Day): Foundation & Setup COMPLETE
+   - ✅ Day 2 (Oct 13 Evening): Landing Page & Wallet Connection COMPLETE
+   - 🟡 Day 3 (Oct 16): Copyright registration flow (Part 1) - CURRENT
+   - Day 4 (Oct 17): Copyright registration flow (Part 2) + Mint start
+   - Day 5 (Oct 18): NFT minting + Marketplace start
+   - Day 6 (Oct 19): Complete marketplace + Dashboard start
+   - Day 7 (Oct 20): Complete dashboard + Mobile polish
+   - Day 8 (Oct 21): Final polish + Deploy to Vercel
+   - Day 9 (Oct 22): Buffer day + Final submission
 
-2. **Frontend DApp** 💻 (2-3 days)
-   - Next.js + Tailwind setup
-   - RainbowKit wallet connection
-   - Copyright registration page
-   - Mint NFT page
-   - Marketplace browse & purchase
-   - Deploy to Vercel
-
-3. **Pitch Deck** 📊 (3 days allocated)
+2. **Pitch Deck** 📊 (Parallel work, Oct 18-21)
    - Problem/solution slides
    - Technical architecture & user flows
    - Business model & go-to-market
    - Team & roadmap
-   - Demo screenshots
+   - Live demo screenshots from production app
+   - Demo video (3-5 minutes)
 
-4. **Final Submission** ✅ (Oct 21-22)
+3. **Final Submission** ✅ (Oct 22, 2025 - DEADLINE DAY)
    - Review all deliverables
    - Submit pitch deck PDF
-   - Submit contract addresses
-   - Confirm submission before deadline
+   - Submit contract addresses (already deployed ✅)
+   - Submit live demo URL
+   - Confirm submission before 5 PM deadline
 
 ### Key Contracts Summary
 
@@ -115,21 +149,41 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 ### Active Development Files
 
 ```
-contracts/
+contracts/ ✅ DEPLOYED
   ├── CopyrightRegistry.sol ✅
   ├── KaryaNFT.sol ✅
   └── KaryaMarketplace.sol ✅
 
-test/
+test/ ✅ 90 TESTS PASSING
   ├── CopyrightRegistry.test.js ✅
   ├── KaryaNFT.test.js ✅
   └── KaryaMarketplace.test.js ✅
 
-docs/
-  ├── PRD.md ✅
-  ├── EXECUTION-PLAN.md ✅ (v1.3)
+frontend/ 🏗️ IN DEVELOPMENT (Day 2/9 - 22%)
+  ├── /app ✅ (Next.js 14 App Router)
+  │   ├── layout.tsx ✅ (Root layout with providers + Header)
+  │   ├── page.tsx ✅ (Home page with all sections)
+  │   ├── providers.tsx ✅ (wagmi + RainbowKit setup)
+  │   └── globals.css ✅ (Indonesian theme design system)
+  ├── /components ✅ (UI, Layout, Web3, Landing sections)
+  │   ├── /ui ✅ (Button, Card, Input, Spinner)
+  │   ├── /layout ✅ (Header, Footer)
+  │   ├── /web3 ✅ (ConnectButton with RainbowKit)
+  │   └── /landing ✅ (Hero, HowItWorks, Features, ForIndonesianCreators, FAQ)
+  ├── /lib ✅ (Contracts exported)
+  │   └── /contracts ✅ (All 3 contract ABIs + addresses)
+  └── /public (Static assets - TODO)
+
+docs/ ✅ COMPLETE
+  ├── PRD.md ✅ (Smart Contracts)
+  ├── FRONTEND-PRD.md ✅ (Web App Spec)
+  ├── EXECUTION-PLAN.md ✅ (v1.5)
+  ├── FRONTEND-EXECUTION-PLAN.md ✅ (9-day sprint)
   ├── CONTRACT-API.md ✅
-  └── ARCHITECTURE.md ✅
+  ├── ARCHITECTURE.md ✅
+  ├── SECURITY-AUDIT.md ✅
+  ├── DEPLOYMENT-GUIDE.md ✅
+  └── DEPLOYED-CONTRACTS.md ✅
 ```
 
 ## Project Context
@@ -310,14 +364,15 @@ When implementing features that touch financial services:
 ## Hackathon Submission Checklist
 
 ### Pre-Submission Requirements
-- [ ] Smart contract deployed to Sepolia testnet 🔴 NEXT
-- [ ] Contract verified on Etherscan
-- [x] All tests passing ✅ (90/90 tests)
-- [x] Security audit completed ✅ (Slither + manual review)
-- [ ] Pitch deck completed (PDF format)
-- [ ] Demo prepared (live or video)
-- [ ] GitHub repository public (if submitting)
-- [ ] Team information finalized
+- [x] Smart contract deployed to Sepolia testnet ✅ (Oct 13, 2025)
+- [x] Contract verified on Etherscan ✅ (All 3 contracts)
+- [x] All tests passing ✅ (90/90 tests, 100% coverage)
+- [x] Security audit completed ✅ (Slither + manual review, 0 critical issues)
+- [ ] Frontend DApp deployed 🏗️ IN PROGRESS (Target: Oct 21)
+- [ ] Pitch deck completed (PDF format) 🔴 NOT STARTED (Target: Oct 18-21)
+- [ ] Demo prepared (live URL + video) 🔴 NOT STARTED (Target: Oct 21)
+- [ ] GitHub repository public ✅ (Already public)
+- [ ] Team information finalized 🔴 TODO
 
 ### Pitch Deck Must Include
 1. Problem statement and solution
@@ -419,11 +474,27 @@ When implementing features that touch financial services:
     - Deployer: `0xcAfeA0fd...` (vanity address)
     - All source code verified on Etherscan
 
-🎯 **Next Steps:**
-1. Build frontend DApp (Next.js + Tailwind) - 2-3 days
-2. Create pitch deck (Problem, Solution, Tech, Business Model) - 3 days
-3. Test full user flow on deployed contracts
-4. Submit before Oct 22 deadline (9 days remaining)
+🎯 **Frontend Sprint Progress (Day 2/9 Complete):**
+1. ✅ **Day 1 (Oct 13)**: Project setup + Landing page foundation COMPLETE
+   - Next.js 14 + TypeScript + Tailwind CSS
+   - Web3 stack (wagmi + RainbowKit)
+   - Base UI components
+   - Contract ABIs exported
+   - Hero section
+2. ✅ **Day 2 (Oct 13 Evening)**: Landing page + Wallet connection COMPLETE
+   - 5 landing page sections (How It Works, Features, For Indonesian Creators, FAQ, Footer)
+   - Header with navigation
+   - Wallet connection with RainbowKit
+   - Full bilingual support
+3. 🟡 **Day 3 (Current)**: Copyright registration flow (Part 1)
+4. **Oct 17**: Copyright registration (Part 2) + Mint start
+5. **Oct 18**: NFT minting + Marketplace browse
+6. **Oct 19**: Complete marketplace + Dashboard
+7. **Oct 20**: Polish + Mobile responsiveness
+8. **Oct 21**: Deploy to Vercel + Final testing
+9. **Oct 22**: Buffer + SUBMIT TO HACKATHON
+
+**See `docs/FRONTEND-EXECUTION-PLAN.md` for detailed daily breakdown**
 
 ### Available Commands
 

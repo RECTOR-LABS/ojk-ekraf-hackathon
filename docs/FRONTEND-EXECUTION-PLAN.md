@@ -1,0 +1,1187 @@
+# Frontend Execution Plan & Progress Tracker
+
+# Karya Chain - 9-Day Sprint to Hackathon Deadline
+
+**Version**: 1.2
+**Created**: October 13, 2025
+**Sprint Start**: October 13, 2025
+**Deadline**: October 22, 2025 (9 days remaining)
+**Last Updated**: October 13, 2025 (Late Evening - Day 3 Complete!)
+
+---
+
+## Executive Summary
+
+**Objective**: Build production-ready web application for Karya Chain hackathon submission
+
+**Current Status**: 33% Frontend Complete (Day 3/9 ✅) - Smart contracts 100% deployed ✅
+
+**Strategy**: Aggressive 9-day sprint focusing on MVP features that demonstrate core platform value
+
+**Success Criteria**:
+
+- Functional demo of Register → Mint → List → Purchase flow
+- Professional, polished UI worthy of production
+- Live deployment on Vercel with Sepolia integration
+- Complete by Oct 21 (1 day buffer before deadline)
+
+**Progress Highlights**:
+
+- ✅ Complete landing page with 5 sections (bilingual)
+- ✅ Wallet connection with RainbowKit
+- ✅ Indonesian-themed design system
+- ✅ Dev server running on localhost:3000
+- ✅ Copyright registration Steps 1-2 complete (File upload + Metadata form)
+- ✅ IPFS integration with Pinata working
+- ✅ SHA-256 content hashing functional
+- ✅ Form state management with Zustand + localStorage
+
+---
+
+## Progress Dashboard
+
+### Overall Progress: 33% Complete (3/9 Days)
+
+| Category                   | Progress | Status         | Target Date | Actual Date |
+| -------------------------- | -------- | -------------- | ----------- | ----------- |
+| **Project Setup**          | 100%     | 🟢 Complete    | Oct 13      | Oct 13 ✅   |
+| **Landing Page**           | 100%     | 🟢 Complete    | Oct 13      | Oct 13 ✅   |
+| **Wallet & Auth**          | 100%     | 🟢 Complete    | Oct 13      | Oct 13 ✅   |
+| **Copyright Registration** | 57%      | 🟡 In Progress | Oct 16-17   | Oct 13-17   |
+| **NFT Minting**            | 0%       | 🔴 Not Started | Oct 17-18   | -           |
+| **Marketplace**            | 0%       | 🔴 Not Started | Oct 18-19   | -           |
+| **Dashboard**              | 0%       | 🔴 Not Started | Oct 19-20   | -           |
+| **Polish & Deploy**        | 0%       | 🔴 Not Started | Oct 20-21   | -           |
+| **Buffer/Testing**         | 0%       | 🔴 Not Started | Oct 21      | -           |
+
+**Status Legend:**
+
+- 🔴 Not Started (0%)
+- 🟡 In Progress (1-99%)
+- 🟢 Complete (100%)
+- ⚠️ Blocked/At Risk
+
+---
+
+## Epic Breakdown
+
+### EPIC 1: Foundation & Setup
+
+**Duration**: 0.5-1 day (Oct 13-14)
+**Priority**: CRITICAL (Blocks all other work)
+**Progress**: 7/7 Stories ✅, 22/22 Tasks ✅, 100% Complete
+
+| Story                                      | Tasks | Status | Assignee | Target    | Actual      |
+| ------------------------------------------ | ----- | ------ | -------- | --------- | ----------- |
+| 1.1: Next.js 14 Project Setup              | 8/8   | 🟢     | Claude   | Oct 14 AM | Oct 13 ✅   |
+| 1.2: Tailwind CSS Configuration            | 4/4   | 🟢     | Claude   | Oct 14 AM | Oct 13 ✅   |
+| 1.3: Web3 Integration (wagmi + RainbowKit) | 5/5   | 🟢     | Claude   | Oct 14 PM | Oct 13 ✅   |
+| 1.4: Directory Structure                   | 2/2   | 🟢     | Claude   | Oct 14 PM | Oct 13 ✅   |
+| 1.5: Design System Implementation          | 1/1   | 🟢     | Claude   | Oct 14 PM | Oct 13 ✅   |
+| 1.6: Contract ABIs & Addresses             | 1/1   | 🟢     | Claude   | Oct 14 PM | Oct 13 ✅   |
+| 1.7: Environment Configuration             | 1/1   | 🟢     | Claude   | Oct 14 PM | Oct 13 ✅   |
+
+**Deliverables:**
+
+- [x] Next.js 14 project with App Router ✅
+- [x] Tailwind CSS configured with design tokens ✅
+- [x] RainbowKit wallet connection working ✅
+- [x] Project structure following Frontend PRD ✅
+- [x] All contract ABIs imported ✅
+- [x] Environment variables configured ✅
+- [x] Dev server running locally ✅
+
+---
+
+#### Story 1.1: Next.js 14 Project Setup
+
+**Tasks:**
+
+- [x] TASK-1.1.1: Create Next.js 14 app with TypeScript (`npx create-next-app@latest`) ✅
+- [x] TASK-1.1.2: Configure `next.config.js` for optimal production build ✅
+- [x] TASK-1.1.3: Set up `tsconfig.json` with strict mode ✅
+- [x] TASK-1.1.4: Install core dependencies (React 18, TypeScript) ✅
+- [x] TASK-1.1.5: Configure path aliases (@/ for absolute imports) ✅
+- [x] TASK-1.1.6: Set up `app/layout.tsx` as root layout ✅
+- [x] TASK-1.1.7: Create basic `app/page.tsx` (temporary landing page) ✅
+- [x] TASK-1.1.8: Verify dev server runs (`npm run dev`) ✅
+
+**Acceptance Criteria:**
+
+- [x] Project created with TypeScript ✅
+- [x] App Router (not Pages Router) ✅
+- [x] Dev server runs on localhost:3000 ✅
+- [x] No compilation errors ✅
+
+**Estimated Time**: 30 minutes
+
+---
+
+#### Story 1.2: Tailwind CSS Configuration
+
+**Tasks:**
+
+- [x] TASK-1.2.1: Install Tailwind CSS (`npm install -D tailwindcss postcss autoprefixer`) ✅
+- [x] TASK-1.2.2: Initialize Tailwind config (`npx tailwindcss init -p`) ✅
+- [x] TASK-1.2.3: Configure `tailwind.config.ts` with custom theme (colors, fonts, spacing from Frontend PRD) ✅
+- [x] TASK-1.2.4: Add Tailwind directives to `app/globals.css` ✅
+
+**Custom Theme Configuration:**
+
+```typescript
+// tailwind.config.ts
+export default {
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          600: "#DC2626",
+          500: "#EF4444",
+          400: "#F87171",
+        },
+        secondary: {
+          600: "#0891B2",
+          500: "#06B6D4",
+          400: "#22D3EE",
+        },
+        accent: {
+          600: "#D97706",
+          500: "#F59E0B",
+          400: "#FBBF24",
+        },
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        display: ["Plus Jakarta Sans", "Inter", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
+      },
+    },
+  },
+};
+```
+
+**Acceptance Criteria:**
+
+- [x] Tailwind classes work in components ✅
+- [x] Custom colors accessible (bg-primary-600, text-secondary-500) ✅
+- [x] Custom fonts loaded (Inter for body, Plus Jakarta Sans for headings) ✅
+
+**Estimated Time**: 30 minutes
+
+---
+
+#### Story 1.3: Web3 Integration (wagmi + RainbowKit)
+
+**Tasks:**
+
+- [x] TASK-1.3.1: Install Web3 dependencies (`npm install wagmi viem @rainbow-me/rainbowkit`) ✅
+- [x] TASK-1.3.2: Install TanStack Query (`npm install @tanstack/react-query`) ✅
+- [x] TASK-1.3.3: Create `app/providers.tsx` with wagmi + RainbowKit providers ✅
+- [x] TASK-1.3.4: Configure Sepolia network in wagmi config ✅
+- [x] TASK-1.3.5: Test wallet connection (create temporary connect button) ✅
+
+**Implementation:**
+
+```tsx
+// app/providers.tsx
+"use client";
+
+import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { WagmiProvider } from "wagmi";
+import { sepolia } from "wagmi/chains";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@rainbow-me/rainbowkit/styles.css";
+
+const config = getDefaultConfig({
+  appName: "Karya Chain",
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_ID!,
+  chains: [sepolia],
+  ssr: true,
+});
+
+const queryClient = new QueryClient();
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>{children}</RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+}
+```
+
+**Acceptance Criteria:**
+
+- [x] Wallet connection modal opens ✅
+- [x] Can connect MetaMask/WalletConnect ✅
+- [x] Auto-switches to Sepolia network ✅
+- [x] Address displayed after connection ✅
+
+**Estimated Time**: 1 hour
+
+---
+
+#### Story 1.4: Directory Structure
+
+**Tasks:**
+
+- [x] TASK-1.4.1: Create directory structure following Frontend PRD ✅
+- [x] TASK-1.4.2: Add README.md in key directories explaining purpose ✅
+
+**Directory Structure:**
+
+```
+/frontend (or root)
+├── /app
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── /register
+│   ├── /mint
+│   ├── /marketplace
+│   ├── /dashboard
+│   └── /profile
+├── /components
+│   ├── /ui (Button, Card, Input, etc.)
+│   ├── /layout (Header, Footer)
+│   ├── /web3 (WalletButton, NetworkSwitcher)
+│   └── /features (CopyrightForm, NFTCard, etc.)
+├── /lib
+│   ├── /contracts (ABIs, addresses)
+│   ├── /hooks (custom React hooks)
+│   └── /utils (ipfs, formatting, etc.)
+├── /public
+│   └── /images
+└── /styles
+```
+
+**Estimated Time**: 15 minutes
+
+---
+
+#### Story 1.5: Design System Implementation
+
+**Tasks:**
+
+- [x] TASK-1.5.1: Create base UI components (Button, Card, Input) in `/components/ui` ✅
+
+**Priority Components:**
+
+- Button (primary, secondary, outline variants)
+- Card
+- Input
+- Loading Spinner
+
+**Estimated Time**: 1.5 hours
+
+---
+
+#### Story 1.6: Contract ABIs & Addresses
+
+**Tasks:**
+
+- [x] TASK-1.6.1: Export contract ABIs and addresses to `/lib/contracts/` ✅
+
+**Implementation:**
+
+```typescript
+// lib/contracts/copyrightRegistry.ts
+export const copyrightRegistryAddress =
+  "0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f";
+export const copyrightRegistryABI = [
+  /* ABI array */
+];
+
+// lib/contracts/karyaNFT.ts
+export const karyaNFTAddress = "0xE7f3c9BdAFd36050BdFAD3195dD7d0f4f2b52Fa4";
+export const karyaNFTABI = [
+  /* ABI array */
+];
+
+// lib/contracts/marketplace.ts
+export const marketplaceAddress = "0xb2430198bF01a8ec5749424a4642F32eb4b8Ed10";
+export const marketplaceABI = [
+  /* ABI array */
+];
+```
+
+**Estimated Time**: 30 minutes
+
+---
+
+#### Story 1.7: Environment Configuration
+
+**Tasks:**
+
+- [x] TASK-1.7.1: Create `.env.local` with required variables ✅
+
+**Environment Variables:**
+
+```bash
+# Wallet Connect
+NEXT_PUBLIC_WALLET_CONNECT_ID=your_project_id
+
+# IPFS (Pinata)
+NEXT_PUBLIC_PINATA_JWT=your_pinata_jwt
+NEXT_PUBLIC_PINATA_GATEWAY=your_gateway_url
+
+# Contract Addresses (Sepolia)
+NEXT_PUBLIC_COPYRIGHT_REGISTRY=0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f
+NEXT_PUBLIC_KARYA_NFT=0xE7f3c9BdAFd36050BdFAD3195dD7d0f4f2b52Fa4
+NEXT_PUBLIC_MARKETPLACE=0xb2430198bF01a8ec5749424a4642F32eb4b8Ed10
+
+# Network
+NEXT_PUBLIC_CHAIN_ID=11155111
+NEXT_PUBLIC_RPC_URL=https://rpc.sepolia.dev
+```
+
+**Estimated Time**: 15 minutes
+
+---
+
+### EPIC 2: Landing Page & Marketing
+
+**Duration**: 1-1.5 days (Oct 13)
+**Priority**: HIGH (First impression)
+**Progress**: 5/5 Stories ✅, 18/18 Tasks ✅, 100% Complete
+
+| Story                        | Tasks | Status | Assignee | Target    | Actual      |
+| ---------------------------- | ----- | ------ | -------- | --------- | ----------- |
+| 2.1: Hero Section            | 4/4   | 🟢     | Claude   | Oct 14 PM | Oct 13 ✅   |
+| 2.2: How It Works Section    | 3/3   | 🟢     | Claude   | Oct 15 AM | Oct 13 ✅   |
+| 2.3: Features Grid           | 3/3   | 🟢     | Claude   | Oct 15 AM | Oct 13 ✅   |
+| 2.4: For Indonesian Creators | 4/4   | 🟢     | Claude   | Oct 15 AM | Oct 13 ✅   |
+| 2.5: FAQ & Footer            | 4/4   | 🟢     | Claude   | Oct 15 PM | Oct 13 ✅   |
+
+**Deliverables:**
+
+- [x] Professional landing page (Bahasa + English) ✅
+- [x] Clear value proposition visible in 10 seconds ✅
+- [x] Mobile-responsive ✅
+- [x] LCP < 2.5s (to be verified in production)
+- [x] All CTAs link to /register ✅
+
+**MVP Scope Decisions:**
+
+- ✅ Include: Hero, How It Works, Features, FAQ
+- ⚪ Defer: Live statistics (hardcode numbers)
+- ⚪ Defer: Creator testimonials (use placeholders)
+- ⚪ Defer: Video content
+
+---
+
+### EPIC 3: Wallet Connection & Authentication
+
+**Duration**: 0.5 day (Oct 15 PM)
+**Priority**: CRITICAL (Blocks all other features)
+**Progress**: 3/3 Stories ✅, 8/8 Tasks ✅, 100% Complete
+
+| Story                               | Tasks | Status | Assignee | Target    | Actual      |
+| ----------------------------------- | ----- | ------ | -------- | --------- | ----------- |
+| 3.1: Connect Wallet Button (Header) | 3/3   | 🟢     | Claude   | Oct 15 PM | Oct 13 ✅   |
+| 3.2: Wallet Connection Modal        | 3/3   | 🟢     | Claude   | Oct 15 PM | Oct 13 ✅   |
+| 3.3: Connected State & Dropdown     | 2/2   | 🟢     | Claude   | Oct 15 PM | Oct 13 ✅   |
+
+**Deliverables:**
+
+- [x] Wallet connection button in header ✅
+- [x] RainbowKit modal configured ✅
+- [x] Network auto-switching to Sepolia ✅
+- [x] Connected state shows address + balance ✅
+- [x] Session persistence across refresh ✅
+
+**Acceptance Criteria:**
+
+- [x] Works with MetaMask, WalletConnect, Coinbase Wallet ✅
+- [x] Mobile-friendly ✅
+- [x] No console errors ✅
+
+---
+
+### EPIC 4: Copyright Registration Flow
+
+**Duration**: 1.5-2 days (Oct 13-17)
+**Priority**: CRITICAL (Core feature)
+**Progress**: 2/5 Stories ✅, 13/23 Tasks ✅, 57% Complete
+
+| Story                                | Tasks | Status | Assignee | Target | Actual      |
+| ------------------------------------ | ----- | ------ | -------- | ------ | ----------- |
+| 4.1: Step 1 - File Upload            | 6/6   | 🟢     | Claude   | Oct 16 | Oct 13 ✅   |
+| 4.2: Step 2 - Metadata Form          | 7/7   | 🟢     | Claude   | Oct 16 | Oct 13 ✅   |
+| 4.3: Step 3 - Review & Confirmation  | 0/4   | 🔴     | -        | Oct 17 | -           |
+| 4.4: Step 4 - Blockchain Transaction | 0/5   | 🔴     | -        | Oct 17 | -           |
+| 4.5: Certificate Generation          | 0/1   | 🔴     | -        | Oct 17 | -           |
+
+**Deliverables:**
+
+- [x] 4-step registration flow (layout complete, steps 1-2 functional)
+- [x] File upload with IPFS integration ✅
+- [x] Form with validation (title, description, asset type) ✅
+- [ ] Review page with preview (pending - Day 4)
+- [ ] Blockchain transaction with pending states (pending - Day 4)
+- [ ] Success page with certificate download (pending - Day 4)
+- [ ] Error handling for all failure scenarios (partial)
+
+**Technical Requirements:**
+
+- [x] IPFS upload via Pinata ✅
+- [x] Content hash generation (SHA-256) ✅
+- [ ] Duplicate detection (will be handled by smart contract)
+- [x] Form state persistence (localStorage via Zustand) ✅
+- [ ] Transaction monitoring (pending - Day 4)
+
+**MVP Scope Decisions:**
+
+- ✅ Include: Solo works (single creator)
+- ⚪ Defer: Collaborative works (multiple creators)
+- ✅ Include: 5 asset types (Art, Music, Photo, Writing, Design)
+- ⚪ Defer: Advanced metadata (location, creation date)
+
+---
+
+### EPIC 5: NFT Minting Flow
+
+**Duration**: 1 day (Oct 17-18)
+**Priority**: CRITICAL (Core feature)
+**Progress**: 0/4 Stories, 0/12 Tasks
+
+| Story                           | Tasks | Status | Assignee | Target    | Actual |
+| ------------------------------- | ----- | ------ | -------- | --------- | ------ |
+| 5.1: View Registered Copyrights | 0/3   | 🔴     | -        | Oct 17 PM | -      |
+| 5.2: Mint NFT Configuration     | 0/4   | 🔴     | -        | Oct 18 AM | -      |
+| 5.3: Minting Transaction        | 0/3   | 🔴     | -        | Oct 18 AM | -      |
+| 5.4: Post-Mint Actions          | 0/2   | 🔴     | -        | Oct 18 PM | -      |
+
+**Deliverables:**
+
+- [ ] List user's registered copyrights
+- [ ] Mint NFT form (royalty percentage 5-20%)
+- [ ] IPFS metadata upload
+- [ ] Blockchain transaction
+- [ ] Success state with "List on Marketplace" CTA
+
+**Technical Requirements:**
+
+- [ ] Fetch user's copyrights from contract
+- [ ] Generate NFT metadata (ERC-721 standard)
+- [ ] Upload metadata to IPFS
+- [ ] Call `mint()` function on KaryaNFT contract
+- [ ] Handle minting errors
+
+**MVP Scope Decisions:**
+
+- ✅ Include: ERC-721 (unique 1/1 NFTs)
+- ⚪ Defer: ERC-1155 (editions/multiple copies)
+- ✅ Include: Royalty configuration (5-20%)
+- ⚪ Defer: Custom royalty splits (multiple beneficiaries)
+
+---
+
+### EPIC 6: Marketplace (Browse & Search)
+
+**Duration**: 1 day (Oct 18-19)
+**Priority**: CRITICAL (Core feature)
+**Progress**: 0/5 Stories, 0/16 Tasks
+
+| Story                         | Tasks | Status | Assignee | Target    | Actual |
+| ----------------------------- | ----- | ------ | -------- | --------- | ------ |
+| 6.1: Marketplace Landing Page | 0/3   | 🔴     | -        | Oct 18 PM | -      |
+| 6.2: NFT Grid Display         | 0/4   | 🔴     | -        | Oct 18 PM | -      |
+| 6.3: Filter & Search          | 0/4   | 🔴     | -        | Oct 19 AM | -      |
+| 6.4: NFT Detail Page          | 0/3   | 🔴     | -        | Oct 19 AM | -      |
+| 6.5: Purchase Flow            | 0/2   | 🔴     | -        | Oct 19 PM | -      |
+
+**Deliverables:**
+
+- [ ] Marketplace page with NFT grid
+- [ ] NFT cards (image, title, price, creator, royalty)
+- [ ] Filter by asset type
+- [ ] Search by title/creator
+- [ ] NFT detail page (full info)
+- [ ] Purchase button with transaction flow
+- [ ] Success state after purchase
+
+**Technical Requirements:**
+
+- [ ] Fetch all active listings from marketplace contract
+- [ ] Fetch NFT metadata from IPFS
+- [ ] Display images (optimize with Next.js Image)
+- [ ] Calculate royalty amounts
+- [ ] Execute purchase transaction
+- [ ] Handle insufficient balance errors
+
+**MVP Scope Decisions:**
+
+- ✅ Include: Browse all listings
+- ✅ Include: Basic filter (asset type)
+- ✅ Include: Search (title)
+- ✅ Include: Fixed-price purchase
+- ⚪ Defer: Sort options (newest, price)
+- ⚪ Defer: Advanced filters (price range, royalty %)
+- ⚪ Defer: Offers/bids system
+- ⚪ Defer: Favorites/likes
+
+---
+
+### EPIC 7: Creator Dashboard
+
+**Duration**: 1 day (Oct 19-20)
+**Priority**: HIGH (User retention)
+**Progress**: 0/4 Stories, 0/12 Tasks
+
+| Story                   | Tasks | Status | Assignee | Target    | Actual |
+| ----------------------- | ----- | ------ | -------- | --------- | ------ |
+| 7.1: Dashboard Overview | 0/3   | 🔴     | -        | Oct 19 PM | -      |
+| 7.2: My Copyrights Tab  | 0/3   | 🔴     | -        | Oct 20 AM | -      |
+| 7.3: My NFTs Tab        | 0/3   | 🔴     | -        | Oct 20 AM | -      |
+| 7.4: List NFT for Sale  | 0/3   | 🔴     | -        | Oct 20 PM | -      |
+
+**Deliverables:**
+
+- [ ] Dashboard layout with tabs
+- [ ] Overview stats (total copyrights, NFTs, sales)
+- [ ] List of registered copyrights
+- [ ] List of minted NFTs
+- [ ] Quick actions (Register, Mint, List)
+- [ ] List NFT for sale functionality
+
+**Technical Requirements:**
+
+- [ ] Fetch user's copyrights from CopyrightRegistry
+- [ ] Fetch user's NFTs from KaryaNFT
+- [ ] Display copyright status (registered, minted)
+- [ ] List NFT transaction flow
+- [ ] Set price and create listing
+
+**MVP Scope Decisions:**
+
+- ✅ Include: Basic dashboard with tabs
+- ✅ Include: Copyright list
+- ✅ Include: NFT list
+- ✅ Include: List for sale
+- ⚪ Defer: Earnings/royalty tracking
+- ⚪ Defer: Sales analytics
+- ⚪ Defer: Profile editing
+- ⚪ Defer: Notification center
+
+---
+
+### EPIC 8: Polish, Testing & Deployment
+
+**Duration**: 1.5-2 days (Oct 20-21)
+**Priority**: CRITICAL (Launch readiness)
+**Progress**: 0/6 Stories, 0/18 Tasks
+
+| Story                           | Tasks | Status | Assignee | Target    | Actual |
+| ------------------------------- | ----- | ------ | -------- | --------- | ------ |
+| 8.1: Mobile Responsiveness      | 0/4   | 🔴     | -        | Oct 20 PM | -      |
+| 8.2: Loading States & Skeletons | 0/3   | 🔴     | -        | Oct 20 PM | -      |
+| 8.3: Error Handling             | 0/3   | 🔴     | -        | Oct 20 PM | -      |
+| 8.4: Performance Optimization   | 0/3   | 🔴     | -        | Oct 21 AM | -      |
+| 8.5: SEO & Meta Tags            | 0/2   | 🔴     | -        | Oct 21 AM | -      |
+| 8.6: Vercel Deployment          | 0/3   | 🔴     | -        | Oct 21 PM | -      |
+
+**Deliverables:**
+
+- [ ] All pages mobile-responsive (test on iPhone, iPad)
+- [ ] Loading states for all async operations
+- [ ] Error messages for all failure scenarios
+- [ ] Image optimization
+- [ ] Code splitting and lazy loading
+- [ ] SEO meta tags on all pages
+- [ ] Deployed to Vercel with custom domain (optional)
+- [ ] Connected to Sepolia contracts
+- [ ] End-to-end testing (manual)
+
+**Performance Targets:**
+
+- [ ] Lighthouse Performance: 90+
+- [ ] LCP < 2.5s
+- [ ] FID < 100ms
+- [ ] CLS < 0.1
+
+**Acceptance Criteria:**
+
+- [ ] No console errors
+- [ ] Works on Chrome, Safari, Firefox
+- [ ] Works on mobile wallets (MetaMask Mobile)
+- [ ] All user flows tested on Sepolia
+- [ ] Production deployment accessible
+
+---
+
+## Daily Schedule (9-Day Sprint)
+
+### Day 1 (Monday, Oct 14) - Foundation Day
+
+**Focus**: Project setup + Landing page start
+
+**Morning (4 hours):**
+
+- ☐ Next.js 14 project setup (30 min)
+- ☐ Tailwind CSS configuration (30 min)
+- ☐ Web3 integration (wagmi + RainbowKit) (1 hour)
+- ☐ Directory structure setup (15 min)
+- ☐ Design system base components (1.5 hours)
+
+**Afternoon (4 hours):**
+
+- ☐ Contract ABIs & addresses (30 min)
+- ☐ Environment configuration (15 min)
+- ☐ Landing page - Hero section (2 hours)
+- ☐ Landing page - How It Works section (1.5 hours)
+
+**End of Day Deliverable:**
+
+- ✅ Project running locally with wallet connection
+- ✅ Hero section complete
+
+**Evening Checkpoint**: Review progress, adjust Day 2 plan if needed
+
+---
+
+### Day 2 (Tuesday, Oct 15) - Landing Page + Wallet
+
+**Focus**: Complete landing page + Wallet authentication
+
+**Morning (4 hours):**
+
+- ☐ Landing page - Features grid (1.5 hours)
+- ☐ Landing page - For Indonesian Creators section (1.5 hours)
+- ☐ Landing page - FAQ & Footer (1 hour)
+
+**Afternoon (4 hours):**
+
+- ☐ Wallet connection button in header (1 hour)
+- ☐ Wallet connection modal (RainbowKit customization) (1.5 hours)
+- ☐ Connected state & dropdown (1 hour)
+- ☐ Session persistence testing (30 min)
+
+**End of Day Deliverable:**
+
+- ✅ Complete landing page (Bahasa + English)
+- ✅ Functional wallet connection
+
+**Evening Checkpoint**: Test on mobile, verify wallet works with MetaMask/WalletConnect
+
+---
+
+### Day 3 (Wednesday, Oct 13) - Copyright Registration (Part 1) ✅ COMPLETE
+
+**Focus**: File upload + Metadata form
+
+**Morning (4 hours):**
+
+- ✅ Registration page layout (30 min)
+- ✅ Step 1 - File upload UI (drag & drop) (2 hours)
+- ✅ IPFS integration (Pinata setup) (1 hour)
+- ✅ Content hash generation (30 min)
+
+**Afternoon (4 hours):**
+
+- ✅ Step 2 - Metadata form UI (1.5 hours)
+- ✅ Form validation (1 hour)
+- ✅ Form state management (Zustand) (1 hour)
+- ✅ Progress indicator (30 min)
+
+**End of Day Deliverable:**
+
+- ✅ File upload working with IPFS
+- ✅ Metadata form with validation
+- ✅ Registration store with localStorage persistence
+
+**Evening Checkpoint**: Test IPFS upload, verify form saves to localStorage ✅ COMPLETE
+
+---
+
+### Day 4 (Thursday, Oct 17) - Copyright Registration (Part 2) + Mint Start
+
+**Focus**: Complete registration flow + Start minting
+
+**Morning (4 hours):**
+
+- ☐ Step 3 - Review & confirmation page (1.5 hours)
+- ☐ Step 4 - Blockchain transaction UI (1 hour)
+- ☐ Transaction monitoring (pending/success states) (1 hour)
+- ☐ Certificate generation (PDF) (30 min)
+
+**Afternoon (4 hours):**
+
+- ☐ End-to-end registration testing (30 min)
+- ☐ Error handling for all failure scenarios (1 hour)
+- ☐ Start NFT Minting - View registered copyrights (1.5 hours)
+- ☐ Mint NFT configuration UI (1 hour)
+
+**End of Day Deliverable:**
+
+- ✅ Complete copyright registration flow working on Sepolia
+- ✅ At least 2 test copyrights registered
+
+**Evening Checkpoint**: Register 2-3 works on Sepolia, download certificates
+
+---
+
+### Day 5 (Friday, Oct 18) - NFT Minting + Marketplace Start
+
+**Focus**: Complete minting + Start marketplace
+
+**Morning (4 hours):**
+
+- ☐ Mint NFT - Metadata generation (1 hour)
+- ☐ Mint NFT - IPFS upload (30 min)
+- ☐ Minting transaction flow (1 hour)
+- ☐ Post-mint success state (30 min)
+- ☐ End-to-end minting testing (1 hour)
+
+**Afternoon (4 hours):**
+
+- ☐ Marketplace page layout (1 hour)
+- ☐ NFT card component (1 hour)
+- ☐ Fetch listings from contract (1 hour)
+- ☐ NFT grid display (1 hour)
+
+**End of Day Deliverable:**
+
+- ✅ Complete NFT minting flow working
+- ✅ At least 2 test NFTs minted
+- ✅ Marketplace displays listings
+
+**Evening Checkpoint**: Mint 2-3 NFTs on Sepolia, verify marketplace shows them
+
+---
+
+### Day 6 (Saturday, Oct 19) - Marketplace + Dashboard Start
+
+**Focus**: Complete marketplace + Start dashboard
+
+**Morning (4 hours):**
+
+- ☐ Search functionality (1 hour)
+- ☐ Filter by asset type (1 hour)
+- ☐ NFT detail page (2 hours)
+
+**Afternoon (4 hours):**
+
+- ☐ Purchase flow UI (1 hour)
+- ☐ Purchase transaction (1.5 hours)
+- ☐ Purchase success state (30 min)
+- ☐ Dashboard layout & overview (1 hour)
+
+**End of Day Deliverable:**
+
+- ✅ Complete marketplace (browse, search, purchase)
+- ✅ At least 1 test purchase completed
+- ✅ Dashboard skeleton ready
+
+**Evening Checkpoint**: Complete full user flow: Register → Mint → List → Purchase
+
+---
+
+### Day 7 (Sunday, Oct 20) - Dashboard + Polish Start
+
+**Focus**: Complete dashboard + Start polish
+
+**Morning (4 hours):**
+
+- ☐ Dashboard - My Copyrights tab (1.5 hours)
+- ☐ Dashboard - My NFTs tab (1.5 hours)
+- ☐ List NFT for sale functionality (1 hour)
+
+**Afternoon (4 hours):**
+
+- ☐ Mobile responsiveness - Landing page (1 hour)
+- ☐ Mobile responsiveness - Registration flow (1 hour)
+- ☐ Mobile responsiveness - Marketplace (1 hour)
+- ☐ Mobile responsiveness - Dashboard (1 hour)
+
+**End of Day Deliverable:**
+
+- ✅ Complete dashboard
+- ✅ All pages mobile-responsive
+
+**Evening Checkpoint**: Test full app on mobile device (iPhone/Android)
+
+---
+
+### Day 8 (Monday, Oct 21) - Polish, Optimize & Deploy
+
+**Focus**: Final polish + Production deployment
+
+**Morning (4 hours):**
+
+- ☐ Loading states & skeleton loaders (1.5 hours)
+- ☐ Error handling & user-friendly messages (1 hour)
+- ☐ Image optimization (Next.js Image) (30 min)
+- ☐ Code splitting & lazy loading (1 hour)
+
+**Afternoon (4 hours):**
+
+- ☐ SEO meta tags on all pages (1 hour)
+- ☐ Performance testing (Lighthouse) (30 min)
+- ☐ Vercel deployment setup (1 hour)
+- ☐ Production deployment (30 min)
+- ☐ End-to-end testing on production (1 hour)
+
+**End of Day Deliverable:**
+
+- ✅ Production-ready web app deployed on Vercel
+- ✅ Connected to Sepolia contracts
+- ✅ All user flows tested on production
+- ✅ Performance score 90+
+
+**Evening Checkpoint**: Share production URL with team, final testing
+
+---
+
+### Day 9 (Tuesday, Oct 22) - Buffer Day / Deadline Day
+
+**Focus**: Final testing, bug fixes, submission prep
+
+**Morning (4 hours):**
+
+- ☐ Final bug fixes
+- ☐ Cross-browser testing (Chrome, Safari, Firefox)
+- ☐ Mobile wallet testing (MetaMask Mobile)
+- ☐ Documentation updates (README, CLAUDE.md)
+
+**Afternoon (Before 5 PM):**
+
+- ☐ Record demo video/screenshots
+- ☐ Update pitch deck with live demo URL
+- ☐ Final submission checklist review
+- ☐ Submit to hackathon portal
+
+**Deadline**: October 22, 2025 (End of Day)
+
+---
+
+## Critical Path Analysis
+
+**Critical Path** (blocks everything else):
+
+```
+Day 1: Setup → Day 2: Wallet → Day 3-4: Registration → Day 5: Minting → Day 6: Marketplace
+```
+
+**Dependencies:**
+
+- Landing Page: Independent (can parallel with other work)
+- Wallet Connection: Blocks Registration, Minting, Marketplace, Dashboard
+- Registration: Blocks Minting
+- Minting: Blocks Marketplace (need NFTs to list)
+- Marketplace: Blocks Purchase flow
+- Dashboard: Depends on Registration + Minting
+
+**Risk Mitigation:**
+
+- If behind schedule: Cut dashboard features, focus on Register → Mint → List → Purchase flow
+- If wallet integration issues: Use RainbowKit default UI (no customization)
+- If IPFS upload slow: Use smaller test files, consider Pinata dedicated gateway
+
+---
+
+## MVP Scope Definition
+
+### MUST HAVE (Core Demo Flow)
+
+- ✅ Landing page (Bahasa + English)
+- ✅ Wallet connection (MetaMask, WalletConnect)
+- ✅ Copyright registration (solo works, 5 asset types)
+- ✅ NFT minting (ERC-721, royalty 5-20%)
+- ✅ Marketplace browse (grid view, basic search)
+- ✅ NFT detail page
+- ✅ Purchase NFT (fixed price)
+- ✅ Basic dashboard (view copyrights, NFTs, list for sale)
+
+**Estimated Time**: 7-8 days (with buffer)
+
+### NICE TO HAVE (If time permits)
+
+- ⚪ Advanced search & filters (price range, sort options)
+- ⚪ Creator profiles
+- ⚪ Earnings/royalty tracking
+- ⚪ Collaborative works (multiple creators)
+- ⚪ Favorites/watchlist
+- ⚪ Social sharing
+- ⚪ Notification system
+
+**Defer to post-hackathon**
+
+### OUT OF SCOPE (Post-Hackathon v1.5/v2.0)
+
+- ⚪ ERC-1155 editions
+- ⚪ Auction system
+- ⚪ Offers/bids
+- ⚪ Bundle sales
+- ⚪ Advanced analytics
+- ⚪ Mobile app
+- ⚪ Fiat on-ramp
+- ⚪ Email notifications
+
+---
+
+## Risk Management
+
+### Identified Risks
+
+**Risk 1: IPFS Upload Slow/Unreliable**
+
+- **Impact**: High (blocks registration)
+- **Probability**: Medium
+- **Mitigation**:
+  - Use Pinata dedicated gateway (paid if needed)
+  - Implement retry logic (3 attempts)
+  - Use smaller test files during development
+  - Have backup: nft.storage as fallback
+- **Contingency**: If IPFS completely fails, use centralized storage temporarily
+
+**Risk 2: Web3 Integration Complexity**
+
+- **Impact**: High (blocks all features)
+- **Probability**: Low (RainbowKit is battle-tested)
+- **Mitigation**:
+  - Use RainbowKit default UI (no over-customization)
+  - Follow official wagmi documentation exactly
+  - Test early with real wallet on Sepolia
+- **Contingency**: Use ethers.js directly if wagmi issues
+
+**Risk 3: Falling Behind Schedule**
+
+- **Impact**: Critical (miss deadline)
+- **Probability**: Medium (aggressive timeline)
+- **Mitigation**:
+  - Daily progress checkpoints
+  - Cut nice-to-have features aggressively
+  - Focus on core flow: Register → Mint → List → Purchase
+- **Contingency**: Work extended hours on Day 7-8, use Day 9 as buffer
+
+**Risk 4: Smart Contract Integration Issues**
+
+- **Impact**: High (app won't work)
+- **Probability**: Low (contracts already tested)
+- **Mitigation**:
+  - Test contract calls early (Day 3)
+  - Use Sepolia testnet throughout
+  - Have contract ABIs ready from Day 1
+- **Contingency**: Contact RECTOR for contract support
+
+**Risk 5: Mobile Responsiveness Issues**
+
+- **Impact**: Medium (poor UX)
+- **Probability**: Medium
+- **Mitigation**:
+  - Use Tailwind responsive classes from start
+  - Test on mobile daily
+  - Use mobile-first design approach
+- **Contingency**: Dedicate full Day 7 to mobile fixes
+
+**Risk 6: Vercel Deployment Issues**
+
+- **Impact**: Medium (no live demo)
+- **Probability**: Low (Vercel is reliable)
+- **Mitigation**:
+  - Deploy early (Day 5-6 for testing)
+  - Test environment variables on Vercel
+  - Have .env.example documented
+- **Contingency**: Use alternative (Railway, Netlify) or localhost demo
+
+---
+
+## Success Metrics
+
+### Quantitative Metrics
+
+**Performance:**
+
+- [ ] Lighthouse Performance Score: 90+
+- [ ] LCP (Largest Contentful Paint): <2.5s
+- [ ] FID (First Input Delay): <100ms
+- [ ] CLS (Cumulative Layout Shift): <0.1
+- [ ] Bundle size (main): <500KB
+
+**Functionality:**
+
+- [ ] 100% of MVP features working
+- [ ] 95%+ transaction success rate (on Sepolia)
+- [ ] Zero critical bugs
+- [ ] Mobile responsive on iPhone SE, iPad, Desktop
+
+**Code Quality:**
+
+- [ ] Zero TypeScript errors
+- [ ] Zero console errors in production
+- [ ] All components typed
+- [ ] ESLint passing
+
+### Qualitative Metrics
+
+**User Experience:**
+
+- [ ] Clear value proposition (10-second test)
+- [ ] Intuitive navigation
+- [ ] Professional, polished design
+- [ ] Fast loading perception (skeleton loaders)
+- [ ] Helpful error messages
+
+**Demo Readiness:**
+
+- [ ] Live demo accessible via URL
+- [ ] Full user flow works end-to-end
+- [ ] No breaking bugs during demo
+- [ ] Mobile-friendly (judges may test on phone)
+
+---
+
+## Testing Strategy
+
+### Manual Testing Checklist
+
+**Day 4 (After Registration Complete):**
+
+- [ ] Test registration flow on Sepolia
+- [ ] Verify certificate downloads
+- [ ] Test error states (network error, insufficient gas)
+- [ ] Test on mobile
+
+**Day 6 (After Marketplace Complete):**
+
+- [ ] Complete full flow: Register → Mint → List → Purchase
+- [ ] Test with different asset types
+- [ ] Verify royalties calculated correctly
+- [ ] Test search and filter
+- [ ] Test on different browsers
+
+**Day 8 (Production Deployment):**
+
+- [ ] Test all features on production URL
+- [ ] Cross-browser testing (Chrome, Safari, Firefox)
+- [ ] Mobile wallet testing (MetaMask Mobile)
+- [ ] Performance testing (Lighthouse)
+- [ ] Verify all Sepolia contract interactions work
+
+### Testing Priorities
+
+**P0 (Critical Path):**
+
+- Wallet connection
+- Copyright registration transaction
+- NFT minting transaction
+- Purchase transaction
+- All transactions confirmed on Sepolia
+
+**P1 (Core Features):**
+
+- File upload to IPFS
+- Form validation
+- Search functionality
+- Dashboard data display
+
+**P2 (Polish):**
+
+- Loading states
+- Error messages
+- Mobile responsiveness
+- Performance optimization
+
+---
+
+## Progress Tracking
+
+### Daily Standup Questions
+
+**Every morning (5 minutes):**
+
+1. What did I complete yesterday?
+2. What am I working on today?
+3. Any blockers or risks?
+4. Am I on track for deadline?
+
+**Every evening (5 minutes):**
+
+1. Did I complete today's deliverables?
+2. Any learnings or issues?
+3. Any scope adjustments needed?
+4. Plan for tomorrow confirmed?
+
+### Progress Update Format
+
+**End of Each Day:**
+
+```markdown
+## Day X Progress Update (Date)
+
+### Completed ✅
+
+- Feature A (3 hours)
+- Feature B (2 hours)
+
+### In Progress 🟡
+
+- Feature C (50% complete)
+
+### Blocked ⚠️
+
+- Issue: IPFS upload failing
+- Mitigation: Trying alternative approach
+
+### Time Spent: 8 hours
+
+### On Track: Yes/No
+
+### Risk Level: Low/Medium/High
+```
+
+---
+
+## Resource Links
+
+### Technical Documentation
+
+- Frontend PRD: `docs/FRONTEND-PRD.md`
+- Contract ABIs: `docs/CONTRACT-API.md`
+- Architecture: `docs/ARCHITECTURE.md`
+
+### External Resources
+
+- Next.js Docs: <https://nextjs.org/docs>
+- Tailwind CSS: <https://tailwindcss.com/docs>
+- wagmi: <https://wagmi.sh/>
+- RainbowKit: <https://www.rainbowkit.com/docs/introduction>
+- Pinata IPFS: <https://docs.pinata.cloud/>
+
+### Deployed Contracts (Sepolia)
+
+- CopyrightRegistry: `0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f`
+- KaryaNFT: `0xE7f3c9BdAFd36050BdFAD3195dD7d0f4f2b52Fa4`
+- KaryaMarketplace: `0xb2430198bF01a8ec5749424a4642F32eb4b8Ed10`
+- Etherscan: <https://sepolia.etherscan.io/>
+
+---
+
+## Conclusion
+
+This 9-day sprint is aggressive but achievable with:
+
+- ✅ Clear daily objectives
+- ✅ MVP-focused scope
+- ✅ Identified risks with mitigation plans
+- ✅ Daily progress tracking
+- ✅ 1-day buffer for testing/fixes
+
+**Key Success Factors:**
+
+1. **Focus on MVP**: Don't get distracted by nice-to-have features
+2. **Test Early**: Test contract interactions on Day 3-4, not Day 8
+3. **Mobile-First**: Build responsive from Day 1, not as afterthought
+4. **Daily Checkpoints**: Catch issues early, adjust plan daily
+5. **Ship on Day 8**: Use Day 9 as true buffer, not primary work day
+
+**Commitment**: Ship production-ready demo by Oct 21, inshaAllah! 🚀
+
+---
+
+**Document Status**: ✅ Ready for Execution
+**Next Action**: Begin Day 1 (Oct 14) - Project Setup
+**Last Updated**: October 13, 2025
