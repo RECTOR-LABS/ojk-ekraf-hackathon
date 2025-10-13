@@ -15,10 +15,10 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 
 ## Current Project Status
 
-**Last Updated**: October 14, 2025 (Early Morning - Day 4 COMPLETE)
-**Overall Progress**: 82% Complete ✅ **SMART CONTRACTS DEPLOYED! FRONTEND IN PROGRESS! 🚀**
-**Days Until Deadline**: 9 days
-**Frontend Sprint Progress**: Day 4/9 Complete (45%)
+**Last Updated**: October 17, 2025 (Day 5 COMPLETE)
+**Overall Progress**: 85% Complete ✅ **SMART CONTRACTS DEPLOYED! MARKETPLACE LIVE! 🚀**
+**Days Until Deadline**: 6 days
+**Frontend Sprint Progress**: Day 5/9 Complete (55%)
 
 ### ✅ Completed
 
@@ -79,7 +79,7 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 - ✅ DEPLOYED-CONTRACTS.md - Live contract addresses and links
 - ✅ CLAUDE.md - Project guidance (this file)
 
-#### Frontend DApp (Day 4/9 - 45%) 🏗️
+#### Frontend DApp (Day 5/9 - 55%) 🏗️
 - **Day 1 Complete** ✅ (Oct 13 Morning - Foundation)
   - Next.js 14 + TypeScript setup
   - Tailwind CSS with Indonesian theme
@@ -129,19 +129,53 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
     - Success page with NFT details and marketplace CTA
   - **Dev Server Status**: ✅ Compiles successfully with zero errors
 
+- **Day 5 Complete** ✅ (Oct 17 - Marketplace Development)
+  - **Marketplace Page (/marketplace):**
+    - Grid layout with responsive columns (1/2/3/4)
+    - Search bar (by title/creator address)
+    - Asset type filter (5 types with dropdown)
+    - Active filters display with clear buttons
+    - Loading/empty/error states
+  - **NFTCard Component:**
+    - Image preview with fallback UI
+    - Asset type badges (color-coded by type)
+    - Royalty percentage badge
+    - Creator info with address truncation
+    - Price display in ETH
+    - Hover effects and smooth transitions
+  - **useMarketplaceListings Hook:**
+    - Fetch all active listings from marketplace contract
+    - Fetch NFT metadata from IPFS (Pinata gateway)
+    - Fetch royalty info (ERC-2981)
+    - Enrich listings with metadata (title, description, image)
+    - Error handling and loading states
+  - **NFT Detail Page (/marketplace/[tokenId]):**
+    - Large image preview
+    - Full NFT information (title, description, properties grid)
+    - Creator and owner information
+    - Royalty information card
+    - Copyright registration details
+    - Purchase functionality with wagmi v2
+    - Transaction states (idle → signing → pending → success/error)
+    - Success/error banners
+    - Etherscan links (token + metadata)
+    - Wallet connection check
+    - Owner/seller detection
+  - **Dev Server Status**: ✅ Running on localhost:3002, zero compilation errors
+
 ### 🎯 Next Steps (In Priority Order)
 
-1. **Frontend DApp** 💻 (9-day sprint: Oct 13-22) - **DAY 5 READY TO START** 🏃
+1. **Frontend DApp** 💻 (9-day sprint: Oct 13-22) - **DAY 6 NEXT** 🏃
    - **Reference**: `docs/FRONTEND-EXECUTION-PLAN.md` for daily breakdown
    - **Reference**: `docs/FRONTEND-PRD.md` for detailed specifications
    - ✅ Day 1 (Oct 13 Morning): Foundation & Setup COMPLETE
    - ✅ Day 2 (Oct 13 Evening): Landing Page & Wallet Connection COMPLETE
    - ✅ Day 3 (Oct 13 Night): Copyright registration Steps 1-2 COMPLETE
    - ✅ Day 4 (Oct 13-14): Registration Steps 3-4 + Full NFT Minting COMPLETE (AHEAD OF SCHEDULE!)
-   - 🎯 Day 5 (Oct 17): Marketplace browse + NFT detail page - NEXT
-   - Day 6 (Oct 18): Complete marketplace + Dashboard start
-   - Day 7 (Oct 19): Complete dashboard + Mobile polish
-   - Day 8 (Oct 20): Final polish + Deploy to Vercel
+   - ✅ Day 5 (Oct 17): Full marketplace (browse, search, filter, detail, purchase) COMPLETE
+   - 🎯 Day 6 (Oct 18): Dashboard (My Copyrights, My NFTs, List for Sale) - NEXT
+   - Day 7 (Oct 19): Mobile responsiveness + Polish
+   - Day 8 (Oct 20): Performance optimization + Deploy to Vercel
    - Day 9 (Oct 21): Buffer day + Final submission
 
 2. **Pitch Deck** 📊 (Parallel work, Oct 18-21)
@@ -180,7 +214,7 @@ test/ ✅ 90 TESTS PASSING
   ├── KaryaNFT.test.js ✅
   └── KaryaMarketplace.test.js ✅
 
-frontend/ 🏗️ IN DEVELOPMENT (Day 4/9 - 45%)
+frontend/ 🏗️ IN DEVELOPMENT (Day 5/9 - 55%)
   ├── /app ✅ (Next.js 14 App Router)
   │   ├── layout.tsx ✅ (Root layout with providers + Header)
   │   ├── page.tsx ✅ (Home page with all sections)
@@ -188,17 +222,22 @@ frontend/ 🏗️ IN DEVELOPMENT (Day 4/9 - 45%)
   │   ├── globals.css ✅ (Indonesian theme + semantic colors)
   │   ├── /register ✅
   │   │   └── page.tsx ✅ (4-step registration wizard with blockchain integration)
-  │   └── /mint ✅
-  │       └── page.tsx ✅ (NFT minting with royalty configuration)
+  │   ├── /mint ✅
+  │   │   └── page.tsx ✅ (NFT minting with royalty configuration)
+  │   └── /marketplace ✅
+  │       ├── page.tsx ✅ (Marketplace browse with search & filters)
+  │       └── /[tokenId]
+  │           └── page.tsx ✅ (NFT detail page with purchase flow)
   ├── /components ✅ (UI, Layout, Web3, Landing, Features)
   │   ├── /ui ✅ (Button, Card, Input, Spinner)
   │   ├── /layout ✅ (Header, Footer)
   │   ├── /web3 ✅ (ConnectButton with RainbowKit)
   │   ├── /landing ✅ (Hero, HowItWorks, Features, ForIndonesianCreators, FAQ)
-  │   └── /features ✅ (FileUpload, MetadataForm, MintNFTModal)
+  │   └── /features ✅ (FileUpload, MetadataForm, MintNFTModal, NFTCard)
   ├── /lib ✅
   │   ├── /contracts ✅ (All 3 contract ABIs + addresses)
   │   ├── /stores ✅ (registrationStore with Zustand + localStorage)
+  │   ├── /hooks ✅ (useMarketplaceListings)
   │   └── /utils ✅ (ipfs with Pinata integration)
   └── /public (Static assets - TODO)
 
@@ -502,7 +541,7 @@ When implementing features that touch financial services:
     - Deployer: `0xcAfeA0fd...` (vanity address)
     - All source code verified on Etherscan
 
-🎯 **Frontend Sprint Progress (Day 4 / 9 Complete - 45% - AHEAD OF SCHEDULE!):**
+🎯 **Frontend Sprint Progress (Day 5 / 9 Complete - 55% - AHEAD OF SCHEDULE!):**
 1. ✅ **Day 1 (Oct 13 Morning)**: Project setup + Landing page foundation COMPLETE
    - Next.js 14 + TypeScript + Tailwind CSS
    - Web3 stack (wagmi + RainbowKit)
@@ -526,8 +565,14 @@ When implementing features that touch financial services:
    - ✅ Complete NFT minting flow with royalty configuration
    - ✅ MintNFTModal with earnings calculator
    - ✅ Full blockchain integration for minting
-5. **Oct 17**: Marketplace browse + NFT detail page
-6. **Oct 18**: Complete marketplace + Dashboard start
+5. ✅ **Day 5 (Oct 17)**: Full Marketplace Implementation COMPLETE
+   - ✅ Marketplace page (/marketplace) with grid layout
+   - ✅ Search and filter functionality
+   - ✅ NFTCard component with badges
+   - ✅ useMarketplaceListings hook (fetch + enrich with IPFS metadata)
+   - ✅ NFT detail page (/marketplace/[tokenId])
+   - ✅ Purchase flow with wagmi v2 integration
+6. **Oct 18**: Dashboard (My Copyrights, My NFTs, List for Sale)
 7. **Oct 19**: Complete dashboard + Mobile polish
 8. **Oct 20**: Final polish + Deploy to Vercel
 9. **Oct 21**: Buffer + SUBMIT TO HACKATHON
