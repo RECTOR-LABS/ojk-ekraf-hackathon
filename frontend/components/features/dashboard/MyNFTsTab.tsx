@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import NextImage from "next/image";
 import {
   Image as ImageIcon,
   ShoppingBag,
@@ -136,10 +137,12 @@ export default function MyNFTsTab({ userAddress }: MyNFTsTabProps) {
                 {/* Image */}
                 <div className="relative aspect-square bg-gray-100">
                   {nft.image ? (
-                    <img
+                    <NextImage
                       src={nft.image}
                       alt={nft.title || `NFT #${nft.tokenId}`}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">

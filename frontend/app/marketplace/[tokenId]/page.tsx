@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   useReadContract,
   useWriteContract,
@@ -244,16 +245,19 @@ export default function NFTDetailPage() {
           {/* Left Column - Image */}
           <div className="space-y-6">
             <Card className="overflow-hidden">
-              <div className="aspect-square bg-gray-100">
+              <div className="relative aspect-square bg-gray-100">
                 {!imageError && nftMetadata?.image ? (
-                  <img
+                  <Image
                     src={nftMetadata.image.replace(
                       "ipfs://",
                       "https://gateway.pinata.cloud/ipfs/"
                     )}
                     alt={nftMetadata.name || `NFT #${tokenId.toString()}`}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
                     onError={() => setImageError(true)}
+                    priority={true}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">

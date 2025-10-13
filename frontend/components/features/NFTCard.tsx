@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ExternalLink, User, TrendingUp } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -67,11 +68,14 @@ export default function NFTCard({ listing }: NFTCardProps) {
         {/* Image Container */}
         <div className="relative aspect-square bg-gray-100 overflow-hidden">
           {!imageError && listing.image ? (
-            <img
+            <Image
               src={listing.image}
               alt={listing.title || `NFT #${listing.tokenId}`}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
               onError={() => setImageError(true)}
+              priority={false}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">

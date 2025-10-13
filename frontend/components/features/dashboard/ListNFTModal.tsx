@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   useWriteContract,
   useWaitForTransactionReceipt,
@@ -206,11 +207,15 @@ export default function ListNFTModal({
         <div className="mb-6 p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center gap-4">
             {nft.image ? (
-              <img
-                src={nft.image}
-                alt={nft.title}
-                className="w-20 h-20 rounded-lg object-cover"
-              />
+              <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                <Image
+                  src={nft.image}
+                  alt={nft.title}
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
+              </div>
             ) : (
               <div className="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
                 <ShoppingBag className="w-8 h-8 text-gray-400" />
