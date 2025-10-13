@@ -176,7 +176,7 @@ export function FileUpload({
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
           className={`
-            relative border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all
+            relative border-2 border-dashed rounded-xl p-6 sm:p-12 text-center cursor-pointer transition-all
             ${isDragging
               ? 'border-primary-500 bg-primary-50 scale-105'
               : 'border-neutral-300 hover:border-primary-400 hover:bg-neutral-50'

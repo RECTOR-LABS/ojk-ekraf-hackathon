@@ -38,10 +38,10 @@ export default function DashboardPage() {
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold font-display text-gray-900 mb-2">
+          <h1 className="text-3xl sm:text-4xl font-bold font-display text-gray-900 mb-2">
             My Dashboard
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-gray-600">
             Manage your copyrights, NFTs, and marketplace listings
           </p>
           <p className="text-sm text-gray-500 mt-2">

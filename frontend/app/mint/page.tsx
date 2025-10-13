@@ -140,10 +140,10 @@ export default function MintPage() {
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold font-display text-neutral-900 mb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-neutral-900 mb-2">
               NFT Minted Successfully! 🎉
             </h2>
-            <p className="text-lg text-neutral-600 mb-8">
+            <p className="text-base sm:text-lg text-neutral-600 mb-8">
               Your copyright is now a tradeable NFT with royalties
             </p>
 

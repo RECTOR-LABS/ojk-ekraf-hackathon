@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Filter, Loader2 } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { useMarketplaceListings } from "@/lib/hooks/useMarketplaceListings";
 import NFTCard from "@/components/features/NFTCard";
 import { Button } from "@/components/ui/Button";
+import { SkeletonGrid } from "@/components/ui/Skeleton";
 
 const ASSET_TYPES = [
   { value: "all", label: "All Assets" },
@@ -154,12 +155,7 @@ export default function MarketplacePage() {
         )}
 
         {/* Loading State */}
-        {isLoading && !error && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className="w-12 h-12 text-primary-500 animate-spin mb-4" />
-            <p className="text-gray-600">Loading marketplace...</p>
-          </div>
-        )}
+        {isLoading && !error && <SkeletonGrid count={8} />}
 
         {/* Empty State - No Listings */}
         {!isLoading && listings.length === 0 && (

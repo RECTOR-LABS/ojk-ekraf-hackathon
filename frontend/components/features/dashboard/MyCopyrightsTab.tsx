@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, FileText, CheckCircle2, ExternalLink, Sparkles } from "lucide-react";
+import { FileText, CheckCircle2, ExternalLink, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useUserCopyrights } from "@/lib/hooks/useUserCopyrights";
+import { SkeletonGrid } from "@/components/ui/Skeleton";
 
 const ASSET_TYPE_LABELS: Record<number, string> = {
   0: "Art",
@@ -30,12 +31,7 @@ export default function MyCopyrightsTab({ userAddress }: MyCopyrightsTabProps) {
   const { copyrights, isLoading, error } = useUserCopyrights(userAddress);
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="w-12 h-12 text-primary-500 animate-spin mb-4" />
-        <p className="text-gray-600">Loading your copyrights...</p>
-      </div>
-    );
+    return <SkeletonGrid count={6} />;
   }
 
   if (error) {

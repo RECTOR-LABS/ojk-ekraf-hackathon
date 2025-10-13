@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Loader2,
   Image as ImageIcon,
   ShoppingBag,
   ExternalLink,
@@ -13,6 +12,7 @@ import {
 import { formatEther } from "viem";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { SkeletonGrid } from "@/components/ui/Skeleton";
 import { useUserNFTs } from "@/lib/hooks/useUserNFTs";
 import ListNFTModal from "./ListNFTModal";
 
@@ -47,12 +47,7 @@ export default function MyNFTsTab({ userAddress }: MyNFTsTabProps) {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="w-12 h-12 text-primary-500 animate-spin mb-4" />
-        <p className="text-gray-600">Loading your NFTs...</p>
-      </div>
-    );
+    return <SkeletonGrid count={6} />;
   }
 
   if (error) {

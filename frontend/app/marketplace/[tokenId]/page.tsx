@@ -309,7 +309,7 @@ export default function NFTDetailPage() {
                   Token #{tokenId.toString()}
                 </span>
               </div>
-              <h1 className="text-4xl font-bold font-display text-gray-900 mb-4">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-gray-900 mb-4">
                 {nftMetadata?.name || `NFT #${tokenId.toString()}`}
               </h1>
               {nftMetadata?.description && (
@@ -393,9 +393,9 @@ export default function NFTDetailPage() {
               <Card className="p-6 border-2 border-primary-200">
                 <div className="mb-6">
                   <p className="text-sm text-gray-500 mb-2">Current Price</p>
-                  <p className="text-4xl font-bold text-gray-900">
+                  <p className="text-3xl sm:text-4xl font-bold text-gray-900">
                     {parseFloat(formatEther(listingData.price)).toFixed(4)}{" "}
-                    <span className="text-2xl font-normal text-gray-600">
+                    <span className="text-xl sm:text-2xl font-normal text-gray-600">
                       ETH
                     </span>
                   </p>

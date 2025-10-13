@@ -579,7 +579,7 @@ export default function RegisterPage() {
                 <div className="flex flex-col items-center flex-1">
                   <div
                     className={`
-                      w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all
+                      w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg transition-all
                       ${
                         currentStep > step.number
                           ? 'bg-primary-600 text-white'
@@ -600,7 +600,7 @@ export default function RegisterPage() {
                   {/* Step Label */}
                   <div className="mt-2 text-center">
                     <p
-                      className={`text-sm font-semibold ${
+                      className={`text-xs sm:text-sm font-semibold ${
                         currentStep >= step.number ? 'text-neutral-900' : 'text-neutral-500'
                       }`}
                     >
@@ -613,10 +613,10 @@ export default function RegisterPage() {
                 {/* Connector Line */}
                 {index < steps.length - 1 && (
                   <div
-                    className={`h-1 flex-1 mx-2 transition-all ${
+                    className={`h-0.5 sm:h-1 flex-1 mx-1 sm:mx-2 transition-all ${
                       currentStep > step.number ? 'bg-primary-600' : 'bg-neutral-200'
                     }`}
-                    style={{ marginTop: '-48px', maxWidth: '100px' }}
+                    style={{ marginTop: '-40px', maxWidth: '80px' }}
                   />
                 )}
               </div>

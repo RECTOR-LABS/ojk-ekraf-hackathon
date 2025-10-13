@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, ShoppingBag, Calendar } from "lucide-react";
+import { ShoppingBag, Calendar } from "lucide-react";
 import { formatEther } from "viem";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { SkeletonGrid } from "@/components/ui/Skeleton";
 import { useUserNFTs } from "@/lib/hooks/useUserNFTs";
 
 const ASSET_TYPE_LABELS: Record<number, string> = {
@@ -34,12 +35,7 @@ export default function MyListingsTab({ userAddress }: MyListingsTabProps) {
   const listedNFTs = nfts.filter((nft) => nft.isListed);
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="w-12 h-12 text-primary-500 animate-spin mb-4" />
-        <p className="text-gray-600">Loading your listings...</p>
-      </div>
-    );
+    return <SkeletonGrid count={6} />;
   }
 
   if (error) {

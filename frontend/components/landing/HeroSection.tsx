@@ -52,18 +52,18 @@ export function HeroSection() {
             </div>
 
             {/* Trust Metrics */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-neutral-200">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 pt-8 border-t border-neutral-200">
               <div>
-                <div className="text-3xl font-bold font-display text-primary-600">1,000+</div>
-                <div className="text-sm text-neutral-600 mt-1">Creators</div>
+                <div className="text-2xl sm:text-3xl font-bold font-display text-primary-600">1,000+</div>
+                <div className="text-xs sm:text-sm text-neutral-600 mt-1">Creators</div>
               </div>
               <div>
-                <div className="text-3xl font-bold font-display text-primary-600">5,000+</div>
-                <div className="text-sm text-neutral-600 mt-1">Works Protected</div>
+                <div className="text-2xl sm:text-3xl font-bold font-display text-primary-600">5,000+</div>
+                <div className="text-xs sm:text-sm text-neutral-600 mt-1">Works Protected</div>
               </div>
-              <div>
-                <div className="text-3xl font-bold font-display text-primary-600">$50K+</div>
-                <div className="text-sm text-neutral-600 mt-1">In Royalties</div>
+              <div className="col-span-2 sm:col-span-1">
+                <div className="text-2xl sm:text-3xl font-bold font-display text-primary-600">$50K+</div>
+                <div className="text-xs sm:text-sm text-neutral-600 mt-1">In Royalties</div>
               </div>
             </div>
           </div>
