@@ -15,10 +15,10 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 
 ## Current Project Status
 
-**Last Updated**: October 13, 2025 (Evening - Day 2 Complete)
-**Overall Progress**: 75% Complete ✅ **SMART CONTRACTS DEPLOYED! FRONTEND IN PROGRESS! 🚀**
+**Last Updated**: October 13, 2025 (Late Night - Day 4 Partial Complete)
+**Overall Progress**: 80% Complete ✅ **SMART CONTRACTS DEPLOYED! FRONTEND IN PROGRESS! 🚀**
 **Days Until Deadline**: 9 days
-**Frontend Sprint Progress**: Day 2/9 Complete (22%)
+**Frontend Sprint Progress**: Day 3-4/9 Partial (40%)
 
 ### ✅ Completed
 
@@ -79,8 +79,8 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 - ✅ DEPLOYED-CONTRACTS.md - Live contract addresses and links
 - ✅ CLAUDE.md - Project guidance (this file)
 
-#### Frontend DApp (Day 2/9 - 22%) 🏗️
-- **Day 1 Complete** ✅ (Oct 13 - Foundation)
+#### Frontend DApp (Day 3-4/9 - 40%) 🏗️
+- **Day 1 Complete** ✅ (Oct 13 Morning - Foundation)
   - Next.js 14 + TypeScript setup
   - Tailwind CSS with Indonesian theme
   - Web3 stack (wagmi + RainbowKit + TanStack Query)
@@ -99,29 +99,40 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
   - Header component with navigation
   - ConnectButton with RainbowKit
   - Wallet connection modal integration
-  - **Dev Server Status**: ✅ Running on localhost:3000
 
-- **Day 3 In Progress** 🟡 (Target: Oct 16)
-  - Copyright Registration Flow (Part 1)
-  - File upload UI with drag & drop
-  - IPFS integration (Pinata)
-  - Metadata form with validation
-  - Form state management
+- **Day 3 Complete** ✅ (Oct 13 Night - Registration Part 1)
+  - Registration page layout with 4-step wizard
+  - Step 1: File upload with drag & drop, SHA-256 hashing
+  - Step 2: Metadata form with validation (title, description, asset type, tags)
+  - IPFS integration with Pinata (file upload working)
+  - Zustand store with localStorage persistence
+  - Image preview for uploaded files
+
+- **Day 4 Partial** 🟡 (Oct 13 Late Night - Registration Part 2)
+  - Step 3: Review & Confirmation (complete file + metadata summary)
+  - Step 4: Blockchain transaction with wagmi v2
+    - `useWriteContract` for copyright registration
+    - `useWaitForTransactionReceipt` for tx monitoring
+    - Transaction states: idle → signing → pending → success/error
+    - Registration ID extraction from event logs
+  - Success page with registration details
+  - Etherscan links for transaction verification
+  - **Dev Server Status**: ✅ Running on localhost:3000, compiled successfully
 
 ### 🎯 Next Steps (In Priority Order)
 
-1. **Frontend DApp** 💻 (9-day sprint: Oct 13-22) - **DAY 3 IN PROGRESS** 🏃
+1. **Frontend DApp** 💻 (9-day sprint: Oct 13-22) - **DAY 4 IN PROGRESS** 🏃
    - **Reference**: `docs/FRONTEND-EXECUTION-PLAN.md` for daily breakdown
    - **Reference**: `docs/FRONTEND-PRD.md` for detailed specifications
-   - ✅ Day 1 (Oct 13 Day): Foundation & Setup COMPLETE
+   - ✅ Day 1 (Oct 13 Morning): Foundation & Setup COMPLETE
    - ✅ Day 2 (Oct 13 Evening): Landing Page & Wallet Connection COMPLETE
-   - 🟡 Day 3 (Oct 16): Copyright registration flow (Part 1) - CURRENT
-   - Day 4 (Oct 17): Copyright registration flow (Part 2) + Mint start
-   - Day 5 (Oct 18): NFT minting + Marketplace start
-   - Day 6 (Oct 19): Complete marketplace + Dashboard start
-   - Day 7 (Oct 20): Complete dashboard + Mobile polish
-   - Day 8 (Oct 21): Final polish + Deploy to Vercel
-   - Day 9 (Oct 22): Buffer day + Final submission
+   - ✅ Day 3 (Oct 13 Night): Copyright registration Steps 1-2 COMPLETE
+   - 🟡 Day 4 (Oct 13 Late Night): Registration Steps 3-4 PARTIAL + Mint start - CURRENT
+   - Day 5 (Oct 17): NFT minting + Marketplace start
+   - Day 6 (Oct 18): Complete marketplace + Dashboard start
+   - Day 7 (Oct 19): Complete dashboard + Mobile polish
+   - Day 8 (Oct 20): Final polish + Deploy to Vercel
+   - Day 9 (Oct 21): Buffer day + Final submission
 
 2. **Pitch Deck** 📊 (Parallel work, Oct 18-21)
    - Problem/solution slides
@@ -159,19 +170,24 @@ test/ ✅ 90 TESTS PASSING
   ├── KaryaNFT.test.js ✅
   └── KaryaMarketplace.test.js ✅
 
-frontend/ 🏗️ IN DEVELOPMENT (Day 2/9 - 22%)
+frontend/ 🏗️ IN DEVELOPMENT (Day 3-4/9 - 40%)
   ├── /app ✅ (Next.js 14 App Router)
   │   ├── layout.tsx ✅ (Root layout with providers + Header)
   │   ├── page.tsx ✅ (Home page with all sections)
   │   ├── providers.tsx ✅ (wagmi + RainbowKit setup)
-  │   └── globals.css ✅ (Indonesian theme design system)
-  ├── /components ✅ (UI, Layout, Web3, Landing sections)
+  │   ├── globals.css ✅ (Indonesian theme + semantic colors)
+  │   └── /register ✅
+  │       └── page.tsx ✅ (4-step registration wizard with blockchain integration)
+  ├── /components ✅ (UI, Layout, Web3, Landing, Features)
   │   ├── /ui ✅ (Button, Card, Input, Spinner)
   │   ├── /layout ✅ (Header, Footer)
   │   ├── /web3 ✅ (ConnectButton with RainbowKit)
-  │   └── /landing ✅ (Hero, HowItWorks, Features, ForIndonesianCreators, FAQ)
-  ├── /lib ✅ (Contracts exported)
-  │   └── /contracts ✅ (All 3 contract ABIs + addresses)
+  │   ├── /landing ✅ (Hero, HowItWorks, Features, ForIndonesianCreators, FAQ)
+  │   └── /features ✅ (FileUpload, MetadataForm)
+  ├── /lib ✅
+  │   ├── /contracts ✅ (All 3 contract ABIs + addresses)
+  │   ├── /stores ✅ (registrationStore with Zustand + localStorage)
+  │   └── /utils ✅ (ipfs with Pinata integration)
   └── /public (Static assets - TODO)
 
 docs/ ✅ COMPLETE
@@ -474,8 +490,8 @@ When implementing features that touch financial services:
     - Deployer: `0xcAfeA0fd...` (vanity address)
     - All source code verified on Etherscan
 
-🎯 **Frontend Sprint Progress (Day 2/9 Complete):**
-1. ✅ **Day 1 (Oct 13)**: Project setup + Landing page foundation COMPLETE
+🎯 **Frontend Sprint Progress (Day 3-4 Partial / 9 Complete - 40%):**
+1. ✅ **Day 1 (Oct 13 Morning)**: Project setup + Landing page foundation COMPLETE
    - Next.js 14 + TypeScript + Tailwind CSS
    - Web3 stack (wagmi + RainbowKit)
    - Base UI components
@@ -486,13 +502,21 @@ When implementing features that touch financial services:
    - Header with navigation
    - Wallet connection with RainbowKit
    - Full bilingual support
-3. 🟡 **Day 3 (Current)**: Copyright registration flow (Part 1)
-4. **Oct 17**: Copyright registration (Part 2) + Mint start
-5. **Oct 18**: NFT minting + Marketplace browse
-6. **Oct 19**: Complete marketplace + Dashboard
-7. **Oct 20**: Polish + Mobile responsiveness
-8. **Oct 21**: Deploy to Vercel + Final testing
-9. **Oct 22**: Buffer + SUBMIT TO HACKATHON
+3. ✅ **Day 3 (Oct 13 Night)**: Copyright registration flow (Part 1) COMPLETE
+   - File upload with drag & drop, SHA-256 hashing
+   - IPFS integration (Pinata)
+   - Metadata form with validation
+   - Zustand state management with localStorage
+4. 🟡 **Day 4 (Oct 13 Late Night - Current)**: Registration Steps 3-4 PARTIAL
+   - ✅ Step 3: Review & Confirmation
+   - ✅ Step 4: Blockchain transaction with wagmi
+   - ✅ Success page with registration details
+   - 🔴 TODO: Start NFT minting UI
+5. **Oct 17**: Complete NFT minting + Marketplace start
+6. **Oct 18**: Complete marketplace + Dashboard start
+7. **Oct 19**: Complete dashboard + Mobile polish
+8. **Oct 20**: Final polish + Deploy to Vercel
+9. **Oct 21**: Buffer + SUBMIT TO HACKATHON
 
 **See `docs/FRONTEND-EXECUTION-PLAN.md` for detailed daily breakdown**
 

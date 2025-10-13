@@ -33,15 +33,25 @@
   /* Semantic Colors */
   --color-success-600: #16a34a;
   --color-success-500: #22c55e;
+  --color-success-200: #bbf7d0;
   --color-success-100: #dcfce7;
+  --color-success-50: #f0fdf4;
 
+  --color-warning-900: #78350f;
+  --color-warning-700: #a16207;
   --color-warning-600: #ca8a04;
   --color-warning-500: #eab308;
+  --color-warning-200: #fef08a;
   --color-warning-100: #fef9c3;
+  --color-warning-50: #fefce8;
 
+  --color-error-900: #991b1b;
+  --color-error-700: #b91c1c;
   --color-error-600: #dc2626;
   --color-error-500: #ef4444;
+  --color-error-200: #fecaca;
   --color-error-100: #fee2e2;
+  --color-error-50: #fef2f2;
 
   --color-info-600: #2563eb;
   --color-info-500: #3b82f6;
