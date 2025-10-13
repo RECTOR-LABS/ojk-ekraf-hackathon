@@ -1,7 +1,8 @@
-import "dotenv/config";
+require("dotenv/config");
+require("@nomicfoundation/hardhat-toolbox");
 
 /** @type import('hardhat/config').HardhatUserConfig */
-const config = {
+module.exports = {
   solidity: {
     version: "0.8.20",
     settings: {
@@ -13,11 +14,9 @@ const config = {
   },
   networks: {
     hardhat: {
-      type: "edr-simulated",
       chainId: 1337,
     },
     sepolia: {
-      type: "http",
       url: process.env.SEPOLIA_RPC_URL || "https://rpc.sepolia.dev",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 11155111,
@@ -41,5 +40,3 @@ const config = {
     coinmarketcap: process.env.COINMARKETCAP_API_KEY || "",
   },
 };
-
-export default config;
