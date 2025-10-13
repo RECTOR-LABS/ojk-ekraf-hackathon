@@ -25,8 +25,10 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { ErrorDisplay } from "@/components/ui/ErrorDisplay";
 import { marketplaceABI, marketplaceAddress } from "@/lib/contracts/marketplace";
 import { karyaNFTABI, karyaNFTAddress } from "@/lib/contracts/karyaNFT";
+import { parseContractError, type UserFriendlyError } from "@/lib/utils/errors";
 
 const ASSET_TYPE_LABELS: Record<number, string> = {
   0: "Art",
@@ -229,16 +231,11 @@ export default function NFTDetailPage() {
 
         {/* Purchase Error Banner */}
         {purchaseError && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-6 flex items-start gap-3">
-            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-red-900 mb-1">
-                Purchase Failed
-              </h3>
-              <p className="text-red-700 text-sm">
-                {(purchaseError as any)?.shortMessage || purchaseError.message}
-              </p>
-            </div>
+          <div className="mb-6">
+            <ErrorDisplay
+              error={parseContractError(purchaseError)}
+              onRetry={handlePurchase}
+            />
           </div>
         )}
 

@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { Button, Spinner } from '@/components/ui';
+import { ErrorDisplay } from '@/components/ui/ErrorDisplay';
 import { karyaNFTAddress, karyaNFTABI } from '@/lib/contracts';
+import { parseContractError, type UserFriendlyError } from '@/lib/utils/errors';
 
 // Asset type labels
 const assetTypeLabels = ['Digital Art', 'Music', 'Photography', 'Writing', 'Design'];
@@ -31,7 +33,7 @@ interface MintNFTModalProps {
 export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProps) {
   const [royaltyPercentage, setRoyaltyPercentage] = useState(10); // Default 10%
   const [txStatus, setTxStatus] = useState<'idle' | 'signing' | 'pending' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [userFriendlyError, setUserFriendlyError] = useState<UserFriendlyError | null>(null);
 
   // wagmi hooks for contract interaction
   const {
@@ -75,10 +77,10 @@ export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProp
   useEffect(() => {
     if (isWriteError && writeError) {
       setTxStatus('error');
-      setErrorMessage(writeError.message || 'Transaction failed. Please try again.');
+      setUserFriendlyError(parseContractError(writeError));
     } else if (receiptError) {
       setTxStatus('error');
-      setErrorMessage('Transaction failed during confirmation. Please try again.');
+      setUserFriendlyError(parseContractError(receiptError));
     }
   }, [isWriteError, writeError, receiptError]);
 
@@ -93,7 +95,7 @@ export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProp
 
   const handleMint = () => {
     setTxStatus('signing');
-    setErrorMessage(null);
+    setUserFriendlyError(null);
 
     try {
       // Convert royalty percentage to basis points (1% = 100 basis points)
@@ -111,7 +113,7 @@ export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProp
       });
     } catch (error: any) {
       setTxStatus('error');
-      setErrorMessage(error?.message || 'Failed to initiate minting transaction');
+      setUserFriendlyError(parseContractError(error));
     }
   };
 
@@ -273,17 +275,20 @@ export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProp
           )}
 
           {/* Error State */}
-          {txStatus === 'error' && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-error-100 flex items-center justify-center mx-auto mb-4">
+          {txStatus === 'error' && userFriendlyError && (
+            <div className="py-8">
+              <div className="w-16 h-16 rounded-full bg-error-100 flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-error-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-error-900 mb-2">Minting Failed</h3>
-              <p className="text-neutral-600 mb-6 max-w-md mx-auto">
-                {errorMessage || 'An error occurred while minting your NFT. Please try again.'}
-              </p>
+
+              <ErrorDisplay
+                error={userFriendlyError}
+                onRetry={() => setTxStatus('idle')}
+                className="mb-6"
+              />
+
               <div className="flex items-center justify-center gap-4">
                 <Button onClick={onClose} variant="secondary">
                   Close

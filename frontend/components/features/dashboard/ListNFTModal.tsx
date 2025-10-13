@@ -17,8 +17,10 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { ErrorDisplay, InlineError } from "@/components/ui/ErrorDisplay";
 import { karyaNFTABI, karyaNFTAddress } from "@/lib/contracts/karyaNFT";
 import { marketplaceABI, marketplaceAddress } from "@/lib/contracts/marketplace";
+import { parseContractError, validatePrice, type UserFriendlyError } from "@/lib/utils/errors";
 
 interface ListNFTModalProps {
   isOpen: boolean;
@@ -34,6 +36,8 @@ export default function ListNFTModal({
   onSuccess,
 }: ListNFTModalProps) {
   const [price, setPrice] = useState("");
+  const [priceError, setPriceError] = useState<string | null>(null);
+  const [userFriendlyError, setUserFriendlyError] = useState<UserFriendlyError | null>(null);
   const [step, setStep] = useState<"input" | "approving" | "listing" | "success">(
     "input"
   );
@@ -72,10 +76,27 @@ export default function ListNFTModal({
       hash: listHash,
     });
 
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPrice = e.target.value;
+    setPrice(newPrice);
+
+    // Clear previous errors
+    setPriceError(null);
+    setUserFriendlyError(null);
+
+    // Validate on change (only if not empty)
+    if (newPrice) {
+      const error = validatePrice(newPrice);
+      setPriceError(error);
+    }
+  };
+
   const handleApprove = async () => {
     if (!nft) return;
 
     setStep("approving");
+    setUserFriendlyError(null);
+
     try {
       approveMarketplace({
         address: karyaNFTAddress as `0x${string}`,
@@ -85,6 +106,7 @@ export default function ListNFTModal({
       });
     } catch (err) {
       console.error("Approve error:", err);
+      setUserFriendlyError(parseContractError(err));
       setStep("input");
     }
   };
@@ -92,7 +114,16 @@ export default function ListNFTModal({
   const handleList = async () => {
     if (!price || !nft) return;
 
+    // Validate price before listing
+    const validationError = validatePrice(price);
+    if (validationError) {
+      setPriceError(validationError);
+      return;
+    }
+
     setStep("listing");
+    setUserFriendlyError(null);
+
     try {
       const priceInWei = parseEther(price);
       listNFT({
@@ -103,11 +134,19 @@ export default function ListNFTModal({
       });
     } catch (err) {
       console.error("List error:", err);
+      setUserFriendlyError(parseContractError(err));
       setStep("input");
     }
   };
 
   const handleSubmit = async () => {
+    // Validate price first
+    const validationError = validatePrice(price);
+    if (validationError) {
+      setPriceError(validationError);
+      return;
+    }
+
     // Check if already approved
     const needsApproval =
       isApproved?.toString().toLowerCase() !==
@@ -201,10 +240,13 @@ export default function ListNFTModal({
                 step="0.0001"
                 min="0"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={handlePriceChange}
                 placeholder="0.0"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                  priceError ? 'border-error-500' : 'border-gray-300'
+                }`}
               />
+              {priceError && <InlineError message={priceError} />}
               <p className="text-xs text-gray-500 mt-2">
                 Platform fee: 2.5% • Creator royalty: {nft.royaltyPercentage}%
               </p>
@@ -221,17 +263,29 @@ export default function ListNFTModal({
             )}
 
             {/* Error Messages */}
-            {(approveError || listError) && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-sm text-red-900">
-                  {(approveError || listError)?.message}
-                </p>
-              </div>
+            {userFriendlyError && (
+              <ErrorDisplay
+                error={userFriendlyError}
+                onRetry={() => setUserFriendlyError(null)}
+                className="mb-4"
+              />
+            )}
+
+            {/* Contract Errors (fallback) */}
+            {!userFriendlyError && (approveError || listError) && (
+              <ErrorDisplay
+                error={parseContractError(approveError || listError)}
+                onRetry={() => {
+                  // Clear errors by resetting state
+                  setStep("input");
+                }}
+                className="mb-4"
+              />
             )}
 
             <Button
               onClick={handleSubmit}
-              disabled={!price || parseFloat(price) <= 0}
+              disabled={!price || parseFloat(price) <= 0 || !!priceError}
               className="w-full"
             >
               {needsApproval ? "Approve & List" : "List for Sale"}
