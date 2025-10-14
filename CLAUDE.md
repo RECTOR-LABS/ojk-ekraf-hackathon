@@ -21,6 +21,14 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 **Frontend Sprint Progress**: Day 8/9 Complete (95%)
 **🌐 LIVE DEMO**: https://karyachain.rectorspace.com/
 
+**🎨 PARALLEL DEVELOPMENT - Alternative Design (frontend-design-2/):**
+- **Design Philosophy**: Glassmorphism with rich professional animations
+- **Navigation**: Sidebar navigation (new UX exploration)
+- **Progress**: Epic 1 Complete (18/42 tasks - 43%)
+- **Status**: Design system & foundation complete, ready for core flows
+- **Dev Server**: Running on localhost:3001
+- **Reference**: `docs/FRONTEND-DESIGN-2-PRD.md` and `docs/FRONTEND-DESIGN-2-EXECUTION-PLAN.md`
+
 ### ✅ Completed
 
 #### Smart Contracts (3/3 - 100%) 🎉
@@ -323,11 +331,30 @@ docs/ ✅ COMPLETE
   ├── FRONTEND-PRD.md ✅ (Web App Spec)
   ├── EXECUTION-PLAN.md ✅ (v1.5)
   ├── FRONTEND-EXECUTION-PLAN.md ✅ (9-day sprint)
+  ├── FRONTEND-DESIGN-2-PRD.md ✅ (Alternative Design - Glassmorphism)
+  ├── FRONTEND-DESIGN-2-EXECUTION-PLAN.md ✅ (8-day sprint)
   ├── CONTRACT-API.md ✅
   ├── ARCHITECTURE.md ✅
   ├── SECURITY-AUDIT.md ✅
   ├── DEPLOYMENT-GUIDE.md ✅
   └── DEPLOYED-CONTRACTS.md ✅
+
+frontend-design-2/ 🚀 EPIC 1 COMPLETE (Day 1 - 43%)
+  ├── /app ✅ (Next.js 14 App Router with glassmorphism)
+  │   ├── layout.tsx ✅ (Root layout with Sidebar + TopBar)
+  │   ├── page.tsx ✅ (Home page with AnimatedSection)
+  │   ├── template.tsx ✅ (Page transition animations)
+  │   ├── providers.tsx ✅ (wagmi + RainbowKit setup)
+  │   └── globals.css ✅ (Complete glassmorphism system with 10+ animations)
+  ├── /components ✅ (Glass UI Library + Layout)
+  │   ├── /ui/glass ✅ (GlassCard, GlassButton, GlassInput, GlassModal, Loading, Badge)
+  │   ├── /ui ✅ (AnimatedSection with scroll trigger)
+  │   └── /layout ✅ (Sidebar navigation, TopBar with wallet)
+  ├── /lib ✅
+  │   └── /contracts ✅ (All 3 contract ABIs + addresses)
+  ├── next.config.ts ✅ (Production optimization)
+  ├── .env.local ✅ (Environment variables)
+  └── Dev Server: ✅ Running on localhost:3001
 ```
 
 ## Project Context
@@ -666,6 +693,29 @@ When implementing features that touch financial services:
 9. 🔜 **Day 9 (Oct 19-20)**: Final polish (SEO meta tags) + Buffer day + SUBMIT TO HACKATHON
 
 **See `docs/FRONTEND-EXECUTION-PLAN.md` for detailed daily breakdown**
+
+🎨 **Frontend Design 2 Progress (Epic 1 Complete - 43% - Alternative Glassmorphism Design):**
+1. ✅ **EPIC 1: Design System & Foundation (18/18 tasks)** COMPLETE
+   - Next.js 14 + TypeScript + Tailwind CSS with glassmorphism
+   - Complete design system in globals.css (10+ animations, glass utilities, gradients)
+   - 7 glass components (GlassCard, GlassButton, GlassInput, GlassModal, Loading components, Badge)
+   - AnimatedSection with scroll-triggered animations
+   - Sidebar navigation (NEW UX pattern)
+   - TopBar with wallet connection
+   - Web3 providers setup (wagmi v2 + RainbowKit)
+   - Contract ABIs integration
+   - Page transition animations (template.tsx)
+   - Homepage with glassmorphism showcase
+2. 🔜 **EPIC 2: Core User Flows (15 tasks)** - Next up
+   - Copyright registration flow
+   - NFT minting flow
+   - Marketplace browse & purchase
+3. 🔜 **EPIC 3: Advanced Features & Polish (9 tasks)**
+   - Dashboard implementation
+   - Advanced animations & micro-interactions
+   - Testing & deployment
+
+**See `docs/FRONTEND-DESIGN-2-EXECUTION-PLAN.md` for detailed breakdown**
 
 ### Available Commands
 
