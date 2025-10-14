@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --strict --noUnusedLocals --noUnusedParameters --noUncheckedIndexedAccess --noImplicitReturns --noFallthroughCasesInSwitch",
+    "typecheck:watch": "tsc --noEmit --strict --noUnusedLocals --noUnusedParameters --noUncheckedIndexedAccess --noImplicitReturns --noFallthroughCasesInSwitch --watch",
+    "typecheck:basic": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck",
+    "check:all": "npm run lint && npm run typecheck && npm run build"
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.2.8",
