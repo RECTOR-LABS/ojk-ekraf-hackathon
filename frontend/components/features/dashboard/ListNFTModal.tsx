@@ -12,7 +12,6 @@ import {
   X,
   Loader2,
   CheckCircle2,
-  AlertCircle,
   ShoppingBag,
   ExternalLink,
 } from "lucide-react";

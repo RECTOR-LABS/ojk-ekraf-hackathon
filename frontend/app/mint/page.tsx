@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import { Card, Button, Spinner } from '@/components/ui';
 import { copyrightRegistryAddress, copyrightRegistryABI } from '@/lib/contracts';

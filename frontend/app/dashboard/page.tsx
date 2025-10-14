@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 import { FileText, Image, ShoppingBag, Wallet } from "lucide-react";
 import MyCopyrightsTab from "@/components/features/dashboard/MyCopyrightsTab";
 import MyNFTsTab from "@/components/features/dashboard/MyNFTsTab";

@@ -49,7 +49,7 @@ export function FileUpload({
       }
       if (type.endsWith('/*')) {
         const category = type.split('/')[0];
-        return fileType.startsWith(category);
+        return category ? fileType.startsWith(category) : false;
       }
       return fileType === type;
     });
@@ -122,16 +122,18 @@ export function FileUpload({
     setIsDragging(false);
 
     const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFile(files[0]);
+    const file = files[0];
+    if (file) {
+      handleFile(file);
     }
   }, [handleFile]);
 
   // Handle file input change
   const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
-      handleFile(files[0]);
+    const file = files?.[0];
+    if (file) {
+      handleFile(file);
     }
   }, [handleFile]);
 

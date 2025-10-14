@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,25 +11,23 @@ import {
   useAccount,
   usePublicClient,
 } from "wagmi";
-import { parseEther, formatEther } from "viem";
+import { formatEther } from "viem";
 import {
   ArrowLeft,
   ExternalLink,
   User,
   TrendingUp,
   ShieldCheck,
-  Calendar,
   Tag,
   Loader2,
   CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ErrorDisplay } from "@/components/ui/ErrorDisplay";
 import { marketplaceABI, marketplaceAddress } from "@/lib/contracts/marketplace";
 import { karyaNFTABI, karyaNFTAddress } from "@/lib/contracts/karyaNFT";
-import { parseContractError, type UserFriendlyError } from "@/lib/utils/errors";
+import { parseContractError } from "@/lib/utils/errors";
 
 const ASSET_TYPE_LABELS: Record<number, string> = {
   0: "Art",
@@ -41,7 +39,6 @@ const ASSET_TYPE_LABELS: Record<number, string> = {
 
 export default function NFTDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const { address: userAddress, isConnected } = useAccount();
   const publicClient = usePublicClient();
 

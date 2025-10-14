@@ -7,7 +7,7 @@ import { sepolia } from 'wagmi/chains';
 const SEPOLIA_CHAIN_ID = 11155111;
 
 export function NetworkChecker() {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
   const [showWarning, setShowWarning] = useState(false);

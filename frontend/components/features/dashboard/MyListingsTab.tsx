@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import NextImage from "next/image";
-import { ShoppingBag, Calendar } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { formatEther } from "viem";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";

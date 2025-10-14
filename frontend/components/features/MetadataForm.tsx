@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Input, Card } from '@/components/ui';
+import { useState } from 'react';
+import { Input } from '@/components/ui';
 
 // Asset types matching the smart contract enum
 export enum AssetType {

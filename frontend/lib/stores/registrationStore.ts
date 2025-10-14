@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { CopyrightMetadata, AssetType } from '@/components/features/MetadataForm';
+import { CopyrightMetadata } from '@/components/features/MetadataForm';
 
 export interface RegistrationState {
   // Step 1: File Upload
