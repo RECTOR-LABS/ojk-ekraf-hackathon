@@ -1,0 +1,24 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0xcAfeA0fd5937C3b9C5E16DDcE1Bb8791BfBAf8Bf",
+  "timestamp": "2025-10-13T08:34:40.189Z",
+  "contracts": {
+    "CopyrightRegistry": {
+      "address": "0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f",
+      "constructorArgs": []
+    },
+    "KaryaNFT": {
+      "address": "0xE7f3c9BdAFd36050BdFAD3195dD7d0f4f2b52Fa4",
+      "constructorArgs": [
+        "0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f"
+      ]
+    },
+    "KaryaMarketplace": {
+      "address": "0xb2430198bF01a8ec5749424a4642F32eb4b8Ed10",
+      "constructorArgs": [
+        "0xcAfeA0fd5937C3b9C5E16DDcE1Bb8791BfBAf8Bf"
+      ]
+    }
+  }
+}

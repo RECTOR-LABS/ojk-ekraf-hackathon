@@ -1,0 +1,45 @@
+'npx hardhat clean' running (wd: /Users/rz/local-dev/ojk-ekraf-hackathon)
+'npx hardhat clean --global' running (wd: /Users/rz/local-dev/ojk-ekraf-hackathon)
+'npx hardhat compile --force' running (wd: /Users/rz/local-dev/ojk-ekraf-hackathon)
+
+KaryaMarketplace.buyNFT(uint256) (contracts/KaryaMarketplace.sol#232-302) sends eth to arbitrary user
+	Dangerous calls:
+	- (platformSuccess,None) = platformFeeRecipient.call{value: platformFee}() (contracts/KaryaMarketplace.sol#273)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+KaryaMarketplace.getListing(uint256) (contracts/KaryaMarketplace.sol#352-355) uses a dangerous strict equality:
+	- listings[listingId].listingId == 0 (contracts/KaryaMarketplace.sol#353)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+KaryaNFT.mintWithDefaultRoyalty(uint256,string).registration (contracts/KaryaNFT.sol#185) is a local variable never initialized
+KaryaNFT.mint(uint256,string,uint96).registration (contracts/KaryaNFT.sol#136) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+CopyrightRegistry.getRegistration(uint256) (contracts/CopyrightRegistry.sol#173-180) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_registrations[registrationId].exists,Registration does not exist) (contracts/CopyrightRegistry.sol#178)
+CopyrightRegistry.isCreator(uint256,address) (contracts/CopyrightRegistry.sol#301-308) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_registrations[registrationId].exists,Registration does not exist) (contracts/CopyrightRegistry.sol#306)
+	- _registrations[registrationId].creator == account (contracts/CopyrightRegistry.sol#307)
+KaryaMarketplace.listNFT(address,uint256,uint256) (contracts/KaryaMarketplace.sol#183-226) uses timestamp for comparisons
+	Dangerous comparisons:
+	- existingListingId != 0 && listings[existingListingId].active (contracts/KaryaMarketplace.sol#204)
+KaryaMarketplace.getListing(uint256) (contracts/KaryaMarketplace.sol#352-355) uses timestamp for comparisons
+	Dangerous comparisons:
+	- listings[listingId].listingId == 0 (contracts/KaryaMarketplace.sol#353)
+KaryaMarketplace.isNFTListed(address,uint256) (contracts/KaryaMarketplace.sol#377-380) uses timestamp for comparisons
+	Dangerous comparisons:
+	- listingId != 0 && listings[listingId].active (contracts/KaryaMarketplace.sol#379)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+KaryaMarketplace.buyNFT(uint256) (contracts/KaryaMarketplace.sol#232-302) has a high cyclomatic complexity (12).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Low level call in KaryaMarketplace.buyNFT(uint256) (contracts/KaryaMarketplace.sol#232-302):
+	- (platformSuccess,None) = platformFeeRecipient.call{value: platformFee}() (contracts/KaryaMarketplace.sol#273)
+	- (royaltySuccess,None) = address(royaltyReceiver).call{value: royaltyAmount}() (contracts/KaryaMarketplace.sol#278)
+	- (sellerSuccess,None) = listing.seller.call{value: sellerProceeds}() (contracts/KaryaMarketplace.sol#283)
+	- (refundSuccess,None) = address(msg.sender).call{value: msg.value - salePrice}() (contracts/KaryaMarketplace.sol#288)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+. analyzed (25 contracts with 100 detectors), 11 result(s) found
