@@ -87,6 +87,7 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 - ✅ SECURITY-AUDIT.md - Comprehensive security audit report
 - ✅ DEPLOYMENT-GUIDE.md - Sepolia deployment instructions
 - ✅ DEPLOYED-CONTRACTS.md - Live contract addresses and links
+- ✅ MANUAL-TESTING-GUIDE.md - Simple checklist for manual testing
 - ✅ CLAUDE.md - Project guidance (this file)
 
 #### Frontend DApp (Day 8 - 95%) 🎉 **DEPLOYED TO PRODUCTION!**
@@ -338,7 +339,8 @@ docs/ ✅ COMPLETE
   ├── ARCHITECTURE.md ✅
   ├── SECURITY-AUDIT.md ✅
   ├── DEPLOYMENT-GUIDE.md ✅
-  └── DEPLOYED-CONTRACTS.md ✅
+  ├── DEPLOYED-CONTRACTS.md ✅
+  └── MANUAL-TESTING-GUIDE.md ✅ (Simple testing checklist)
 
 frontend-design-2/ 🎉 ALL EPICS COMPLETE + v0.2.0 Performance Update (100% - Optimized!)
   ├── /app ✅ (Next.js 14 App Router with glassmorphism)
