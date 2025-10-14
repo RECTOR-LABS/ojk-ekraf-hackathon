@@ -5,11 +5,13 @@ import Link from 'next/link';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-neutral-50 via-white to-secondary-50 overflow-hidden">
+    <section className="relative min-h-[90vh] bg-gradient-to-br from-neutral-50 via-white to-secondary-50 overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('/patterns/batik-pattern.svg')] opacity-5"></div>
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dc2626' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v6h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+      }}></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-32 lg:pb-24">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-40 lg:pb-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Text Content (60%) */}
           <div className="flex flex-col space-y-8">
