@@ -245,7 +245,7 @@ function Step3Review({ onNext, onBack }: { onNext: () => void; onBack: () => voi
             <div>
               <p className="text-sm font-semibold text-neutral-700">Gateway URL</p>
               <a
-                href={gatewayUrl}
+                href={gatewayUrl ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-primary-600 hover:text-primary-500 underline break-all block mt-1"
@@ -334,7 +334,7 @@ function Step4Register({ onBack, onSuccess }: { onBack: () => void; onSuccess: (
         (log) => log.address.toLowerCase() === copyrightRegistryAddress.toLowerCase()
       );
 
-      if (log && log.topics.length > 1) {
+      if (log && log.topics.length > 1 && log.topics[1]) {
         // The first indexed parameter (id) is in topics[1]
         const registrationId = BigInt(log.topics[1]);
         onSuccess(txHash!, registrationId);

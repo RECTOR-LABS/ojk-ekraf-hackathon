@@ -36,57 +36,62 @@ export function useUserNFTs(userAddress: string | undefined) {
       try {
         setIsLoading(true);
 
-        // Get user's NFT balance
-        const balance = (await publicClient.readContract({
+        // Get total minted tokens
+        const totalMinted = (await publicClient!.readContract({
           address: karyaNFTAddress as `0x${string}`,
           abi: karyaNFTABI,
-          functionName: "balanceOf",
-          args: [userAddress as `0x${string}`],
+          functionName: "totalMinted",
         })) as bigint;
 
         const userNFTs: UserNFT[] = [];
 
-        // Fetch each NFT owned by the user
-        for (let i = 0; i < Number(balance); i++) {
+        // Iterate through all tokens and check ownership
+        for (let tokenId = 1; tokenId <= Number(totalMinted); tokenId++) {
           try {
-            const tokenId = (await publicClient.readContract({
+            // Check if user owns this token
+            const owner = (await publicClient!.readContract({
               address: karyaNFTAddress as `0x${string}`,
               abi: karyaNFTABI,
-              functionName: "tokenOfOwnerByIndex",
-              args: [userAddress as `0x${string}`, BigInt(i)],
-            })) as bigint;
+              functionName: "ownerOf",
+              args: [BigInt(tokenId)],
+            })) as string;
+
+            // Skip if not owned by user
+            if (owner.toLowerCase() !== userAddress!.toLowerCase()) {
+              continue;
+            }
 
             // Fetch token URI
-            const tokenURI = (await publicClient.readContract({
+            const tokenURI = (await publicClient!.readContract({
               address: karyaNFTAddress as `0x${string}`,
               abi: karyaNFTABI,
               functionName: "tokenURI",
-              args: [tokenId],
+              args: [BigInt(tokenId)],
             })) as string;
 
             // Fetch copyright ID
-            const copyrightId = (await publicClient.readContract({
+            const copyrightId = (await publicClient!.readContract({
               address: karyaNFTAddress as `0x${string}`,
               abi: karyaNFTABI,
-              functionName: "tokenToCopyrightId",
-              args: [tokenId],
+              functionName: "tokenToCopyright",
+              args: [BigInt(tokenId)],
             })) as bigint;
 
             // Fetch royalty info
-            const royaltyInfo = (await publicClient.readContract({
+            const royaltyInfo = (await publicClient!.readContract({
               address: karyaNFTAddress as `0x${string}`,
               abi: karyaNFTABI,
               functionName: "royaltyInfo",
-              args: [tokenId, BigInt(10000)],
+              args: [BigInt(tokenId), BigInt(10000)],
             })) as [string, bigint];
             const royaltyPercentage = Number(royaltyInfo[1]) / 100;
 
             // Check if listed on marketplace
-            const isListed = (await publicClient.readContract({
+            const isListed = (await publicClient!.readContract({
               address: marketplaceAddress as `0x${string}`,
               abi: marketplaceABI,
               functionName: "isNFTListed",
-              args: [karyaNFTAddress, tokenId],
+              args: [karyaNFTAddress, BigInt(tokenId)],
             })) as boolean;
 
             let listingId: number | undefined;
@@ -94,15 +99,15 @@ export function useUserNFTs(userAddress: string | undefined) {
 
             if (isListed) {
               listingId = Number(
-                (await publicClient.readContract({
+                (await publicClient!.readContract({
                   address: marketplaceAddress as `0x${string}`,
                   abi: marketplaceABI,
                   functionName: "getListingByNFT",
-                  args: [karyaNFTAddress, tokenId],
+                  args: [karyaNFTAddress, BigInt(tokenId)],
                 })) as bigint
               );
 
-              const listing = (await publicClient.readContract({
+              const listing = (await publicClient!.readContract({
                 address: marketplaceAddress as `0x${string}`,
                 abi: marketplaceABI,
                 functionName: "getListing",
@@ -128,8 +133,8 @@ export function useUserNFTs(userAddress: string | undefined) {
             }
 
             userNFTs.push({
-              tokenId: Number(tokenId),
-              owner: userAddress,
+              tokenId,
+              owner: userAddress!,
               tokenURI,
               copyrightId: Number(copyrightId),
               royaltyPercentage,
@@ -147,7 +152,7 @@ export function useUserNFTs(userAddress: string | undefined) {
               )?.value,
             });
           } catch (err) {
-            console.error(`Error fetching NFT at index ${i}:`, err);
+            console.error(`Error fetching NFT tokenId ${tokenId}:`, err);
           }
         }
 

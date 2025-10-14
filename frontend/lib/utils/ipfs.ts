@@ -21,9 +21,11 @@ export async function uploadFileToIPFS(
 }> {
   try {
     // Upload file to Pinata
-    const upload = await pinata.upload.file(file).addMetadata({
-      name: file.name,
-      keyvalues: metadata || {},
+    const upload = await (pinata.upload as any).file(file, {
+      metadata: {
+        name: file.name,
+        keyvalues: metadata || {},
+      }
     });
 
     const ipfsHash = upload.IpfsHash;
@@ -54,8 +56,10 @@ export async function uploadJSONToIPFS(
 }> {
   try {
     // Upload JSON to Pinata
-    const upload = await pinata.upload.json(data).addMetadata({
-      name,
+    const upload = await (pinata.upload as any).json(data, {
+      metadata: {
+        name,
+      }
     });
 
     const ipfsHash = upload.IpfsHash;

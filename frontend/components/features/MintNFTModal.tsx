@@ -63,7 +63,7 @@ export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProp
         (log) => log.address.toLowerCase() === karyaNFTAddress.toLowerCase()
       );
 
-      if (log && log.topics.length > 3) {
+      if (log && log.topics.length > 3 && log.topics[3]) {
         // The tokenId is in topics[3] for Transfer event
         const tokenId = BigInt(log.topics[3]);
         onSuccess(txHash!, tokenId);
@@ -102,13 +102,15 @@ export function MintNFTModal({ copyright, onClose, onSuccess }: MintNFTModalProp
       const royaltyBasisPoints = royaltyPercentage * 100;
 
       // Call the mint function on KaryaNFT contract
+      // The contract will construct the tokenURI from the IPFS CID stored in the copyright registration
       writeContract({
         address: karyaNFTAddress,
         abi: karyaNFTABI,
         functionName: 'mint',
         args: [
-          copyright.id, // registrationId
-          BigInt(royaltyBasisPoints) // royaltyPercentage in basis points
+          copyright.id, // copyrightId
+          `ipfs://${copyright.ipfsCID}`, // tokenURI from copyright IPFS CID
+          BigInt(royaltyBasisPoints) // royaltyPercentage in basis points (uint96)
         ]
       });
     } catch (error: any) {

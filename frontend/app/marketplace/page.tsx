@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Search, Filter } from "lucide-react";
 import { useMarketplaceListings } from "@/lib/hooks/useMarketplaceListings";
 import NFTCard from "@/components/features/NFTCard";
@@ -169,7 +170,9 @@ export default function MarketplacePage() {
             <p className="text-gray-600 mb-6">
               Be the first to list your NFT on the marketplace!
             </p>
-            <Button href="/mint">Mint Your First NFT</Button>
+            <Link href="/mint">
+              <Button>Mint Your First NFT</Button>
+            </Link>
           </div>
         )}
 

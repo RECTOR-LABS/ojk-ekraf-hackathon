@@ -381,5 +381,4 @@ export const copyrightRegistryABI =
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
- as const;
+] as const;

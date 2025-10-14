@@ -37,10 +37,10 @@ export function useUserCopyrights(userAddress: string | undefined) {
         setIsLoading(true);
 
         // Get total registrations count
-        const totalRegistrations = (await publicClient.readContract({
+        const totalRegistrations = (await publicClient!.readContract({
           address: copyrightRegistryAddress as `0x${string}`,
           abi: copyrightRegistryABI,
-          functionName: "getRegistrationCount",
+          functionName: "getTotalRegistrations",
         })) as bigint;
 
         const userCopyrights: UserCopyright[] = [];
@@ -48,7 +48,7 @@ export function useUserCopyrights(userAddress: string | undefined) {
         // Iterate through all registrations and filter by user
         for (let i = 1; i <= Number(totalRegistrations); i++) {
           try {
-            const registration = (await publicClient.readContract({
+            const registration = (await publicClient!.readContract({
               address: copyrightRegistryAddress as `0x${string}`,
               abi: copyrightRegistryABI,
               functionName: "getRegistration",
@@ -57,13 +57,13 @@ export function useUserCopyrights(userAddress: string | undefined) {
 
             // Only include user's registrations
             if (
-              registration.creator.toLowerCase() === userAddress.toLowerCase()
+              registration.creator.toLowerCase() === userAddress!.toLowerCase()
             ) {
               // Check if this copyright has been minted
-              const copyrightIdToToken = (await publicClient.readContract({
+              const copyrightIdToToken = (await publicClient!.readContract({
                 address: karyaNFTAddress as `0x${string}`,
                 abi: karyaNFTABI,
-                functionName: "copyrightIdToToken",
+                functionName: "copyrightToToken",
                 args: [BigInt(i)],
               })) as bigint;
 

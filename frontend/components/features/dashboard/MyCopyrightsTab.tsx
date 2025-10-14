@@ -57,7 +57,9 @@ export default function MyCopyrightsTab({ userAddress }: MyCopyrightsTabProps) {
         <p className="text-gray-600 mb-6">
           Start protecting your creative work by registering your first copyright
         </p>
-        <Button href="/register">Register Your First Copyright</Button>
+        <Link href="/register">
+          <Button>Register Your First Copyright</Button>
+        </Link>
       </Card>
     );
   }
@@ -171,20 +173,24 @@ export default function MyCopyrightsTab({ userAddress }: MyCopyrightsTabProps) {
               {/* Actions */}
               <div className="flex gap-2">
                 {copyright.isMinted && copyright.tokenId ? (
-                  <Button
+                  <Link
                     href={`/marketplace/${copyright.tokenId}`}
-                    variant="outline"
-                    size="sm"
                     className="flex-1"
                   >
-                    View NFT
-                  </Button>
+                    <Button
+                      variant="outline"
+                      size="small"
+                      className="w-full"
+                    >
+                      View NFT
+                    </Button>
+                  </Link>
                 ) : (
                   <Link
                     href={`/mint?copyrightId=${copyright.registrationId}`}
                     className="flex-1"
                   >
-                    <Button size="sm" className="w-full">
+                    <Button size="small" className="w-full">
                       <Sparkles className="w-4 h-4 mr-2" />
                       Mint NFT
                     </Button>

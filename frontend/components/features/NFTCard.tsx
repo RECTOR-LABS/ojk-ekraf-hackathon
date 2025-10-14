@@ -148,7 +148,7 @@ export default function NFTCard({ listing }: NFTCardProps) {
             </div>
 
             <Button
-              size="sm"
+              size="small"
               className="group-hover:bg-primary-600 group-hover:shadow-lg transition-all"
             >
               View

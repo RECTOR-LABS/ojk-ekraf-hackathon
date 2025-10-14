@@ -1060,5 +1060,4 @@ export const karyaNFTABI =
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
- as const;
+] as const;

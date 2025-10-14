@@ -136,7 +136,7 @@ export default function NFTDetailPage() {
 
     async function fetchListing() {
       try {
-        const listing = await publicClient.readContract({
+        const listing = await publicClient!.readContract({
           address: marketplaceAddress as `0x${string}`,
           abi: marketplaceABI,
           functionName: "getListing",
@@ -421,7 +421,7 @@ export default function NFTDetailPage() {
                         isPurchaseSuccess
                       }
                       className="w-full"
-                      size="lg"
+                      size="large"
                     >
                       {!isConnected ? (
                         "Connect Wallet to Purchase"

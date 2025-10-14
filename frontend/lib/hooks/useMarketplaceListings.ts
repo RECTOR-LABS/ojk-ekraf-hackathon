@@ -47,7 +47,7 @@ export function useMarketplaceListings() {
         for (const listingId of listingIds as bigint[]) {
           try {
             // Fetch listing details
-            const listing = (await publicClient.readContract({
+            const listing = (await publicClient!.readContract({
               address: marketplaceAddress as `0x${string}`,
               abi: marketplaceABI,
               functionName: "getListing",
@@ -58,7 +58,7 @@ export function useMarketplaceListings() {
             if (!listing.active) continue;
 
             // Fetch NFT token URI
-            const tokenURI = (await publicClient.readContract({
+            const tokenURI = (await publicClient!.readContract({
               address: karyaNFTAddress as `0x${string}`,
               abi: karyaNFTABI,
               functionName: "tokenURI",
@@ -79,7 +79,7 @@ export function useMarketplaceListings() {
             // Fetch royalty info
             let royaltyPercentage = 0;
             try {
-              const royaltyInfo = (await publicClient.readContract({
+              const royaltyInfo = (await publicClient!.readContract({
                 address: karyaNFTAddress as `0x${string}`,
                 abi: karyaNFTABI,
                 functionName: "royaltyInfo",

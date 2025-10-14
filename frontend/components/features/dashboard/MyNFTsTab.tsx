@@ -72,7 +72,9 @@ export default function MyNFTsTab({ userAddress }: MyNFTsTabProps) {
         <p className="text-gray-600 mb-6">
           Mint your first NFT from your registered copyrights
         </p>
-        <Button href="/mint">Mint Your First NFT</Button>
+        <Link href="/mint">
+          <Button>Mint Your First NFT</Button>
+        </Link>
       </Card>
     );
   }
@@ -221,14 +223,14 @@ export default function MyNFTsTab({ userAddress }: MyNFTsTabProps) {
                       href={`/marketplace/${nft.tokenId}`}
                       className="flex-1"
                     >
-                      <Button variant="outline" size="sm" className="w-full">
+                      <Button variant="outline" size="small" className="w-full">
                         View Details
                       </Button>
                     </Link>
 
                     {!nft.isListed && (
                       <Button
-                        size="sm"
+                        size="small"
                         className="flex-1"
                         onClick={() => handleListForSale(nft)}
                       >

@@ -62,7 +62,9 @@ export default function MyListingsTab({ userAddress }: MyListingsTabProps) {
         <p className="text-gray-600 mb-6">
           You don't have any NFTs listed for sale yet
         </p>
-        <Button href="/dashboard?tab=nfts">Go to My NFTs</Button>
+        <Link href="/dashboard?tab=nfts">
+          <Button>Go to My NFTs</Button>
+        </Link>
       </Card>
     );
   }
@@ -173,7 +175,7 @@ export default function MyListingsTab({ userAddress }: MyListingsTabProps) {
                     href={`/marketplace/${nft.tokenId}`}
                     className="flex-1"
                   >
-                    <Button size="sm" className="w-full">
+                    <Button size="small" className="w-full">
                       View Listing
                     </Button>
                   </Link>
