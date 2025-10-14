@@ -1,13 +1,5 @@
-import { PinataSDK } from 'pinata';
-
-// Initialize Pinata SDK
-export const pinata = new PinataSDK({
-  pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT,
-  pinataGateway: process.env.NEXT_PUBLIC_PINATA_GATEWAY,
-});
-
 /**
- * Upload a file to IPFS via Pinata
+ * Upload a file to IPFS via Pinata (through secure API route)
  * @param file - The file to upload
  * @param metadata - Optional metadata to attach to the upload
  * @returns IPFS hash (CID) and gateway URL
@@ -20,20 +12,26 @@ export async function uploadFileToIPFS(
   gatewayUrl: string;
 }> {
   try {
-    // Upload file to Pinata
-    const upload = await (pinata.upload as any).file(file, {
-      metadata: {
-        name: file.name,
-        keyvalues: metadata || {},
-      }
+    const formData = new FormData();
+    formData.append('file', file);
+    if (metadata) {
+      formData.append('metadata', JSON.stringify(metadata));
+    }
+
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
     });
 
-    const ipfsHash = upload.IpfsHash;
-    const gatewayUrl = `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/ipfs/${ipfsHash}`;
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to upload file');
+    }
 
+    const result = await response.json();
     return {
-      ipfsHash,
-      gatewayUrl,
+      ipfsHash: result.ipfsHash,
+      gatewayUrl: result.gatewayUrl,
     };
   } catch (error) {
     console.error('IPFS upload error:', error);
@@ -42,7 +40,7 @@ export async function uploadFileToIPFS(
 }
 
 /**
- * Upload JSON data to IPFS via Pinata
+ * Upload JSON data to IPFS via Pinata (through secure API route)
  * @param data - JSON data to upload
  * @param name - Name for the JSON file
  * @returns IPFS hash (CID) and gateway URL
@@ -55,19 +53,23 @@ export async function uploadJSONToIPFS(
   gatewayUrl: string;
 }> {
   try {
-    // Upload JSON to Pinata
-    const upload = await (pinata.upload as any).json(data, {
-      metadata: {
-        name,
-      }
+    const response = await fetch('/api/upload-json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data, name }),
     });
 
-    const ipfsHash = upload.IpfsHash;
-    const gatewayUrl = `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY}/ipfs/${ipfsHash}`;
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to upload JSON');
+    }
 
+    const result = await response.json();
     return {
-      ipfsHash,
-      gatewayUrl,
+      ipfsHash: result.ipfsHash,
+      gatewayUrl: result.gatewayUrl,
     };
   } catch (error) {
     console.error('IPFS JSON upload error:', error);
