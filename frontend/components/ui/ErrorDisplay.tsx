@@ -4,7 +4,7 @@
  */
 
 import { AlertCircle, ExternalLink } from 'lucide-react';
-import { Button } from './Button';
+import { Button } from './button';
 import type { UserFriendlyError } from '@/lib/utils/errors';
 
 interface ErrorDisplayProps {
@@ -39,7 +39,7 @@ export function ErrorDisplay({ error, onRetry, className = '' }: ErrorDisplayPro
             <Button
               onClick={handleAction}
               variant="secondary"
-              size="small"
+              size="sm"
               className="inline-flex items-center gap-2"
             >
               {error.action?.label || 'Try Again'}

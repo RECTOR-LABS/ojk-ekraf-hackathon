@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Header } from "@/components/layout/Header";
 import { NetworkChecker } from "@/components/web3/NetworkChecker";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -50,6 +51,7 @@ export default function RootLayout({
           <NetworkChecker />
           <Header />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

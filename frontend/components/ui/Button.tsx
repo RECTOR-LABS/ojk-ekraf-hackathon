@@ -1,57 +1,56 @@
-import React from 'react';
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'small' | 'medium' | 'large';
-  loading?: boolean;
-  fullWidth?: boolean;
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg",
+        destructive:
+          "bg-destructive text-white hover:bg-destructive/90 shadow-md hover:shadow-lg",
+        outline:
+          "border-2 border-neutral-300 bg-background hover:bg-neutral-50 hover:border-neutral-400 text-neutral-900",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-md hover:shadow-lg",
+        ghost:
+          "hover:bg-neutral-100 text-neutral-700",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-6 py-3",
+        sm: "h-8 rounded-md gap-1.5 px-3 text-sm",
+        lg: "h-12 rounded-lg px-8 py-4 text-lg",
+        icon: "size-9",
+        "icon-sm": "size-8",
+        "icon-lg": "size-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+  loading?: boolean
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      children,
-      variant = 'primary',
-      size = 'medium',
-      loading = false,
-      fullWidth = false,
-      disabled,
-      className = '',
-      ...props
-    },
-    ref
-  ) => {
-    const baseStyles =
-      'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
-
-    const variantStyles = {
-      primary:
-        'bg-primary-600 text-white hover:bg-primary-500 focus:ring-primary-500 active:bg-primary-600 shadow-md hover:shadow-lg',
-      secondary:
-        'bg-secondary-600 text-white hover:bg-secondary-500 focus:ring-secondary-500 active:bg-secondary-600 shadow-md hover:shadow-lg',
-      outline:
-        'border-2 border-neutral-300 text-neutral-900 hover:border-neutral-400 hover:bg-neutral-50 focus:ring-neutral-500',
-      ghost:
-        'text-neutral-700 hover:bg-neutral-100 focus:ring-neutral-500',
-      danger:
-        'bg-error-600 text-white hover:bg-error-500 focus:ring-error-500 active:bg-error-600 shadow-md hover:shadow-lg',
-    };
-
-    const sizeStyles = {
-      small: 'px-3 py-1.5 text-sm',
-      medium: 'px-6 py-3 text-base',
-      large: 'px-8 py-4 text-lg',
-    };
-
-    const widthStyles = fullWidth ? 'w-full' : '';
-
-    const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${className}`;
-
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, loading = false, disabled, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
     return (
-      <button
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         disabled={disabled || loading}
-        className={combinedClassName}
         {...props}
       >
         {loading && (
@@ -77,9 +76,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </svg>
         )}
         {children}
-      </button>
-    );
+      </Comp>
+    )
   }
-);
+)
+Button.displayName = "Button"
 
-Button.displayName = 'Button';
+export { Button, buttonVariants }
