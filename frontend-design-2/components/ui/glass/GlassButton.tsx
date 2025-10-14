@@ -1,10 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
-import { ButtonHTMLAttributes, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
-interface GlassButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface GlassButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';

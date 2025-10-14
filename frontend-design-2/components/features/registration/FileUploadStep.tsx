@@ -164,11 +164,15 @@ export function FileUploadStep() {
             disabled={isHashing}
           />
 
-          <label htmlFor="file-upload">
-            <GlassButton variant="primary" size="lg" disabled={isHashing} as="span">
-              {isHashing ? 'Processing...' : 'Choose File'}
-            </GlassButton>
-          </label>
+          <GlassButton
+            variant="primary"
+            size="lg"
+            disabled={isHashing}
+            onClick={() => document.getElementById('file-upload')?.click()}
+            type="button"
+          >
+            {isHashing ? 'Processing...' : 'Choose File'}
+          </GlassButton>
 
           <p className="text-xs text-foreground/50 mt-4">Max file size: 100MB</p>
         </motion.div>
