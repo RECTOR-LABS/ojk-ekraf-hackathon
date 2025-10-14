@@ -4,7 +4,7 @@
 **Deployment Date**: October 13, 2025
 **Deployer Address**: `0xcAfeA0fd5937C3b9C5E16DDcE1Bb8791BfBAf8Bf` ☕
 
-**🌐 LIVE DEMO**: https://karyachain.rectorspace.com/
+**🌐 LIVE DEMO**: https://karyachain-v1.rectorspace.com/
 
 ---
 
@@ -230,12 +230,12 @@ artifacts/contracts/KaryaMarketplace.sol/KaryaMarketplace.json
 - [x] Source code publicly viewable
 - [x] Test coverage: 100% (90 tests passing)
 - [x] Security audit completed
-- [x] Frontend deployed ✅ **https://karyachain.rectorspace.com/** (Oct 18, 2025)
+- [x] Frontend deployed ✅ **https://karyachain-v1.rectorspace.com/** (Oct 18, 2025)
 - [ ] Pitch deck completed (Target: Oct 19-21)
 - [ ] Full demo video (Target: Oct 21)
 
 ---
 
 **Deployment Complete**: ✅
-**Frontend Live**: ✅ https://karyachain.rectorspace.com/
+**Frontend Live**: ✅ https://karyachain-v1.rectorspace.com/
 **Ready for Hackathon Submission**: Contracts ✅, Frontend ✅, Pitch Deck 🔴

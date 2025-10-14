@@ -450,7 +450,7 @@ This document outlines requirements for **KaryaChain Frontend Design 2** - a com
   - Environment variables configured
 
 - [3.3.6] **Deployment**
-  - Deploy to Vercel (new subdomain: `karyachain-v2.rectorspace.com`)
+  - Deploy to Vercel (new subdomain: `karyachain.rectorspace.com`)
   - Custom domain configuration
   - SSL certificate
   - Performance monitoring (Vercel Analytics)

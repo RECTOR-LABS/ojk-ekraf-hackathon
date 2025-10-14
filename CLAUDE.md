@@ -15,11 +15,11 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 
 ## Current Project Status
 
-**Last Updated**: October 18, 2025 (Day 8 COMPLETE ✅)
+**Last Updated**: October 14, 2025 (Day 8 + Branch Strategy COMPLETE ✅)
 **Overall Progress**: 95% Complete ✅ **SMART CONTRACTS DEPLOYED! FRONTEND LIVE ON VERCEL! 🚀**
 **Days Until Deadline**: 4 days
 **Frontend Sprint Progress**: Day 8/9 Complete (95%)
-**🌐 LIVE DEMO**: https://karyachain.rectorspace.com/
+**🌐 LIVE DEMO**: https://karyachain-v1.rectorspace.com/
 
 **🎨 PARALLEL DEVELOPMENT - Alternative Design (frontend-design-2/):**
 - **Design Philosophy**: Glassmorphism with rich professional animations
@@ -90,7 +90,7 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 - ✅ CLAUDE.md - Project guidance (this file)
 
 #### Frontend DApp (Day 8 - 95%) 🎉 **DEPLOYED TO PRODUCTION!**
-**🌐 Live at**: https://karyachain.rectorspace.com/
+**🌐 Live at**: https://karyachain-v1.rectorspace.com/
 - **Day 1 Complete** ✅ (Oct 13 Morning - Foundation)
   - Next.js 14 + TypeScript setup
   - Tailwind CSS with Indonesian theme
@@ -241,14 +241,14 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
   - **Deployment (COMPLETE):**
     - Vercel deployment setup ✅
     - Production deployment ✅
-    - **🌐 LIVE**: https://karyachain.rectorspace.com/
+    - **🌐 LIVE**: https://karyachain-v1.rectorspace.com/
     - SEO meta tags - Deferred to Day 9
   - **Status**: ✅ **DEPLOYED TO PRODUCTION!**
 
 ### 🎯 Next Steps (In Priority Order)
 
 1. **Frontend DApp** 💻 (9-day sprint: Oct 13-22) - **DAY 8 COMPLETE!** ✅ **DEPLOYED TO PRODUCTION! 🚀**
-   - **🌐 LIVE DEMO**: https://karyachain.rectorspace.com/
+   - **🌐 LIVE DEMO**: https://karyachain-v1.rectorspace.com/
    - **Reference**: `docs/FRONTEND-EXECUTION-PLAN.md` for daily breakdown
    - **Reference**: `docs/FRONTEND-PRD.md` for detailed specifications
    - ✅ Day 1 (Oct 13 Morning): Foundation & Setup COMPLETE
@@ -297,7 +297,7 @@ test/ ✅ 90 TESTS PASSING
   ├── KaryaNFT.test.js ✅
   └── KaryaMarketplace.test.js ✅
 
-frontend/ ✅ DEPLOYED TO PRODUCTION (Day 8 - 95% - https://karyachain.rectorspace.com/)
+frontend/ ✅ DEPLOYED TO PRODUCTION (Day 8 - 95% - https://karyachain-v1.rectorspace.com/)
   ├── /app ✅ (Next.js 14 App Router - All pages mobile-responsive)
   │   ├── layout.tsx ✅ (Root layout with providers + Header)
   │   ├── page.tsx ✅ (Home page with all sections, mobile-responsive)
@@ -549,7 +549,7 @@ When implementing features that touch financial services:
 - [x] All tests passing ✅ (90/90 tests, 100% coverage)
 - [x] Security audit completed ✅ (Slither + manual review, 0 critical issues)
 - [x] Production build ready ✅ (9/9 pages, 0 TypeScript errors)
-- [x] Frontend DApp deployed to production ✅ **https://karyachain.rectorspace.com/** (Oct 18, 2025)
+- [x] Frontend DApp deployed to production ✅ **https://karyachain-v1.rectorspace.com/** (Oct 18, 2025)
 - [ ] Pitch deck completed (PDF format) 🔴 NOT STARTED (Target: Oct 19-21)
 - [ ] Demo video prepared (3-5 minutes) 🔴 NOT STARTED (Target: Oct 21)
 - [x] GitHub repository public ✅ (Already public)
@@ -630,6 +630,38 @@ When implementing features that touch financial services:
 - **Deployment Date**: October 13, 2025
 - **All Contracts**: Verified on Etherscan with public source code
 
+### Deployment Branch Strategy (Added Oct 14, 2025 Evening)
+
+**🌳 Two-Branch Deployment Strategy:**
+
+| Branch | Directory | Design | URL | Status |
+|--------|-----------|--------|-----|--------|
+| **frontend-v1** | `frontend/` | Original Clean Design | https://karyachain-v1.rectorspace.com | ✅ Deployed |
+| **dev** | `frontend-design-2/` | Glassmorphism v2 | https://karyachain.rectorspace.com | 🔜 Pending Deployment |
+
+**Branch Setup (Oct 14, 2025):**
+1. ✅ Fixed TypeScript errors in frontend-design-2 (GlassButton, FileUploadStep)
+2. ✅ Created `frontend-v1` branch from `dev`
+3. ✅ Removed `frontend-design-2/` from `frontend-v1` branch (clean separation)
+4. ✅ Removed `frontend/` from `dev` branch (clean separation)
+5. ✅ Pushed both branches to remote (GitHub)
+6. ✅ Updated all documentation with new URL mappings
+
+**Vercel Configuration:**
+- **Project 1 (`karyachain`)**: Deploy from `frontend-v1` branch → Root: `frontend/` → Domain: `karyachain-v1.rectorspace.com`
+- **Project 2 (`karyachain-v2`)**: Deploy from `dev` branch → Root: `frontend-design-2/` → Domain: `karyachain.rectorspace.com`
+
+**Deployment Behavior:**
+- `git push origin frontend-v1` → Triggers `karyachain` deployment only
+- `git push origin dev` → Triggers `karyachain-v2` deployment only
+- Contract changes → No frontend deployments triggered
+
+**Benefits:**
+- ✅ Independent deployments (no interference)
+- ✅ Clean branch structure (each branch has only its frontend)
+- ✅ Glassmorphism design gets primary URL (karyachain.rectorspace.com)
+- ✅ Original design preserved on separate URL for fallback
+
 ### Development Progress (Updated Oct 13, 2025)
 
 ✅ **Completed Milestones:**
@@ -698,7 +730,7 @@ When implementing features that touch financial services:
 8. ✅ **Day 8 (Oct 18 Evening)**: Performance Optimization + Deployment COMPLETE
    - ✅ Fixed 40+ TypeScript errors for production build
    - ✅ Production build successful (9/9 pages, 0 errors)
-   - ✅ Deployed to Vercel: **https://karyachain.rectorspace.com/**
+   - ✅ Deployed to Vercel: **https://karyachain-v1.rectorspace.com/**
 9. 🔜 **Day 9 (Oct 19-20)**: Final polish (SEO meta tags) + Buffer day + SUBMIT TO HACKATHON
 
 **See `docs/FRONTEND-EXECUTION-PLAN.md` for detailed daily breakdown**

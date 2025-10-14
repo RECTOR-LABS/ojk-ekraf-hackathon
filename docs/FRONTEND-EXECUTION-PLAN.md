@@ -7,7 +7,7 @@
 **Sprint Start**: October 13, 2025
 **Deadline**: October 22, 2025 (4 days remaining)
 **Last Updated**: October 18, 2025 (Evening - Day 8 COMPLETE ✅, DEPLOYED TO PRODUCTION! 🚀)
-**🌐 LIVE DEMO**: https://karyachain.rectorspace.com/
+**🌐 LIVE DEMO**: https://karyachain-v1.rectorspace.com/
 
 ---
 
@@ -40,7 +40,7 @@
 - ✅ Skeleton loaders and loading states
 - ✅ Error handling improvements
 - ✅ **Production build successful (9/9 pages, 0 TypeScript errors)** 🎉
-- ✅ **DEPLOYED TO PRODUCTION: https://karyachain.rectorspace.com/** 🚀
+- ✅ **DEPLOYED TO PRODUCTION: https://karyachain-v1.rectorspace.com/** 🚀
 - ✅ AHEAD OF SCHEDULE by 1+ day!
 
 ---
@@ -599,7 +599,7 @@ NEXT_PUBLIC_RPC_URL=https://rpc.sepolia.dev
 - [x] TypeScript errors fixed for production build ✅
 - [x] Production build successful (9/9 pages, 0 errors) ✅
 - [ ] SEO meta tags on all pages 🔄 Day 9
-- [x] Deployed to Vercel ✅ **https://karyachain.rectorspace.com/**
+- [x] Deployed to Vercel ✅ **https://karyachain-v1.rectorspace.com/**
 - [x] Connected to Sepolia contracts ✅
 - [x] End-to-end testing (manual) ✅
 
@@ -616,7 +616,7 @@ NEXT_PUBLIC_RPC_URL=https://rpc.sepolia.dev
 - [ ] Works on Chrome, Safari, Firefox - Day 9 testing
 - [ ] Works on mobile wallets (MetaMask Mobile) - Day 9 testing
 - [x] All user flows tested on Sepolia ✅
-- [x] Production deployment accessible ✅ **https://karyachain.rectorspace.com/**
+- [x] Production deployment accessible ✅ **https://karyachain-v1.rectorspace.com/**
 
 ---
 
@@ -846,13 +846,13 @@ NEXT_PUBLIC_RPC_URL=https://rpc.sepolia.dev
 
 - [ ] SEO meta tags on all pages (1 hour) - DEFERRED TO DAY 9
 - [x] Vercel deployment setup (30 min) ✅ COMPLETE
-- [x] Production deployment (30 min) ✅ COMPLETE - **https://karyachain.rectorspace.com/**
+- [x] Production deployment (30 min) ✅ COMPLETE - **https://karyachain-v1.rectorspace.com/**
 
 **End of Day Deliverable:**
 
 - ✅ Production build ready (TypeScript errors fixed)
 - ✅ Connected to Sepolia contracts
-- ✅ Deployed to Vercel ✅ **https://karyachain.rectorspace.com/**
+- ✅ Deployed to Vercel ✅ **https://karyachain-v1.rectorspace.com/**
 - 🔜 All user flows tested on production - NEXT (Day 9)
 
 **Evening Checkpoint**: ✅ COMPLETE - Deployed to Vercel successfully! 🎉
@@ -1226,6 +1226,6 @@ This 9-day sprint is aggressive but achievable with:
 ---
 
 **Document Status**: ✅ AHEAD OF SCHEDULE - Day 8 COMPLETE (95% - **DEPLOYED TO PRODUCTION! 🚀**)
-**Live Demo**: https://karyachain.rectorspace.com/
+**Live Demo**: https://karyachain-v1.rectorspace.com/
 **Next Action**: Day 9 - SEO meta tags + Final testing + Pitch deck
 **Last Updated**: October 18, 2025 (Evening - Deployment Complete)

@@ -854,7 +854,7 @@ Oct 22:    Buffer & Final Submission                 [__________] 0%
   - Create new Vercel project
   - Configure environment variables
   - Deploy to production
-  - Custom domain: `karyachain-v2.rectorspace.com`
+  - Custom domain: `karyachain.rectorspace.com`
   - SSL certificate (automatic via Vercel)
   - Enable Vercel Analytics
   - Expected time: 45 minutes
