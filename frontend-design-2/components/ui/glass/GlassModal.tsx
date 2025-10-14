@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { ReactNode, useEffect } from 'react';
-import { GlassButton } from './GlassButton';
 
 interface GlassModalProps {
   isOpen: boolean;

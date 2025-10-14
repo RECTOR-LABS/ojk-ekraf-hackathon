@@ -7,6 +7,17 @@ import { Badge } from '@/components/ui/glass/Badge';
 import { ShoppingBag, Eye, TrendingUp, Calendar, Image } from 'lucide-react';
 import Link from 'next/link';
 
+interface Listing {
+  listingId: string;
+  tokenId: string;
+  title: string;
+  assetType: string;
+  price: string;
+  listedAt: string;
+  views: number;
+  royaltyPercentage: number;
+}
+
 // TODO: Fetch from blockchain using wagmi
 const mockListings = [
   {
@@ -112,7 +123,7 @@ export function MyListingsTab() {
   );
 }
 
-function ListingCard({ listing }: { listing: any }) {
+function ListingCard({ listing }: { listing: Listing }) {
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -127,7 +138,7 @@ function ListingCard({ listing }: { listing: any }) {
         {/* Thumbnail */}
         <div className="relative">
           <div className="aspect-video rounded-xl bg-gradient-to-br from-green-600/20 to-blue-600/20 flex items-center justify-center">
-            <Image className="w-16 h-16 text-green-400" />
+            <Image className="w-16 h-16 text-green-400" aria-label="Listing preview" />
           </div>
 
           {/* Status Badge */}

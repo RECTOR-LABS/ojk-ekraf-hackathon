@@ -8,8 +8,18 @@ import { Sparkles, Check, ExternalLink, Image, File } from 'lucide-react';
 import { useState } from 'react';
 import { MintNFTModal } from '@/components/features/mint/MintNFTModal';
 
+interface Copyright {
+  id: string;
+  title: string;
+  assetType: string;
+  contentHash: string;
+  registeredAt: string;
+  isMinted: boolean;
+  tokenId?: string;
+}
+
 // TODO: Fetch from blockchain using wagmi
-const mockCopyrights = [
+const mockCopyrights: Copyright[] = [
   {
     id: '1',
     title: 'Digital Artwork Collection',
@@ -38,14 +48,14 @@ const mockCopyrights = [
 ];
 
 export default function MintPage() {
-  const [selectedCopyright, setSelectedCopyright] = useState<any>(null);
+  const [selectedCopyright, setSelectedCopyright] = useState<Copyright | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const totalCopyrights = mockCopyrights.length;
   const mintedCount = mockCopyrights.filter((c) => c.isMinted).length;
   const unmintedCount = totalCopyrights - mintedCount;
 
-  const openMintModal = (copyright: any) => {
+  const openMintModal = (copyright: Copyright) => {
     setSelectedCopyright(copyright);
     setIsModalOpen(true);
   };
@@ -129,7 +139,7 @@ export default function MintPage() {
 }
 
 interface CopyrightCardProps {
-  copyright: any;
+  copyright: Copyright;
   onMint: () => void;
   delay: number;
 }
@@ -155,9 +165,9 @@ function CopyrightCard({ copyright, onMint, delay }: CopyrightCardProps) {
           <div className="relative">
             <div className="aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
               {copyright.isMinted ? (
-                <Check className="w-16 h-16 text-green-400" />
+                <Check className="w-16 h-16 text-green-400" aria-label="Minted" />
               ) : (
-                <Image className="w-16 h-16 text-purple-400" />
+                <Image className="w-16 h-16 text-purple-400" aria-label="Not minted" />
               )}
             </div>
 
@@ -229,7 +239,7 @@ function EmptyState() {
 
           <h3 className="text-2xl font-bold">No Copyrights Yet</h3>
           <p className="text-foreground/70 max-w-md mx-auto">
-            You haven't registered any copyrights yet. Register your creative work to get started.
+            You haven&apos;t registered any copyrights yet. Register your creative work to get started.
           </p>
 
           <a href="/register">

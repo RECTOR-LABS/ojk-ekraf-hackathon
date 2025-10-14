@@ -149,7 +149,7 @@ export function SuccessPage({
             <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-purple-400" />
             </div>
-            <h3 className="text-xl font-bold">What's Next?</h3>
+            <h3 className="text-xl font-bold">What&apos;s Next?</h3>
             <p className="text-foreground/70">
               Transform your registered copyright into an NFT and start earning royalties
             </p>

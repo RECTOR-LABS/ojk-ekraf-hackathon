@@ -7,12 +7,20 @@ import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassInput } from '@/components/ui/glass/GlassInput';
 import { Badge } from '@/components/ui/glass/Badge';
-import { ShoppingBag, TrendingUp, Check, ExternalLink, AlertCircle } from 'lucide-react';
+import { ShoppingBag, TrendingUp, Check, AlertCircle } from 'lucide-react';
+import Link from 'next/link';
+
+interface NFT {
+  tokenId: string;
+  title: string;
+  assetType: string;
+  royaltyPercentage: number;
+}
 
 interface ListNFTModalProps {
   isOpen: boolean;
   onClose: () => void;
-  nft: any;
+  nft: NFT;
 }
 
 export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
@@ -174,7 +182,7 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
                       <p className="text-xs text-blue-300 flex items-start gap-2">
                         <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                         <span>
-                          You'll also earn <strong>{nft.royaltyPercentage}% royalty</strong> on
+                          You&apos;ll also earn <strong>{nft.royaltyPercentage}% royalty</strong> on
                           every future resale of this NFT, automatically distributed to your
                           wallet.
                         </span>
@@ -280,12 +288,12 @@ function SuccessView({
 
       {/* Action Buttons */}
       <div className="space-y-3">
-        <a href="/marketplace" className="block">
+        <Link href="/marketplace" className="block">
           <GlassButton variant="primary" size="lg" className="w-full">
             <ShoppingBag className="w-5 h-5 mr-2" />
             View on Marketplace
           </GlassButton>
-        </a>
+        </Link>
         <GlassButton variant="secondary" size="md" onClick={onClose} className="w-full">
           Close
         </GlassButton>

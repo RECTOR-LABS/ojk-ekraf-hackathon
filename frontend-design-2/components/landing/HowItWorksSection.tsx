@@ -65,7 +65,7 @@ export function HowItWorksSection() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         >
           <h2 className="text-4xl lg:text-5xl font-bold mb-4">
             Get Started in <span className="gradient-text">4 Simple Steps</span>
@@ -84,7 +84,7 @@ export function HowItWorksSection() {
                 className="absolute top-32 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-blue-600 to-pink-600"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 2, delay: 0.5 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 style={{ transformOrigin: 'left' }}
               />
             )}
@@ -93,9 +93,9 @@ export function HowItWorksSection() {
               {steps.map((step, index) => (
                 <motion.div
                   key={step.number}
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.2 + index * 0.2 }}
+                  transition={{ duration: 0.3, delay: 0.1 + index * 0.1 }}
                 >
                   <GlassCard hover>
                     <div className="text-center space-y-4">
@@ -107,7 +107,7 @@ export function HowItWorksSection() {
                         transition={{
                           type: 'spring',
                           stiffness: 200,
-                          delay: 0.5 + index * 0.2,
+                          delay: 0.2 + index * 0.1,
                         }}
                       >
                         <div className="w-24 h-24 mx-auto rounded-full glass flex items-center justify-center border-4 border-purple-600/50 relative z-10">
@@ -123,7 +123,7 @@ export function HowItWorksSection() {
                           transition={{
                             duration: 2,
                             repeat: Infinity,
-                            delay: 0.5 + index * 0.2,
+                            delay: 0.2 + index * 0.1,
                           }}
                         />
                       </motion.div>
@@ -150,9 +150,9 @@ export function HowItWorksSection() {
             <motion.div
               key={step.number}
               className="relative"
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.2 }}
+              transition={{ duration: 0.3, delay: 0.1 + index * 0.1 }}
             >
               {/* Connector Line (Vertical) */}
               {index < steps.length - 1 && (
@@ -160,7 +160,7 @@ export function HowItWorksSection() {
                   className="absolute left-12 top-24 bottom-0 w-1 bg-gradient-to-b from-purple-600 to-blue-600"
                   initial={{ scaleY: 0 }}
                   animate={inView ? { scaleY: 1 } : {}}
-                  transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                   style={{ transformOrigin: 'top' }}
                 />
               )}
@@ -176,7 +176,7 @@ export function HowItWorksSection() {
                       transition={{
                         type: 'spring',
                         stiffness: 200,
-                        delay: 0.5 + index * 0.2,
+                        delay: 0.2 + index * 0.1,
                       }}
                     >
                       <span className="text-3xl font-bold gradient-text">{step.number}</span>

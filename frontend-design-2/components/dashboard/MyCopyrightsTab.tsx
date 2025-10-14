@@ -7,6 +7,15 @@ import { Badge } from '@/components/ui/glass/Badge';
 import { Sparkles, Eye, Image, FileText } from 'lucide-react';
 import Link from 'next/link';
 
+interface Copyright {
+  id: string;
+  title: string;
+  assetType: string;
+  registeredAt: string;
+  isMinted: boolean;
+  tokenId?: string;
+}
+
 // TODO: Fetch from blockchain using wagmi
 const mockCopyrights = [
   {
@@ -112,7 +121,7 @@ export function MyCopyrightsTab() {
   );
 }
 
-function CopyrightCard({ copyright }: { copyright: any }) {
+function CopyrightCard({ copyright }: { copyright: Copyright }) {
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -127,7 +136,7 @@ function CopyrightCard({ copyright }: { copyright: any }) {
         {/* Thumbnail */}
         <div className="relative">
           <div className="aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
-            <Image className="w-16 h-16 text-purple-400" />
+            <Image className="w-16 h-16 text-purple-400" aria-label="Copyright preview" />
           </div>
 
           {/* Status Badge */}

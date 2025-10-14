@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { useRegistrationStore } from '@/lib/stores/registrationStore';
-import { Upload, FileText, Eye, Zap, Check } from 'lucide-react';
+import { Upload, FileText, Eye, Zap, Check, type LucideIcon } from 'lucide-react';
 import { FileUploadStep } from '@/components/features/registration/FileUploadStep';
 import { MetadataFormStep } from '@/components/features/registration/MetadataFormStep';
 import { ReviewStep } from '@/components/features/registration/ReviewStep';
@@ -84,7 +84,7 @@ export default function RegisterPage() {
 }
 
 interface ProgressStepItemProps {
-  step: { icon: any; label: string; description: string };
+  step: { icon: LucideIcon; label: string; description: string };
   index: number;
   currentStep: number;
   isLast: boolean;

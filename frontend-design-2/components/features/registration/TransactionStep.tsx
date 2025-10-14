@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
-import { Zap, Check, Loader2 } from 'lucide-react';
+import { Zap, Loader2 } from 'lucide-react';
 
 export function TransactionStep() {
   // TODO: Implement blockchain transaction logic with wagmi

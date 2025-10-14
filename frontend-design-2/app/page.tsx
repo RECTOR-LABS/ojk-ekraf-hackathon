@@ -13,7 +13,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Features Grid */}
-      <section className="py-24">
+      <section className="py-24" id="features">
         <div className="max-w-7xl mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-16">
@@ -26,7 +26,7 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          <AnimatedSection delay={0.2}>
+          <AnimatedSection delay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature, index) => (
                 <GlassCard key={index} variant="interactive" hover>

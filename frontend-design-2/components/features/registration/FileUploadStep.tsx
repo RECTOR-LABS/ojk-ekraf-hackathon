@@ -182,6 +182,7 @@ export function FileUploadStep() {
                 {filePreviewUrl ? (
                   <div className="w-24 h-24 rounded-xl overflow-hidden">
                     {file.type.startsWith('image/') ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={filePreviewUrl}
                         alt="Preview"

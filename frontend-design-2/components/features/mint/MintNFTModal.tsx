@@ -6,12 +6,18 @@ import { GlassModal } from '@/components/ui/glass/GlassModal';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Badge } from '@/components/ui/glass/Badge';
-import { Sparkles, TrendingUp, Zap, Check, ExternalLink } from 'lucide-react';
+import { Sparkles, TrendingUp, Zap, Check } from 'lucide-react';
+
+interface Copyright {
+  id: string;
+  title: string;
+  assetType: string;
+}
 
 interface MintNFTModalProps {
   isOpen: boolean;
   onClose: () => void;
-  copyright: any;
+  copyright: Copyright;
 }
 
 export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) {
@@ -116,7 +122,7 @@ export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) 
               </div>
 
               <p className="text-sm text-foreground/70">
-                You'll earn {royaltyPercentage}% royalty on every resale of this NFT, forever.
+                You&apos;ll earn {royaltyPercentage}% royalty on every resale of this NFT, forever.
               </p>
             </div>
 

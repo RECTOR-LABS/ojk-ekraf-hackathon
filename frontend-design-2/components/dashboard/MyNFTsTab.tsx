@@ -9,6 +9,16 @@ import { Sparkles, Eye, Image, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 import { ListNFTModal } from '@/components/features/marketplace/ListNFTModal';
 
+interface NFT {
+  tokenId: string;
+  title: string;
+  assetType: string;
+  mintedAt: string;
+  isListed: boolean;
+  price?: string;
+  royaltyPercentage: number;
+}
+
 // TODO: Fetch from blockchain using wagmi
 const mockNFTs = [
   {
@@ -40,14 +50,14 @@ const mockNFTs = [
 ];
 
 export function MyNFTsTab() {
-  const [selectedNFT, setSelectedNFT] = useState<any>(null);
+  const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const totalNFTs = mockNFTs.length;
   const listedCount = mockNFTs.filter((nft) => nft.isListed).length;
   const unlistedCount = totalNFTs - listedCount;
 
-  const openListModal = (nft: any) => {
+  const openListModal = (nft: NFT) => {
     setSelectedNFT(nft);
     setIsModalOpen(true);
   };
@@ -135,7 +145,7 @@ export function MyNFTsTab() {
   );
 }
 
-function NFTCard({ nft, onListForSale }: { nft: any; onListForSale: () => void }) {
+function NFTCard({ nft, onListForSale }: { nft: NFT; onListForSale: () => void }) {
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -150,7 +160,7 @@ function NFTCard({ nft, onListForSale }: { nft: any; onListForSale: () => void }
         {/* Thumbnail */}
         <div className="relative">
           <div className="aspect-video rounded-xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
-            <Image className="w-16 h-16 text-blue-400" />
+            <Image className="w-16 h-16 text-blue-400" aria-label="NFT preview" />
           </div>
 
           {/* Status Badges */}

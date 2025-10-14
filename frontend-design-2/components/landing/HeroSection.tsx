@@ -76,14 +76,14 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
         >
           <h1 className="text-6xl lg:text-8xl font-bold leading-tight">
             <motion.span
               className="gradient-text block"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               Protect Your Creativity
             </motion.span>
@@ -91,7 +91,7 @@ export function HeroSection() {
               className="text-foreground block mt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
             >
               On The Blockchain
             </motion.span>
@@ -103,7 +103,7 @@ export function HeroSection() {
           className="text-xl lg:text-2xl text-foreground/70 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
         >
           Tamper-proof copyright registration, NFT creation, and perpetual royalties
           for Indonesian creators.
@@ -114,7 +114,7 @@ export function HeroSection() {
           className="flex gap-4 justify-center flex-wrap"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
         >
           <Link href="/register">
             <GlassButton variant="primary" size="lg">
@@ -148,7 +148,7 @@ function StatisticsCounter() {
       className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-16"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.5 }}
+      transition={{ duration: 0.4, delay: 0.5 }}
     >
       {stats.map((stat, index) => (
         <motion.div
@@ -156,9 +156,9 @@ function StatisticsCounter() {
           className="glass rounded-2xl p-6"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: 1.7 + index * 0.1 }}
+          transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
         >
-          <CountUpNumber value={stat.value} duration={2} delay={1.8 + index * 0.1} />
+          <CountUpNumber value={stat.value} duration={1.5} delay={0.6 + index * 0.05} />
           <p className="text-sm text-foreground/60 mt-2">{stat.label}</p>
         </motion.div>
       ))}

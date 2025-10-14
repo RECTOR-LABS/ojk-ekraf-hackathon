@@ -267,7 +267,18 @@ export default function MarketplacePage() {
   );
 }
 
-function MarketplaceNFTCard({ nft }: { nft: any }) {
+interface NFT {
+  tokenId: string;
+  listingId: string;
+  title: string;
+  assetType: string;
+  price: string;
+  seller: string;
+  royaltyPercentage: number;
+  views: number;
+}
+
+function MarketplaceNFTCard({ nft }: { nft: NFT }) {
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',

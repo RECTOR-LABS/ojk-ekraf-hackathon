@@ -13,7 +13,6 @@ import {
   Image,
   User,
   Calendar,
-  TrendingUp,
   Check,
   AlertCircle,
 } from 'lucide-react';
@@ -41,6 +40,7 @@ const mockNFTDetail = {
   ipfsCID: 'QmXyZ123...',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function NFTDetailPage({ params }: { params: { tokenId: string } }) {
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [purchaseSuccess, setPurchaseSuccess] = useState(false);
@@ -71,7 +71,6 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
   // Platform fee calculation
   const platformFee = (Number(nft.price) * 2.5) / 100;
   const creatorRoyalty = (Number(nft.price) * nft.royaltyPercentage) / 100;
-  const sellerReceives = Number(nft.price) - platformFee - creatorRoyalty;
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
@@ -91,7 +90,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <GlassCard className="p-0 overflow-hidden">
               <div className="aspect-square bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
-                <Image className="w-32 h-32 text-purple-400" />
+                <Image className="w-32 h-32 text-purple-400" aria-label="NFT preview" />
               </div>
 
               {/* Badges Overlay */}
