@@ -5,76 +5,16 @@ import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassInput } from '@/components/ui/glass/GlassInput';
 import { Badge } from '@/components/ui/glass/Badge';
+import { LoadingSpinner } from '@/components/ui/glass/Loading';
 import { Search, Filter, ShoppingBag, TrendingUp, Image, Music, FileText, Video, Package } from 'lucide-react';
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { useTranslations } from 'next-intl';
-
-// TODO: Fetch from blockchain using wagmi
-const mockMarketplaceNFTs = [
-  {
-    tokenId: '42',
-    listingId: '456',
-    title: 'Music Album - Nusantara Dreams',
-    assetType: 'MUSIC',
-    price: '0.5',
-    seller: '0xabcd...1234',
-    royaltyPercentage: 10,
-    views: 127,
-  },
-  {
-    tokenId: '87',
-    listingId: '321',
-    title: 'Digital Artwork - Batik Modern',
-    assetType: 'VISUAL_ART',
-    price: '0.8',
-    seller: '0xef56...5678',
-    royaltyPercentage: 15,
-    views: 203,
-  },
-  {
-    tokenId: '156',
-    listingId: '789',
-    title: 'Documentary Film - Heritage Stories',
-    assetType: 'VIDEO',
-    price: '1.2',
-    seller: '0x9012...9abc',
-    royaltyPercentage: 12,
-    views: 89,
-  },
-  {
-    tokenId: '234',
-    listingId: '654',
-    title: 'Short Story Collection - Islands',
-    assetType: 'LITERATURE',
-    price: '0.3',
-    seller: '0xdef0...def0',
-    royaltyPercentage: 8,
-    views: 145,
-  },
-  {
-    tokenId: '567',
-    listingId: '987',
-    title: 'Traditional Dance Recording',
-    assetType: 'VIDEO',
-    price: '0.6',
-    seller: '0x1111...2222',
-    royaltyPercentage: 10,
-    views: 178,
-  },
-  {
-    tokenId: '890',
-    listingId: '135',
-    title: 'Wayang Kulit Performance',
-    assetType: 'MUSIC',
-    price: '0.4',
-    seller: '0x3333...4444',
-    royaltyPercentage: 9,
-    views: 96,
-  },
-];
+import { useMarketplaceListings, type MarketplaceListing } from '@/lib/hooks/useMarketplaceListings';
 
 export default function MarketplacePage() {
   const t = useTranslations('marketplace');
+  const { listings, isLoading, error, totalListings } = useMarketplaceListings();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAssetType, setSelectedAssetType] = useState('ALL');
   const [sortBy, setSortBy] = useState('recent');
@@ -88,7 +28,7 @@ export default function MarketplacePage() {
   ];
 
   // Filter NFTs
-  const filteredNFTs = mockMarketplaceNFTs.filter((nft) => {
+  const filteredNFTs = listings.filter((nft) => {
     const matchesSearch =
       searchQuery === '' ||
       nft.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -105,17 +45,42 @@ export default function MarketplacePage() {
       case 'price-high':
         return Number(b.price) - Number(a.price);
       case 'popular':
-        return b.views - a.views;
+        // No views data from blockchain, sort by listing date instead
+        return new Date(b.listedAt).getTime() - new Date(a.listedAt).getTime();
       default:
         return 0;
     }
   });
 
-  const totalVolume = mockMarketplaceNFTs
+  const totalVolume = listings
     .reduce((sum, nft) => sum + Number(nft.price), 0)
     .toFixed(2);
-  const totalNFTs = mockMarketplaceNFTs.length;
-  const avgPrice = (Number(totalVolume) / totalNFTs).toFixed(3);
+  const avgPrice = totalListings > 0 ? (Number(totalVolume) / totalListings).toFixed(3) : '0.000';
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="flex justify-center items-center py-16">
+          <LoadingSpinner size="lg" />
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <GlassCard>
+          <div className="text-center py-12">
+            <p className="text-red-400 mb-2">Failed to load marketplace listings</p>
+            <p className="text-sm text-foreground/60">Please check your connection and try again</p>
+          </div>
+        </GlassCard>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
@@ -134,7 +99,7 @@ export default function MarketplacePage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <GlassCard>
             <div className="text-center">
-              <p className="text-3xl font-bold gradient-text mb-2">{totalNFTs}</p>
+              <p className="text-3xl font-bold gradient-text mb-2">{totalListings}</p>
               <p className="text-sm text-foreground/60">{t('stats.listed')}</p>
             </div>
           </GlassCard>
@@ -269,19 +234,17 @@ export default function MarketplacePage() {
   );
 }
 
-interface NFT {
-  tokenId: string;
-  listingId: string;
-  title: string;
-  assetType: string;
-  price: string;
-  seller: string;
-  royaltyPercentage: number;
-  views: number;
-}
-
-function MarketplaceNFTCard({ nft }: { nft: NFT }) {
+function MarketplaceNFTCard({ nft }: { nft: MarketplaceListing }) {
   const t = useTranslations('marketplace.card');
+  const [imageError, setImageError] = useState(false);
+
+  // IPFS image URL for Visual Art
+  const imageUrl = nft.ipfsCID && nft.assetType === 'VISUAL_ART'
+    ? `https://gateway.pinata.cloud/ipfs/${nft.ipfsCID}`
+    : null;
+
+  // Truncate seller address
+  const truncatedSeller = `${nft.seller.slice(0, 6)}...${nft.seller.slice(-4)}`;
 
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
@@ -314,8 +277,19 @@ function MarketplaceNFTCard({ nft }: { nft: NFT }) {
         <div className="space-y-4">
           {/* Thumbnail */}
           <div className="relative">
-            <div className="aspect-square rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
-              <AssetIcon className="w-16 h-16 text-purple-400" />
+            <div className="aspect-square rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center overflow-hidden">
+              {imageUrl && !imageError ? (
+                <NextImage
+                  src={imageUrl}
+                  alt={nft.title}
+                  fill
+                  className="object-cover"
+                  onError={() => setImageError(true)}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              ) : (
+                <AssetIcon className="w-16 h-16 text-purple-400" />
+              )}
             </div>
 
             {/* Royalty Badge */}
@@ -343,12 +317,7 @@ function MarketplaceNFTCard({ nft }: { nft: NFT }) {
 
               <div className="flex justify-between items-center text-xs">
                 <span className="text-foreground/60">{t('seller')}</span>
-                <span className="font-mono text-foreground/80">{nft.seller}</span>
-              </div>
-
-              <div className="flex justify-between items-center text-xs">
-                <span className="text-foreground/60">{t('views')}</span>
-                <span className="text-foreground/80">{nft.views}</span>
+                <span className="font-mono text-foreground/80">{truncatedSeller}</span>
               </div>
             </div>
 

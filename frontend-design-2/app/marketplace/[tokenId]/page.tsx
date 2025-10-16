@@ -1,66 +1,107 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Badge } from '@/components/ui/glass/Badge';
+import { LoadingSpinner } from '@/components/ui/glass/Loading';
 import {
   ShoppingBag,
   Shield,
-  Eye,
   ExternalLink,
   Image,
+  Music,
+  FileText,
+  Video,
+  Package,
   User,
   Calendar,
   Check,
   AlertCircle,
 } from 'lucide-react';
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { useTranslations } from 'next-intl';
+import { useNFTDetail } from '@/lib/hooks/useNFTDetail';
+import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
+import { KaryaMarketplaceAddress, KaryaMarketplaceABI } from '@/lib/contracts/KaryaMarketplace';
+import { KaryaNFTAddress } from '@/lib/contracts/KaryaNFT';
+import { parseEther } from 'viem';
 
-// TODO: Fetch from blockchain using wagmi and IPFS
-const mockNFTDetail = {
-  tokenId: '42',
-  listingId: '456',
-  title: 'Music Album - Nusantara Dreams',
-  description:
-    'A beautiful collection of traditional Indonesian music fused with modern electronic elements. This album represents the rich cultural heritage of the Nusantara archipelago, featuring authentic instruments like gamelan, angklung, and sasando.',
-  assetType: 'MUSIC',
-  price: '0.5',
-  seller: '0xabcd...1234',
-  owner: '0xabcd...1234',
-  creator: '0xabcd...1234',
-  royaltyPercentage: 10,
-  views: 127,
-  registrationId: '1',
-  registeredAt: '2025-01-08',
-  mintedAt: '2025-01-10',
-  listedAt: '2025-01-12',
-  contentHash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-  ipfsCID: 'QmXyZ123...',
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function NFTDetailPage({ params }: { params: { tokenId: string } }) {
   const t = useTranslations('marketplace.detail');
-  const [isPurchasing, setIsPurchasing] = useState(false);
-  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
-  const [purchaseError, setPurchaseError] = useState('');
+  const { address: userAddress } = useAccount();
+  const { nft, isLoading, error } = useNFTDetail(params.tokenId);
 
-  const nft = mockNFTDetail; // TODO: Fetch actual NFT data using tokenId from params
+  const [purchaseError, setPurchaseError] = useState('');
+  const [imageError, setImageError] = useState(false);
+
+  // Purchase transaction
+  const { writeContract, data: txHash, isPending: isWritePending, error: writeError } = useWriteContract();
+  const {
+    isLoading: isTxPending,
+    isSuccess: isTxSuccess,
+    error: txError,
+  } = useWaitForTransactionReceipt({ hash: txHash });
 
   const handlePurchase = async () => {
-    setIsPurchasing(true);
-    setPurchaseError('');
+    if (!nft || !nft.isListed || !nft.listingId) {
+      setPurchaseError('NFT is not listed for sale');
+      return;
+    }
 
-    // TODO: Implement actual purchase with wagmi
-    // Simulate purchase process
-    setTimeout(() => {
-      setIsPurchasing(false);
-      setPurchaseSuccess(true);
-    }, 3000);
+    try {
+      setPurchaseError('');
+      writeContract({
+        address: KaryaMarketplaceAddress,
+        abi: KaryaMarketplaceABI,
+        functionName: 'purchaseNFT',
+        args: [BigInt(nft.listingId)],
+        value: BigInt(nft.priceWei),
+      });
+    } catch (err) {
+      console.error('Purchase error:', err);
+      setPurchaseError(err instanceof Error ? err.message : 'Failed to purchase NFT');
+    }
   };
+
+  // Handle transaction errors
+  useEffect(() => {
+    if (writeError) {
+      setPurchaseError(writeError.message);
+    }
+    if (txError) {
+      setPurchaseError(txError.message);
+    }
+  }, [writeError, txError]);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="flex justify-center items-center py-16">
+          <LoadingSpinner size="lg" />
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !nft) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <GlassCard>
+          <div className="text-center py-12">
+            <p className="text-red-400 mb-2">Failed to load NFT details</p>
+            <p className="text-sm text-foreground/60">
+              {error ? 'Please check your connection and try again' : 'NFT not found'}
+            </p>
+          </div>
+        </GlassCard>
+      </div>
+    );
+  }
 
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
@@ -70,9 +111,41 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
     OTHER: 'Other',
   };
 
+  // Get asset icon
+  const getAssetIcon = () => {
+    switch (nft.assetType) {
+      case 'MUSIC':
+        return Music;
+      case 'LITERATURE':
+        return FileText;
+      case 'VIDEO':
+        return Video;
+      case 'OTHER':
+        return Package;
+      default:
+        return Image;
+    }
+  };
+
+  const AssetIcon = getAssetIcon();
+
+  // IPFS image URL for Visual Art
+  const imageUrl = nft.ipfsCID && nft.assetType === 'VISUAL_ART'
+    ? `https://gateway.pinata.cloud/ipfs/${nft.ipfsCID}`
+    : null;
+
+  // Truncate addresses
+  const truncatedSeller = `${nft.seller.slice(0, 6)}...${nft.seller.slice(-4)}`;
+  const truncatedOwner = `${nft.owner.slice(0, 6)}...${nft.owner.slice(-4)}`;
+  const truncatedCreator = `${nft.creator.slice(0, 6)}...${nft.creator.slice(-4)}`;
+
   // Platform fee calculation
-  const platformFee = (Number(nft.price) * 2.5) / 100;
-  const creatorRoyalty = (Number(nft.price) * nft.royaltyPercentage) / 100;
+  const platformFee = nft.isListed ? (Number(nft.price) * 2.5) / 100 : 0;
+  const creatorRoyalty = nft.isListed ? (Number(nft.price) * nft.royaltyPercentage) / 100 : 0;
+
+  // Purchase states
+  const isPurchasing = isWritePending || isTxPending;
+  const purchaseSuccess = isTxSuccess;
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
@@ -90,9 +163,20 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
         <div className="space-y-6">
           {/* NFT Image */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <GlassCard className="p-0 overflow-hidden">
-              <div className="aspect-square bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
-                <Image className="w-32 h-32 text-purple-400" aria-label="NFT preview" />
+            <GlassCard className="p-0 overflow-hidden relative">
+              <div className="aspect-square bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center overflow-hidden">
+                {imageUrl && !imageError ? (
+                  <NextImage
+                    src={imageUrl}
+                    alt={nft.title}
+                    fill
+                    className="object-cover"
+                    onError={() => setImageError(true)}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : (
+                  <AssetIcon className="w-32 h-32 text-purple-400" aria-label="NFT preview" />
+                )}
               </div>
 
               {/* Badges Overlay */}
@@ -100,17 +184,8 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                 <Badge variant="default" className="bg-purple-600/80 backdrop-blur-sm">
                   {nft.royaltyPercentage}% {t('royalty')}
                 </Badge>
-                <Badge variant="success">{t('forSale')}</Badge>
-              </div>
-
-              {/* Views Counter */}
-              <div className="absolute bottom-4 left-4">
-                <div className="glass rounded-lg px-3 py-1.5 bg-background/80 backdrop-blur-md">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Eye className="w-4 h-4 text-foreground/60" />
-                    <span className="font-semibold">{nft.views} {t('views')}</span>
-                  </div>
-                </div>
+                {nft.isListed && <Badge variant="success">{t('forSale')}</Badge>}
+                {!nft.isListed && <Badge variant="default">Not Listed</Badge>}
               </div>
             </GlassCard>
           </motion.div>
@@ -132,13 +207,15 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                   <p className="text-xs text-foreground/60 mb-1">{t('properties.tokenId')}</p>
                   <p className="font-mono font-semibold">#{nft.tokenId}</p>
                 </div>
-                <div className="glass rounded-lg p-3 border border-foreground/10">
-                  <p className="text-xs text-foreground/60 mb-1">{t('properties.listingId')}</p>
-                  <p className="font-mono font-semibold">#{nft.listingId}</p>
-                </div>
+                {nft.listingId && (
+                  <div className="glass rounded-lg p-3 border border-foreground/10">
+                    <p className="text-xs text-foreground/60 mb-1">{t('properties.listingId')}</p>
+                    <p className="font-mono font-semibold">#{nft.listingId}</p>
+                  </div>
+                )}
                 <div className="glass rounded-lg p-3 border border-foreground/10">
                   <p className="text-xs text-foreground/60 mb-1">{t('properties.copyrightId')}</p>
-                  <p className="font-mono font-semibold">#{nft.registrationId}</p>
+                  <p className="font-mono font-semibold">#{nft.copyrightId}</p>
                 </div>
               </div>
             </GlassCard>
@@ -241,21 +318,39 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                 )}
 
                 {/* Purchase Button */}
-                <GlassButton
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                  onClick={handlePurchase}
-                  disabled={isPurchasing || purchaseSuccess}
-                  loading={isPurchasing}
-                >
-                  <ShoppingBag className="w-5 h-5 mr-2" />
-                  {isPurchasing
-                    ? t('purchase.processing')
-                    : purchaseSuccess
-                      ? t('purchase.purchased')
-                      : `${t('purchase.button')} ${nft.price} ETH`}
-                </GlassButton>
+                {!nft.isListed && (
+                  <div className="bg-yellow-600/20 border border-yellow-600/30 rounded-lg p-4">
+                    <p className="text-sm text-foreground/70 text-center">
+                      This NFT is not currently listed for sale
+                    </p>
+                  </div>
+                )}
+                {nft.isListed && (nft.isOwner || nft.isSeller) && (
+                  <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg p-4">
+                    <p className="text-sm text-foreground/70 text-center">
+                      You own this NFT
+                    </p>
+                  </div>
+                )}
+                {nft.isListed && !nft.isOwner && !nft.isSeller && (
+                  <GlassButton
+                    variant="primary"
+                    size="lg"
+                    className="w-full"
+                    onClick={handlePurchase}
+                    disabled={isPurchasing || purchaseSuccess || !userAddress}
+                    loading={isPurchasing}
+                  >
+                    <ShoppingBag className="w-5 h-5 mr-2" />
+                    {!userAddress
+                      ? 'Connect Wallet to Purchase'
+                      : isPurchasing
+                        ? t('purchase.processing')
+                        : purchaseSuccess
+                          ? t('purchase.purchased')
+                          : `${t('purchase.button')} ${nft.price} ETH`}
+                  </GlassButton>
+                )}
 
                 {/* Fee Breakdown */}
                 <div className="space-y-2 text-sm pt-3 border-t border-foreground/10">
@@ -291,18 +386,18 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-foreground/60">{t('seller.address')}</p>
-                    <p className="font-mono font-semibold">{nft.seller}</p>
+                    <p className="font-mono font-semibold">{truncatedSeller}</p>
                   </div>
                 </div>
 
                 <div className="space-y-2 text-sm pt-3 border-t border-foreground/10">
                   <div className="flex justify-between">
                     <span className="text-foreground/60">{t('seller.creator')}</span>
-                    <span className="font-mono">{nft.creator}</span>
+                    <span className="font-mono">{truncatedCreator}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-foreground/60">{t('seller.owner')}</span>
-                    <span className="font-mono">{nft.owner}</span>
+                    <span className="font-mono">{truncatedOwner}</span>
                   </div>
                 </div>
               </div>
@@ -318,23 +413,30 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
             <GlassCard>
               <h3 className="font-bold mb-4">{t('timeline.title')}</h3>
               <div className="space-y-3">
-                {[
-                  { label: t('timeline.copyrightRegistered'), date: nft.registeredAt },
-                  { label: t('timeline.nftMinted'), date: nft.mintedAt },
-                  { label: t('timeline.listedForSale'), date: nft.listedAt },
-                ].map((event, index) => (
-                  <div key={index} className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-4 h-4 text-purple-400" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm">{t('timeline.copyrightRegistered')}</p>
+                    <p className="text-xs text-foreground/60">
+                      {new Date(nft.registeredAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+                {nft.listedAt && (
+                  <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0">
                       <Calendar className="w-4 h-4 text-purple-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-sm">{event.label}</p>
+                      <p className="font-semibold text-sm">{t('timeline.listedForSale')}</p>
                       <p className="text-xs text-foreground/60">
-                        {new Date(event.date).toLocaleDateString()}
+                        {new Date(nft.listedAt).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </GlassCard>
           </motion.div>
@@ -349,7 +451,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
               <h3 className="font-bold mb-3">{t('externalLinks.title')}</h3>
               <div className="space-y-2">
                 <a
-                  href={`https://sepolia.etherscan.io/token/CONTRACT_ADDRESS/${nft.tokenId}`}
+                  href={`https://sepolia.etherscan.io/token/${KaryaNFTAddress}?a=${nft.tokenId}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors"
@@ -357,15 +459,17 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                   <span className="text-sm font-medium">{t('externalLinks.etherscan')}</span>
                   <ExternalLink className="w-4 h-4 text-foreground/60" />
                 </a>
-                <a
-                  href={`https://gateway.pinata.cloud/ipfs/${nft.ipfsCID}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors"
-                >
-                  <span className="text-sm font-medium">{t('externalLinks.ipfs')}</span>
-                  <ExternalLink className="w-4 h-4 text-foreground/60" />
-                </a>
+                {nft.ipfsCID && (
+                  <a
+                    href={`https://gateway.pinata.cloud/ipfs/${nft.ipfsCID}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors"
+                  >
+                    <span className="text-sm font-medium">{t('externalLinks.ipfs')}</span>
+                    <ExternalLink className="w-4 h-4 text-foreground/60" />
+                  </a>
+                )}
               </div>
             </GlassCard>
           </motion.div>
