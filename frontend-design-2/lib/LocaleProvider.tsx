@@ -17,7 +17,7 @@ const messagesMap = {
 
 export function LocaleProvider({ children }: LocaleProviderProps) {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale);
-  const [messages, setMessages] = useState<any>(messagesMap[defaultLocale]);
+  const [messages, setMessages] = useState<Record<string, unknown>>(messagesMap[defaultLocale]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load locale and messages on mount
@@ -50,8 +50,8 @@ export function LocaleProvider({ children }: LocaleProviderProps) {
       setMessages(messagesMap[newLocale]);
     };
 
-    window.addEventListener('localeChange' as any, handleLocaleChange);
-    return () => window.removeEventListener('localeChange' as any, handleLocaleChange);
+    window.addEventListener('localeChange' as keyof WindowEventMap, handleLocaleChange as EventListener);
+    return () => window.removeEventListener('localeChange' as keyof WindowEventMap, handleLocaleChange as EventListener);
   }, []);
 
   if (isLoading || !messages) {

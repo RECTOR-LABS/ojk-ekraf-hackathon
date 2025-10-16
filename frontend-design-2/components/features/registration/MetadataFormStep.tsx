@@ -35,7 +35,7 @@ export function MetadataFormStep() {
       setAssetType(metadata.assetType || null);
       setTags(metadata.tags || []); // This should now reload the tags
     }
-  }, [currentStep]); // Only watch currentStep, not metadata (object reference doesn't change)
+  }, [currentStep, metadata]); // Watch both currentStep and metadata
 
   // Validate form
   const validate = () => {

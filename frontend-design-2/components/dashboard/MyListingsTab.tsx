@@ -6,7 +6,7 @@ import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Badge } from '@/components/ui/glass/Badge';
 import { LoadingSpinner } from '@/components/ui/glass/Loading';
-import { ShoppingBag, Eye, TrendingUp, Calendar, Image, Music, BookOpen, Video, File } from 'lucide-react';
+import { ShoppingBag, Eye, Calendar, Image, Music, BookOpen, Video, File } from 'lucide-react';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { useUserListings, type UserListing } from '@/lib/hooks/useUserListings';

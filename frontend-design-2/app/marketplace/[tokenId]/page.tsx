@@ -27,7 +27,6 @@ import { useNFTDetail } from '@/lib/hooks/useNFTDetail';
 import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import { KaryaMarketplaceAddress, KaryaMarketplaceABI } from '@/lib/contracts/KaryaMarketplace';
 import { KaryaNFTAddress } from '@/lib/contracts/KaryaNFT';
-import { parseEther } from 'viem';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function NFTDetailPage({ params }: { params: { tokenId: string } }) {
@@ -61,7 +60,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
         functionName: 'buyNFT',
         args: [BigInt(nft.listingId)],
         value: BigInt(nft.priceWei),
-      } as any);
+      });
     } catch (err) {
       console.error('Purchase error:', err);
       setPurchaseError(err instanceof Error ? err.message : 'Failed to purchase NFT');

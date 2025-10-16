@@ -52,7 +52,7 @@ export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) 
   useEffect(() => {
     if (isTxSuccess && receipt) {
       // Extract token ID from NFTMinted event logs
-      const nftMintedEvent = receipt.logs.find((log: any) => {
+      const nftMintedEvent = receipt.logs.find((log) => {
         try {
           // Check if this is the NFTMinted event (topic0)
           return log.topics[0] === '0x...' || log.address.toLowerCase() === KaryaNFTAddress.toLowerCase();

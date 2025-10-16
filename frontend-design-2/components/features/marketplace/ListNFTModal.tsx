@@ -38,12 +38,10 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
   const {
     writeContract: approveWrite,
     data: approveTxHash,
-    isPending: isApprovePending,
     error: approveWriteError,
   } = useWriteContract();
 
   const {
-    isLoading: isApproveTxPending,
     isSuccess: isApproveTxSuccess,
     error: approveTxError,
   } = useWaitForTransactionReceipt({
@@ -54,12 +52,10 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
   const {
     writeContract: listWrite,
     data: listTxHash,
-    isPending: isListPending,
     error: listWriteError,
   } = useWriteContract();
 
   const {
-    isLoading: isListTxPending,
     isSuccess: isListTxSuccess,
     error: listTxError,
     data: listReceipt,
@@ -84,7 +80,7 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
       console.log('🔍 [ListNFTModal] List transaction receipt:', listReceipt);
 
       // Extract listing ID from NFTListed event logs
-      const nftListedEvent = listReceipt.logs.find((log: any) => {
+      const nftListedEvent = listReceipt.logs.find((log) => {
         try {
           return log.address.toLowerCase() === KaryaMarketplaceAddress.toLowerCase();
         } catch {

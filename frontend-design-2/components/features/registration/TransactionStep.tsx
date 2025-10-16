@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
