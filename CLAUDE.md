@@ -15,14 +15,14 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 
 ## Current Project Status
 
-**Last Updated**: October 16, 2025 (Full Blockchain Integration COMPLETE ✅)
-**Overall Progress**: 99% Complete ✅ **PRODUCTION-READY!**
-**Days Until Deadline**: 2 days (Oct 22, 2025)
+**Last Updated**: October 17, 2025 (Mobile Responsive & Error Handling COMPLETE ✅)
+**Overall Progress**: 99.5% Complete ✅ **PRODUCTION-READY!**
+**Days Until Deadline**: 1.5 days (Oct 22, 2025)
 **🌐 SUBMISSION URL**: https://karyachain.rectorspace.com (frontend-design-2 - Glassmorphism)
 
 **🎨 Frontend (frontend-design-2/) - For Hackathon Submission:**
 - **Design**: Glassmorphism with dual layout (Marketing navbar + Sidebar)
-- **Version**: v0.4.0 (PATCH - Marketplace & NFT detail blockchain integration)
+- **Version**: v0.4.1 (PATCH - Mobile responsive fixes + Error message handling)
 - **Status**: 100% blockchain integrated - NO MOCK DATA ANYWHERE ✅
 - **5 Custom Hooks**: ~1000+ lines of wagmi integration (useUserCopyrights, useUserNFTs, useUserListings, useMarketplaceListings, useNFTDetail)
 - **Dev Server**: localhost:3001
@@ -66,6 +66,18 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 - Marketplace browse with search/filter using real listings
 - NFT detail page with purchase functionality (ownership checks, wallet validation)
 - **NO MOCK DATA ANYWHERE IN APPLICATION** ✅
+
+**v0.4.1 (Oct 17)**: Mobile responsive + Error handling fixes 🎉
+- Fixed all mobile horizontal scroll issues (Bug #13-15)
+  - Dashboard: Added overflow-x-hidden, responsive padding, flex-shrink-0
+  - Landing page: Responsive navbar, logo text, overflow prevention
+  - Button tap targets: All interactive elements meet 44px minimum
+- Fixed error message overflow in all transaction flows (Bug #16)
+  - Added text wrapping (break-words, whitespace-pre-wrap)
+  - Scrollable containers (max-h-32, overflow-y-auto)
+  - Improved flex layout (flex-1 min-w-0)
+  - Applied to: Mint, List, Purchase, Registration flows
+- Commits: `f8fd30a` (mobile fixes) + `ba48e22` (error fixes) + `dba190a` (debug logs)
 
 ### 🎯 Next Steps (Priority Order)
 
@@ -166,20 +178,30 @@ This repository is for the **OJK-Ekraf Infinity Hackathon 2025** - a blockchain 
 **Oct 19-21**: Pitch deck & demo video 🔜
 **Oct 22**: SUBMISSION DEADLINE
 
-### Testing & Bugs (Updated Oct 16)
+### Testing & Bugs (Updated Oct 17)
 
 **Testing Progress** (localhost:3001):
-- ✅ Section 1-4: Wallet, Landing, Registration, Mint NFT (35/35 checks)
-- 🔜 Section 5-12: Marketplace, Purchase, Dashboard, End-to-end (pending)
+- ✅ Section 1-8, 11: Wallet, Landing, Registration, Mint, List, Marketplace, Mobile (66/66 checks)
+- 🔜 Section 9-10, 12: End-to-end, Error states, Cross-browser (pending)
 - **Reference**: `docs/MANUAL-TESTING-GUIDE.md`
 
-**Bugs Fixed** (6 total):
+**Bugs Fixed** (16 total: 14 FIXED + 2 deferred):
 1. ✅ Asset type UI feedback (visual selection)
 2. 🔴 Tags persistence (LOW priority - workaround exists)
 3. ✅ Blockchain registration disabled → Full IPFS + wagmi integration
 4. ✅ Dashboard mock data → 3 custom hooks with real blockchain data
 5. ✅ Modal transparency → Improved glassmorphism
 6. ✅ Registration store not resetting → Auto-reset on success
+7. ✅ Marketplace mock data → 2 custom hooks with real listings
+8. ✅ Mint NFT function not working → Fixed function name + tokenURI
+9. ✅ List NFT fake implementation → Full wagmi two-step flow
+10. ✅ TypeScript error in purchase → Fixed function name
+11. 🔴 Console errors (23 total - LOW priority, non-critical)
+12. ✅ Marketplace cache not refreshing → React Query invalidation
+13. ✅ Dashboard horizontal scroll on mobile → Responsive fixes
+14. ✅ Landing page horizontal scroll → Overflow prevention
+15. ✅ Button tap targets below 44px → min-h-[44px] all buttons
+16. ✅ Error message overflow → Text wrapping + scrollable containers
 
 **Proof of Success**:
 - Registration TX: `0x1ac392...5eca87` ([Etherscan](https://sepolia.etherscan.io/tx/0x1ac392d58da682715357fd834c555147cdc6f41fe9235302fbc4d280b15eca87))

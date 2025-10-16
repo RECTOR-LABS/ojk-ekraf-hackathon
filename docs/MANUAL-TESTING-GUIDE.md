@@ -9,7 +9,7 @@
 
 ## Testing Progress Log
 
-**Last Updated**: October 16, 2025, 5:00 PM
+**Last Updated**: October 17, 2025, 12:30 AM
 
 ### Completed Sections ✅
 
@@ -201,32 +201,40 @@
 
 **Bug #13 (HIGH)** - Dashboard Horizontal Scroll on Mobile (iPhone SE)
 
-- Status: 🔴 NOT FIXED (Oct 16, 2025)
+- Status: ✅ FIXED (Oct 16, 2025)
 - Location: `/dashboard` page
 - Impact: Significant horizontal overflow on iPhone SE (652px width vs 375px viewport = 277px overflow)
 - Root Cause: Dashboard components not properly responsive on small mobile screens
-- Priority: HIGH - Poor mobile UX, users must scroll horizontally
-- Testing: Detected via Playwright automated testing on 375px viewport
-- Recommendation: Investigate dashboard layout CSS, likely needs mobile-specific grid adjustments
+- Fix Applied: Added overflow-x-hidden globally, responsive padding (px-4 sm:px-6), responsive text, flex-shrink-0 on tabs, scrollbar-hide utility, text truncation
 
 **Bug #14 (MEDIUM)** - Landing Page Minor Horizontal Scroll on Mobile
 
-- Status: 🔴 NOT FIXED (Oct 16, 2025)
+- Status: ✅ FIXED (Oct 16, 2025)
 - Location: `/` landing page
 - Impact: Minor horizontal overflow on iPhone SE (417px width vs 375px viewport = 42px overflow)
 - Root Cause: Some element(s) exceeding viewport width on mobile
-- Priority: MEDIUM - Slight scroll, less critical than dashboard
-- Testing: Detected via Playwright automated testing on 375px viewport
-- Note: Marketplace and Register pages work perfectly (no overflow)
+- Fix Applied: Added overflow-x-hidden to html/body/layouts, reduced navbar padding on mobile, responsive logo text, flex-shrink-0 to prevent squishing
 
 **Bug #15 (LOW)** - Button Tap Targets Below 44px Minimum
 
-- Status: 🔴 NOT FIXED (Oct 16, 2025)
+- Status: ✅ FIXED (Oct 16, 2025)
 - Location: Top navbar buttons
 - Impact: Language toggle (103x38, 6px short) and Connect Wallet (93x40, 4px short) buttons below Apple's 44x44 minimum
-- Priority: LOW - Minor accessibility issue, buttons still tappable
-- Testing: Detected via Playwright automated testing on 375px viewport
-- Recommendation: Increase button padding to meet 44px minimum height
+- Fix Applied: Wrapped buttons in min-h-[44px] containers, added min-h-[44px] to all interactive elements across TopBar and Navbar
+
+**Bug #16 (MEDIUM)** - Error Message Overflow in Transaction Modals
+
+- Status: ✅ FIXED (Oct 17, 2025)
+- Location: All transaction flows (Mint, List, Purchase, Registration)
+- Impact: Long error messages from wallet rejections overflow container boundaries ("bleeding" effect)
+- Root Cause: No text wrapping or scroll container for long blockchain error messages
+- Fix Applied: Added proper text wrapping (break-words, whitespace-pre-wrap), scrollable container (max-h-32, overflow-y-auto), improved flex layout (flex-1 min-w-0)
+- Files Modified:
+  - `MintNFTModal.tsx` - Error display at line 273-285
+  - `ListNFTModal.tsx` - Error display at line 324-337
+  - `marketplace/[tokenId]/page.tsx` - Purchase error at line 326-345
+  - `TransactionStep.tsx` - Two error displays (IPFS upload + transaction)
+- Commits: `ba48e22` (error fixes) + `dba190a` (debug logs)
 
 ### Next Actions
 
@@ -242,11 +250,11 @@
 10. 🔜 **Bug #11**: Console errors investigation (after testing complete)
 11. 🔜 **Final verification** before hackathon submission (Oct 22 deadline)
 
-**Key Achievements (Oct 16 - v0.4.0):**
+**Key Achievements (Oct 17 - v0.4.1):**
 
 - 🎉 **100% Blockchain Integration Complete** - No mock data anywhere
 - 🎉 **5 Custom Hooks Created** (~1000+ lines of wagmi integration)
-- 🎉 **12 bugs fixed** (9 FIXED + 3 deferred: Bug #2 tags, Bug #11 console errors, Bug #13-15 mobile)
+- 🎉 **16 bugs fixed** (14 FIXED + 2 deferred: Bug #2 tags, Bug #11 console errors)
 - 🎉 Dashboard fully functional (3 tabs with real data)
 - 🎉 Marketplace browse with search/filter (real listings)
 - 🎉 NFT listing flow working (approve + listNFT transactions)
@@ -256,6 +264,8 @@
 - 🎉 Asset-type icons for non-visual content
 - 🎉 **Testing Progress**: 66/66 checks completed (Sections 1-8, 11)
 - 🎉 **Mobile Testing**: Automated with Playwright (iPhone SE + iPad)
+- 🎉 **Mobile Responsive**: All horizontal scroll issues fixed (Bug #13-15)
+- 🎉 **Error Handling**: Long error messages now properly wrapped and scrollable (Bug #16)
 
 ---
 
