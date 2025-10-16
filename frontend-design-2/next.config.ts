@@ -5,6 +5,9 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Check if running on Vercel (Vercel sets outputFileTracingRoot automatically)
+const isVercel = process.env.VERCEL === '1';
+
 const nextConfig: NextConfig = {
   // Image optimization for IPFS and external sources
   images: {
@@ -25,10 +28,12 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
 
-  // Turbopack configuration
-  turbopack: {
-    root: __dirname, // Explicit workspace root
-  },
+  // Turbopack configuration (only set locally to avoid conflict with Vercel's outputFileTracingRoot)
+  ...(!isVercel && {
+    turbopack: {
+      root: __dirname,
+    },
+  }),
 
   // Webpack configuration for Web3 compatibility (used when Turbopack falls back to Webpack)
   webpack: (config) => {
