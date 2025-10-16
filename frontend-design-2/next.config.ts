@@ -1,4 +1,9 @@
 import type { NextConfig } from "next";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const nextConfig: NextConfig = {
   // Image optimization for IPFS and external sources
@@ -20,7 +25,12 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
 
-  // Webpack configuration for Web3 compatibility
+  // Turbopack configuration
+  turbopack: {
+    root: __dirname, // Explicit workspace root
+  },
+
+  // Webpack configuration for Web3 compatibility (used when Turbopack falls back to Webpack)
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
