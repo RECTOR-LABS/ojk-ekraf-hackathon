@@ -18,10 +18,10 @@ export function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-glass-border">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex items-center justify-between min-h-[52px]">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-h-[44px]">
             <motion.div
               className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center"
               whileHover={{ scale: 1.05, rotate: 5 }}
@@ -29,7 +29,7 @@ export function Navbar() {
             >
               <Shield className="w-6 h-6 text-white" />
             </motion.div>
-            <h1 className="text-xl font-bold gradient-text">KaryaChain</h1>
+            <h1 className="text-lg sm:text-xl font-bold gradient-text">KaryaChain</h1>
           </Link>
 
           {/* Desktop Navigation */}
@@ -38,7 +38,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground transition-colors py-2 min-h-[44px] flex items-center"
               >
                 {link.label}
               </Link>
@@ -47,7 +47,9 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <LanguageSwitcher />
+            <div className="min-h-[44px] flex items-center">
+              <LanguageSwitcher />
+            </div>
             <Link href="/register">
               <GlassButton variant="primary">Get Started</GlassButton>
             </Link>
@@ -56,7 +58,7 @@ export function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="md:hidden glass rounded-lg p-2"
+            className="md:hidden glass rounded-lg p-3 min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
