@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassInput } from '@/components/ui/glass/GlassInput';
 import { useRegistrationStore, AssetType } from '@/lib/stores/registrationStore';
-import { Palette, Music, BookOpen, Video, Grid3x3, X } from 'lucide-react';
+import { Palette, Music, BookOpen, Video, Grid3x3, X, Check } from 'lucide-react';
 
 const assetTypes = [
   { value: 'VISUAL_ART' as AssetType, label: 'Visual Art', icon: Palette, color: 'from-pink-600' },
@@ -16,7 +16,7 @@ const assetTypes = [
 ];
 
 export function MetadataFormStep() {
-  const { metadata, setMetadata, nextStep, prevStep } = useRegistrationStore();
+  const { metadata, setMetadata, nextStep, prevStep, currentStep } = useRegistrationStore();
 
   const [title, setTitle] = useState(metadata?.title || '');
   const [description, setDescription] = useState(metadata?.description || '');
@@ -25,6 +25,17 @@ export function MetadataFormStep() {
   const [tagInput, setTagInput] = useState('');
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Sync local state with Zustand store when navigating to this step (currentStep === 1)
+  useEffect(() => {
+    if (currentStep === 1 && metadata) {
+      console.log('[MetadataFormStep] Syncing from store:', metadata); // Debug log
+      setTitle(metadata.title || '');
+      setDescription(metadata.description || '');
+      setAssetType(metadata.assetType || null);
+      setTags(metadata.tags || []); // This should now reload the tags
+    }
+  }, [currentStep]); // Only watch currentStep, not metadata (object reference doesn't change)
 
   // Validate form
   const validate = () => {
@@ -50,17 +61,31 @@ export function MetadataFormStep() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
-  const handleSubmit = () => {
-    if (validate() && assetType) {
+  // Save current form data to store
+  const saveMetadata = () => {
+    if (assetType) {
+      console.log('[MetadataFormStep] Saving to store:', { title, description, assetType, tags }); // Debug log
       setMetadata({
         title,
         description,
         assetType,
         tags,
       });
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = () => {
+    if (validate()) {
+      saveMetadata();
       nextStep();
     }
+  };
+
+  // Handle going back with auto-save
+  const handleBack = () => {
+    saveMetadata(); // Save current progress even if validation fails
+    prevStep();
   };
 
   // Handle tag input
@@ -172,27 +197,46 @@ export function MetadataFormStep() {
             Asset Type <span className="text-red-400">*</span>
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {assetTypes.map((type) => (
-              <motion.button
-                key={type.value}
-                type="button"
-                onClick={() => setAssetType(type.value)}
-                className={`glass rounded-xl p-4 border-2 transition-all ${
-                  assetType === type.value
-                    ? 'border-purple-600 bg-purple-600/20'
-                    : 'border-transparent hover:border-purple-600/30'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div
-                  className={`w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br ${type.color} to-transparent flex items-center justify-center`}
+            {assetTypes.map((type) => {
+              const isSelected = assetType === type.value;
+              return (
+                <motion.button
+                  key={type.value}
+                  type="button"
+                  onClick={() => setAssetType(type.value)}
+                  className={`relative glass rounded-xl p-4 border-2 transition-all ${
+                    isSelected
+                      ? 'border-purple-600 bg-purple-600/30 shadow-lg shadow-purple-600/20'
+                      : 'border-transparent hover:border-purple-600/30'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <type.icon className="w-6 h-6 text-white" />
-                </div>
-                <p className="text-sm font-medium text-center">{type.label}</p>
-              </motion.button>
-            ))}
+                  {/* Selection indicator */}
+                  {isSelected && (
+                    <motion.div
+                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                    >
+                      <Check className="w-4 h-4 text-white" />
+                    </motion.div>
+                  )}
+
+                  <div
+                    className={`w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br ${type.color} to-transparent flex items-center justify-center transition-all ${
+                      isSelected ? 'scale-110' : ''
+                    }`}
+                  >
+                    <type.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <p className={`text-sm font-medium text-center transition-colors ${
+                    isSelected ? 'text-purple-300' : ''
+                  }`}>{type.label}</p>
+                </motion.button>
+              );
+            })}
           </div>
           {errors.assetType && <p className="text-red-400 text-sm mt-2">{errors.assetType}</p>}
         </div>
@@ -241,7 +285,7 @@ export function MetadataFormStep() {
 
       {/* Navigation Buttons */}
       <div className="flex justify-between gap-4 pt-4">
-        <GlassButton variant="ghost" size="lg" onClick={prevStep}>
+        <GlassButton variant="ghost" size="lg" onClick={handleBack}>
           Back
         </GlassButton>
         <GlassButton variant="primary" size="lg" onClick={handleSubmit}>

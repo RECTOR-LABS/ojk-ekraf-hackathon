@@ -5,8 +5,10 @@ import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Shield, Sparkles, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export function HeroSection() {
+  const t = useTranslations('hero');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -85,7 +87,7 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.1 }}
             >
-              Protect Your Creativity
+              {t('title')}
             </motion.span>
             <motion.span
               className="text-foreground block mt-2"
@@ -93,7 +95,7 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.2 }}
             >
-              On The Blockchain
+              {t('subtitle')}
             </motion.span>
           </h1>
         </motion.div>
@@ -105,8 +107,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
         >
-          Tamper-proof copyright registration, NFT creation, and perpetual royalties
-          for Indonesian creators.
+          {t('description')}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -118,12 +119,12 @@ export function HeroSection() {
         >
           <Link href="/register">
             <GlassButton variant="primary" size="lg">
-              Register Copyright
+              {t('registerButton')}
             </GlassButton>
           </Link>
           <Link href="/marketplace">
             <GlassButton variant="secondary" size="lg">
-              Explore Marketplace
+              {t('exploreButton')}
             </GlassButton>
           </Link>
         </motion.div>
@@ -136,11 +137,12 @@ export function HeroSection() {
 }
 
 function StatisticsCounter() {
+  const t = useTranslations('hero.stats');
   // TODO: Fetch real data from blockchain contracts
   const stats = [
-    { value: 1234, label: 'Copyrights Registered' },
-    { value: 567, label: 'NFTs Minted' },
-    { value: 89, label: 'Active Listings' },
+    { value: 1234, label: t('copyrights') },
+    { value: 567, label: t('nfts') },
+    { value: 89, label: t('listings') },
   ];
 
   return (

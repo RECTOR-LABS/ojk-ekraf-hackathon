@@ -236,10 +236,22 @@ body {
   color: var(--foreground);
 }
 
-/* Focus Visible */
-*:focus-visible {
+/* Focus Visible - Only for form inputs, not links/buttons */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid rgba(102, 126, 234, 0.5);
   outline-offset: 2px;
+}
+
+/* Remove outline for links and buttons */
+a:focus,
+a:focus-visible,
+button:focus,
+button:focus-visible,
+[role="button"]:focus,
+[role="button"]:focus-visible {
+  outline: none;
 }
 
 /* Animated Background for Body */
@@ -269,6 +281,35 @@ body::before {
 
 .hover-scale:hover {
   transform: scale(1.05);
+}
+
+/* Cursor Pointer for Interactive Elements */
+a,
+button,
+[role="button"],
+[type="button"],
+[type="submit"],
+[type="reset"],
+label[for],
+select,
+summary,
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Enhanced hover for links */
+a {
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Interactive cards that are clickable */
+a > .glass,
+a > .glass-hover {
+  cursor: pointer;
 }
 
 /* Reduced Motion */

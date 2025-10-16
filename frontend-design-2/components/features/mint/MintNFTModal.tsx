@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { GlassModal } from '@/components/ui/glass/GlassModal';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Badge } from '@/components/ui/glass/Badge';
-import { Sparkles, TrendingUp, Zap, Check } from 'lucide-react';
+import { Sparkles, TrendingUp, Zap, Check, AlertCircle } from 'lucide-react';
+import { KaryaNFTAddress, KaryaNFTABI } from '@/lib/contracts/KaryaNFT';
 
 interface Copyright {
   id: string;
@@ -22,9 +24,22 @@ interface MintNFTModalProps {
 
 export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) {
   const [royaltyPercentage, setRoyaltyPercentage] = useState(10);
-  const [isMinting, setIsMinting] = useState(false);
   const [mintSuccess, setMintSuccess] = useState(false);
   const [tokenId, setTokenId] = useState('');
+  const [error, setError] = useState<string>('');
+
+  // Wagmi hooks for minting
+  const { writeContract, data: txHash, isPending: isWritePending, error: writeError } = useWriteContract();
+  const {
+    isLoading: isTxPending,
+    isSuccess: isTxSuccess,
+    error: txError,
+    data: receipt,
+  } = useWaitForTransactionReceipt({
+    hash: txHash,
+  });
+
+  const isMinting = isWritePending || isTxPending;
 
   // Example calculations
   const exampleSalePrice = 1; // ETH
@@ -32,16 +47,58 @@ export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) 
   const averageResales = 5;
   const lifetimeEarnings = royaltyPerSale * averageResales;
 
-  const handleMint = async () => {
-    setIsMinting(true);
+  // Extract token ID from transaction receipt
+  useEffect(() => {
+    if (isTxSuccess && receipt) {
+      // Extract token ID from NFTMinted event logs
+      const nftMintedEvent = receipt.logs.find((log: any) => {
+        try {
+          // Check if this is the NFTMinted event (topic0)
+          return log.topics[0] === '0x...' || log.address.toLowerCase() === KaryaNFTAddress.toLowerCase();
+        } catch {
+          return false;
+        }
+      });
 
-    // TODO: Implement actual minting with wagmi
-    // Simulate minting process
-    setTimeout(() => {
-      setIsMinting(false);
-      setMintSuccess(true);
-      setTokenId('123'); // Mock token ID
-    }, 3000);
+      if (nftMintedEvent && nftMintedEvent.topics[1]) {
+        // Token ID is usually the first indexed parameter (topics[1])
+        const extractedTokenId = BigInt(nftMintedEvent.topics[1]).toString();
+        setTokenId(extractedTokenId);
+        setMintSuccess(true);
+      } else {
+        // Fallback: use a placeholder if we can't extract
+        setTokenId('Unknown');
+        setMintSuccess(true);
+      }
+    }
+  }, [isTxSuccess, receipt]);
+
+  // Handle errors
+  useEffect(() => {
+    if (writeError) {
+      setError(writeError.message || 'Failed to initiate minting transaction');
+    } else if (txError) {
+      setError(txError.message || 'Transaction failed');
+    }
+  }, [writeError, txError]);
+
+  const handleMint = async () => {
+    try {
+      setError('');
+
+      // Convert royalty percentage to basis points (e.g., 10% = 1000)
+      const royaltyBps = royaltyPercentage * 100;
+
+      writeContract({
+        address: KaryaNFTAddress,
+        abi: KaryaNFTABI,
+        functionName: 'mintNFT',
+        args: [BigInt(copyright.id), BigInt(royaltyBps)],
+      });
+    } catch (err) {
+      console.error('Minting error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to mint NFT');
+    }
   };
 
   const assetTypeLabels: { [key: string]: string } = {

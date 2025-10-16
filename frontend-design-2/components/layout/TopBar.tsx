@@ -2,6 +2,7 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Badge } from '../ui/glass/Badge';
+import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 
 export function TopBar() {
   return (
@@ -13,8 +14,9 @@ export function TopBar() {
           Sepolia Testnet
         </Badge>
 
-        {/* Right: Wallet Connection */}
-        <div className="ml-auto">
+        {/* Right: Language Switcher + Wallet Connection */}
+        <div className="ml-auto flex items-center gap-4">
+          <LanguageSwitcher />
           <ConnectButton
             showBalance={{
               smallScreen: false,

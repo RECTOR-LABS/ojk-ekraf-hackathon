@@ -1,0 +1,156 @@
+{
+  "hero": {
+    "title": "Lindungi Kreativitas Anda",
+    "subtitle": "Di Blockchain",
+    "description": "Pendaftaran hak cipta yang tahan manipulasi, pembuatan NFT, dan royalti abadi untuk kreator Indonesia.",
+    "registerButton": "Daftarkan Hak Cipta",
+    "exploreButton": "Jelajahi Marketplace",
+    "stats": {
+      "copyrights": "Hak Cipta Terdaftar",
+      "nfts": "NFT Telah Dicetak",
+      "listings": "Listing Aktif"
+    }
+  },
+  "howItWorks": {
+    "title": "Mulai dalam",
+    "titleHighlight": "4 Langkah Sederhana",
+    "subtitle": "Dari pendaftaran hingga penghasilan abadi dalam hitungan menit",
+    "steps": {
+      "register": {
+        "title": "Daftarkan Hak Cipta",
+        "description": "Unggah karya kreatif Anda dan tambahkan metadata. Kami menghasilkan hash yang tahan manipulasi dan menyimpannya di blockchain."
+      },
+      "mint": {
+        "title": "Cetak NFT",
+        "description": "Ubah hak cipta terdaftar Anda menjadi NFT. Tentukan persentase royalti Anda (5-20%) untuk semua penjualan di masa depan."
+      },
+      "list": {
+        "title": "Listing di Marketplace",
+        "description": "Tetapkan harga Anda dan listing NFT Anda di marketplace kami. Karya Anda kini siap untuk kolektor."
+      },
+      "earn": {
+        "title": "Dapatkan Penghasilan Selamanya",
+        "description": "Terima pembayaran royalti otomatis di setiap penjualan kembali. Kreativitas Anda membayar Anda secara abadi."
+      }
+    }
+  },
+  "trust": {
+    "blockchain": {
+      "title": "Keamanan Blockchain",
+      "description": "Ethereum Sepolia Testnet",
+      "detail": "Catatan yang tidak dapat diubah dan tahan manipulasi"
+    },
+    "ipfs": {
+      "title": "Penyimpanan IPFS",
+      "description": "Terdesentralisasi & Permanen",
+      "detail": "File Anda tersimpan selamanya di IPFS"
+    },
+    "verified": {
+      "title": "Smart Contract Terverifikasi",
+      "description": "Teraudit & Open Source",
+      "detail": "Kode yang transparan dan terpercaya"
+    }
+  },
+  "cta": {
+    "title": "Mulai Lindungi Karya Anda Hari Ini",
+    "subtitle": "Bergabunglah dengan kreator Indonesia yang mengamankan hak digital mereka di blockchain. Daftarkan hak cipta pertama Anda dalam hitungan menit.",
+    "button": "Daftarkan Hak Cipta Pertama Anda",
+    "features": "Gratis untuk mendaftar • Tidak perlu kartu kredit • Diamankan oleh blockchain"
+  },
+  "marketplace": {
+    "title": "Marketplace NFT",
+    "subtitle": "Temukan dan koleksi karya kreatif unik dari kreator Indonesia",
+    "stats": {
+      "listed": "NFT Terdaftar",
+      "volume": "Total Volume",
+      "avgPrice": "Harga Rata-rata"
+    },
+    "search": "Cari berdasarkan judul atau alamat kreator...",
+    "filters": {
+      "label": "Filter berdasarkan:",
+      "allTypes": "Semua Jenis",
+      "visualArt": "Seni Visual",
+      "music": "Musik",
+      "literature": "Literatur",
+      "video": "Video"
+    },
+    "sort": {
+      "label": "Urutkan berdasarkan:",
+      "recent": "Baru Terdaftar",
+      "priceLow": "Harga: Rendah ke Tinggi",
+      "priceHigh": "Harga: Tinggi ke Rendah",
+      "popular": "Paling Populer"
+    },
+    "card": {
+      "price": "Harga:",
+      "seller": "Penjual:",
+      "views": "Dilihat:",
+      "viewDetails": "Lihat Detail"
+    },
+    "empty": {
+      "title": "NFT Tidak Ditemukan",
+      "description": "Coba sesuaikan pencarian atau filter Anda"
+    },
+    "detail": {
+      "backButton": "← Kembali ke Marketplace",
+      "forSale": "Dijual",
+      "royalty": "Royalti",
+      "views": "dilihat",
+      "properties": {
+        "title": "Properti",
+        "assetType": "Jenis Aset",
+        "tokenId": "ID Token",
+        "listingId": "ID Listing",
+        "copyrightId": "ID Hak Cipta"
+      },
+      "copyright": {
+        "title": "Hak Cipta Terverifikasi",
+        "description": "NFT ini didukung oleh pendaftaran hak cipta yang terverifikasi di blockchain.",
+        "registered": "Terdaftar:",
+        "contentHash": "Hash Konten:"
+      },
+      "price": {
+        "title": "Harga Saat Ini",
+        "listingPrice": "Harga Listing:",
+        "platformFee": "Biaya Platform (2.5%):",
+        "creatorRoyalty": "Royalti Kreator"
+      },
+      "purchase": {
+        "button": "Beli seharga",
+        "processing": "Memproses...",
+        "purchased": "Terbeli",
+        "success": {
+          "title": "Pembelian Berhasil!",
+          "description": "NFT sekarang ada di wallet Anda. Lihat di dashboard Anda."
+        },
+        "error": {
+          "title": "Pembelian Gagal"
+        }
+      },
+      "seller": {
+        "title": "Informasi Penjual",
+        "address": "Alamat Penjual",
+        "creator": "Kreator:",
+        "owner": "Pemilik:"
+      },
+      "timeline": {
+        "title": "Timeline",
+        "copyrightRegistered": "Hak Cipta Terdaftar",
+        "nftMinted": "NFT Dicetak",
+        "listedForSale": "Terdaftar untuk Dijual"
+      },
+      "externalLinks": {
+        "title": "Tautan Eksternal",
+        "etherscan": "Lihat di Etherscan",
+        "ipfs": "Lihat di IPFS"
+      }
+    }
+  },
+  "common": {
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan",
+    "success": "Berhasil",
+    "connectWallet": "Hubungkan Wallet",
+    "disconnect": "Putuskan"
+  }
+}

@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export function CTASection() {
+  const t = useTranslations('cta');
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <h2 className="text-4xl lg:text-5xl font-bold gradient-text mb-4">
-                Start Protecting Your Work Today
+                {t('title')}
               </h2>
             </motion.div>
 
@@ -73,8 +75,7 @@ export function CTASection() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Join Indonesian creators securing their digital rights on blockchain.
-              Register your first copyright in minutes.
+              {t('subtitle')}
             </motion.p>
 
             <motion.div
@@ -84,7 +85,7 @@ export function CTASection() {
             >
               <Link href="/register">
                 <GlassButton variant="primary" size="lg">
-                  Register Your First Copyright
+                  {t('button')}
                 </GlassButton>
               </Link>
             </motion.div>
@@ -96,7 +97,7 @@ export function CTASection() {
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Free to register • No credit card required • Secured by blockchain
+              {t('features')}
             </motion.p>
           </div>
         </motion.div>

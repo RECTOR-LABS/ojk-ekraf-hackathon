@@ -4,36 +4,38 @@ import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Upload, Sparkles, ShoppingBag, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
-const steps = [
-  {
-    number: 1,
-    icon: Upload,
-    title: 'Register Copyright',
-    description: 'Upload your creative work and add metadata. We generate a tamper-proof hash and store it on the blockchain.',
-  },
-  {
-    number: 2,
-    icon: Sparkles,
-    title: 'Mint NFT',
-    description: 'Transform your registered copyright into an NFT. Set your royalty percentage (5-20%) for all future sales.',
-  },
-  {
-    number: 3,
-    icon: ShoppingBag,
-    title: 'List on Marketplace',
-    description: 'Set your price and list your NFT on our marketplace. Your work is now ready for collectors.',
-  },
-  {
-    number: 4,
-    icon: TrendingUp,
-    title: 'Earn Forever',
-    description: 'Receive automatic royalty payments on every resale. Your creativity pays you perpetually.',
-  },
-];
+import { useTranslations } from 'next-intl';
 
 export function HowItWorksSection() {
+  const t = useTranslations('howItWorks');
   const [inView, setInView] = useState(false);
+
+  const steps = [
+    {
+      number: 1,
+      icon: Upload,
+      title: t('steps.register.title'),
+      description: t('steps.register.description'),
+    },
+    {
+      number: 2,
+      icon: Sparkles,
+      title: t('steps.mint.title'),
+      description: t('steps.mint.description'),
+    },
+    {
+      number: 3,
+      icon: ShoppingBag,
+      title: t('steps.list.title'),
+      description: t('steps.list.description'),
+    },
+    {
+      number: 4,
+      icon: TrendingUp,
+      title: t('steps.earn.title'),
+      description: t('steps.earn.description'),
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,10 +70,10 @@ export function HowItWorksSection() {
           transition={{ duration: 0.3 }}
         >
           <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            Get Started in <span className="gradient-text">4 Simple Steps</span>
+            {t('title')} <span className="gradient-text">{t('titleHighlight')}</span>
           </h2>
           <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
-            From registration to perpetual earnings in minutes
+            {t('subtitle')}
           </p>
         </motion.div>
 

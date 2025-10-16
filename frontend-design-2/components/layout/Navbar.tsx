@@ -5,6 +5,7 @@ import { Shield, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 const navLinks = [
   { label: 'Features', href: '#features' },
@@ -46,6 +47,7 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
+            <LanguageSwitcher />
             <Link href="/register">
               <GlassButton variant="primary">Get Started</GlassButton>
             </Link>
@@ -78,6 +80,9 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <div className="flex justify-center">
+              <LanguageSwitcher />
+            </div>
             <Link href="/register" onClick={() => setIsMobileOpen(false)}>
               <GlassButton variant="primary" fullWidth>
                 Get Started

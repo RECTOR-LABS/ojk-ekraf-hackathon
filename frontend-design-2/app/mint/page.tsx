@@ -4,56 +4,19 @@ import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Badge } from '@/components/ui/glass/Badge';
-import { Sparkles, Check, ExternalLink, Image, File } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/glass/Loading';
+import { Sparkles, Check, ExternalLink, Image as ImageIcon, File, Music as MusicIcon, BookOpen, Video as VideoIcon } from 'lucide-react';
 import { useState } from 'react';
 import { MintNFTModal } from '@/components/features/mint/MintNFTModal';
-
-interface Copyright {
-  id: string;
-  title: string;
-  assetType: string;
-  contentHash: string;
-  registeredAt: string;
-  isMinted: boolean;
-  tokenId?: string;
-}
-
-// TODO: Fetch from blockchain using wagmi
-const mockCopyrights: Copyright[] = [
-  {
-    id: '1',
-    title: 'Digital Artwork Collection',
-    assetType: 'VISUAL_ART',
-    contentHash: '0xa1b2c3d4e5f6...',
-    registeredAt: '2025-01-10',
-    isMinted: false,
-  },
-  {
-    id: '2',
-    title: 'Music Album - Nusantara Dreams',
-    assetType: 'MUSIC',
-    contentHash: '0xf6e5d4c3b2a1...',
-    registeredAt: '2025-01-08',
-    isMinted: true,
-    tokenId: '42',
-  },
-  {
-    id: '3',
-    title: 'Short Story: Tales of Indonesia',
-    assetType: 'LITERATURE',
-    contentHash: '0x1a2b3c4d5e6f...',
-    registeredAt: '2025-01-05',
-    isMinted: false,
-  },
-];
+import { useUserCopyrights, type Copyright } from '@/lib/hooks/useUserCopyrights';
+import Image from 'next/image';
 
 export default function MintPage() {
   const [selectedCopyright, setSelectedCopyright] = useState<Copyright | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const totalCopyrights = mockCopyrights.length;
-  const mintedCount = mockCopyrights.filter((c) => c.isMinted).length;
-  const unmintedCount = totalCopyrights - mintedCount;
+  // Fetch real blockchain data
+  const { copyrights, isLoading, error, totalCopyrights, mintedCount, unmintedCount } = useUserCopyrights();
 
   const openMintModal = (copyright: Copyright) => {
     setSelectedCopyright(copyright);
@@ -106,14 +69,27 @@ export default function MintPage() {
       </motion.div>
 
       {/* Copyright Cards Grid */}
-      {mockCopyrights.length > 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center py-16">
+          <LoadingSpinner size="lg" />
+        </div>
+      ) : error ? (
+        <div className="text-center py-16">
+          <GlassCard variant="elevated">
+            <div className="py-8 space-y-4">
+              <p className="text-red-400">Failed to load copyrights from blockchain</p>
+              <p className="text-sm text-foreground/60">Please check your wallet connection and try again</p>
+            </div>
+          </GlassCard>
+        </div>
+      ) : copyrights.length > 0 ? (
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          {mockCopyrights.map((copyright, index) => (
+          {copyrights.map((copyright, index) => (
             <CopyrightCard
               key={copyright.id}
               copyright={copyright}
@@ -145,12 +121,38 @@ interface CopyrightCardProps {
 }
 
 function CopyrightCard({ copyright, onMint, delay }: CopyrightCardProps) {
+  const [imageError, setImageError] = useState(false);
+
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
     LITERATURE: 'Literature',
     VIDEO: 'Video',
     OTHER: 'Other',
+  };
+
+  const imageUrl = copyright.ipfsCID && copyright.assetType === 'VISUAL_ART'
+    ? `https://gateway.pinata.cloud/ipfs/${copyright.ipfsCID}`
+    : null;
+
+  // Asset type icon mapping
+  const getAssetIcon = () => {
+    if (copyright.isMinted) {
+      return <Check className="w-16 h-16 text-green-400" aria-label="Minted" />;
+    }
+
+    switch (copyright.assetType) {
+      case 'MUSIC':
+        return <MusicIcon className="w-16 h-16 text-purple-400" aria-label="Music" />;
+      case 'LITERATURE':
+        return <BookOpen className="w-16 h-16 text-blue-400" aria-label="Literature" />;
+      case 'VIDEO':
+        return <VideoIcon className="w-16 h-16 text-green-400" aria-label="Video" />;
+      case 'OTHER':
+        return <File className="w-16 h-16 text-gray-400" aria-label="Other" />;
+      default:
+        return <ImageIcon className="w-16 h-16 text-purple-400" aria-label="Visual Art" />;
+    }
   };
 
   return (
@@ -163,11 +165,18 @@ function CopyrightCard({ copyright, onMint, delay }: CopyrightCardProps) {
         <div className="space-y-4">
           {/* Thumbnail / Icon */}
           <div className="relative">
-            <div className="aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
-              {copyright.isMinted ? (
-                <Check className="w-16 h-16 text-green-400" aria-label="Minted" />
+            <div className="aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center overflow-hidden">
+              {imageUrl && !imageError ? (
+                <Image
+                  src={imageUrl}
+                  alt={copyright.title}
+                  fill
+                  className="object-cover"
+                  onError={() => setImageError(true)}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
               ) : (
-                <Image className="w-16 h-16 text-purple-400" aria-label="Not minted" />
+                getAssetIcon()
               )}
             </div>
 

@@ -39,7 +39,7 @@ export function GlassModal({ isOpen, onClose, title, children, size = 'md' }: Gl
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -49,7 +49,8 @@ export function GlassModal({ isOpen, onClose, title, children, size = 'md' }: Gl
           {/* Modal */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
             <motion.div
-              className={`glass rounded-2xl w-full ${sizeClasses[size]} p-6 m-auto`}
+              className={`glass rounded-2xl w-full ${sizeClasses[size]} p-6 m-auto bg-black/60`}
+              style={{ backdropFilter: 'blur(24px)' }}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}

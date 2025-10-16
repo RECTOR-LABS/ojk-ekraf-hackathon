@@ -7,6 +7,7 @@ import { GlassInput } from '@/components/ui/glass/GlassInput';
 import { Badge } from '@/components/ui/glass/Badge';
 import { Search, Filter, ShoppingBag, TrendingUp, Image, Music, FileText, Video, Package } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 // TODO: Fetch from blockchain using wagmi
 const mockMarketplaceNFTs = [
@@ -72,18 +73,19 @@ const mockMarketplaceNFTs = [
   },
 ];
 
-const assetTypes = [
-  { value: 'ALL', label: 'All Types', icon: Package },
-  { value: 'VISUAL_ART', label: 'Visual Art', icon: Image },
-  { value: 'MUSIC', label: 'Music', icon: Music },
-  { value: 'LITERATURE', label: 'Literature', icon: FileText },
-  { value: 'VIDEO', label: 'Video', icon: Video },
-];
-
 export default function MarketplacePage() {
+  const t = useTranslations('marketplace');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAssetType, setSelectedAssetType] = useState('ALL');
   const [sortBy, setSortBy] = useState('recent');
+
+  const assetTypes = [
+    { value: 'ALL', label: t('filters.allTypes'), icon: Package },
+    { value: 'VISUAL_ART', label: t('filters.visualArt'), icon: Image },
+    { value: 'MUSIC', label: t('filters.music'), icon: Music },
+    { value: 'LITERATURE', label: t('filters.literature'), icon: FileText },
+    { value: 'VIDEO', label: t('filters.video'), icon: Video },
+  ];
 
   // Filter NFTs
   const filteredNFTs = mockMarketplaceNFTs.filter((nft) => {
@@ -120,10 +122,10 @@ export default function MarketplacePage() {
       {/* Page Header */}
       <motion.div className="mb-12" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-          <span className="gradient-text">NFT Marketplace</span>
+          <span className="gradient-text">{t('title')}</span>
         </h1>
         <p className="text-xl text-foreground/70">
-          Discover and collect unique creative works from Indonesian creators
+          {t('subtitle')}
         </p>
       </motion.div>
 
@@ -133,7 +135,7 @@ export default function MarketplacePage() {
           <GlassCard>
             <div className="text-center">
               <p className="text-3xl font-bold gradient-text mb-2">{totalNFTs}</p>
-              <p className="text-sm text-foreground/60">Listed NFTs</p>
+              <p className="text-sm text-foreground/60">{t('stats.listed')}</p>
             </div>
           </GlassCard>
         </motion.div>
@@ -146,7 +148,7 @@ export default function MarketplacePage() {
           <GlassCard>
             <div className="text-center">
               <p className="text-3xl font-bold text-green-400 mb-2">{totalVolume} ETH</p>
-              <p className="text-sm text-foreground/60">Total Volume</p>
+              <p className="text-sm text-foreground/60">{t('stats.volume')}</p>
             </div>
           </GlassCard>
         </motion.div>
@@ -159,7 +161,7 @@ export default function MarketplacePage() {
           <GlassCard>
             <div className="text-center">
               <p className="text-3xl font-bold text-blue-400 mb-2">{avgPrice} ETH</p>
-              <p className="text-sm text-foreground/60">Average Price</p>
+              <p className="text-sm text-foreground/60">{t('stats.avgPrice')}</p>
             </div>
           </GlassCard>
         </motion.div>
@@ -178,7 +180,7 @@ export default function MarketplacePage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
               <GlassInput
                 type="text"
-                placeholder="Search by title or creator address..."
+                placeholder={t('search')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12"
@@ -189,7 +191,7 @@ export default function MarketplacePage() {
             <div className="flex flex-wrap gap-3 items-center">
               <div className="flex items-center gap-2 text-sm text-foreground/60">
                 <Filter className="w-4 h-4" />
-                <span className="font-semibold">Filter by:</span>
+                <span className="font-semibold">{t('filters.label')}</span>
               </div>
 
               {assetTypes.map((type) => (
@@ -212,14 +214,14 @@ export default function MarketplacePage() {
             <div className="flex flex-wrap gap-3 items-center">
               <div className="flex items-center gap-2 text-sm text-foreground/60">
                 <TrendingUp className="w-4 h-4" />
-                <span className="font-semibold">Sort by:</span>
+                <span className="font-semibold">{t('sort.label')}</span>
               </div>
 
               {[
-                { value: 'recent', label: 'Recently Listed' },
-                { value: 'price-low', label: 'Price: Low to High' },
-                { value: 'price-high', label: 'Price: High to Low' },
-                { value: 'popular', label: 'Most Popular' },
+                { value: 'recent', label: t('sort.recent') },
+                { value: 'price-low', label: t('sort.priceLow') },
+                { value: 'price-high', label: t('sort.priceHigh') },
+                { value: 'popular', label: t('sort.popular') },
               ].map((option) => (
                 <button
                   key={option.value}
@@ -257,8 +259,8 @@ export default function MarketplacePage() {
           <GlassCard>
             <div className="text-center py-12">
               <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
-              <h3 className="text-xl font-bold mb-2">No NFTs Found</h3>
-              <p className="text-foreground/70">Try adjusting your search or filters</p>
+              <h3 className="text-xl font-bold mb-2">{t('empty.title')}</h3>
+              <p className="text-foreground/70">{t('empty.description')}</p>
             </div>
           </GlassCard>
         </motion.div>
@@ -279,6 +281,8 @@ interface NFT {
 }
 
 function MarketplaceNFTCard({ nft }: { nft: NFT }) {
+  const t = useTranslations('marketplace.card');
+
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -333,17 +337,17 @@ function MarketplaceNFTCard({ nft }: { nft: NFT }) {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-foreground/60">Price:</span>
+                <span className="text-foreground/60">{t('price')}</span>
                 <span className="font-bold text-green-400 text-lg">{nft.price} ETH</span>
               </div>
 
               <div className="flex justify-between items-center text-xs">
-                <span className="text-foreground/60">Seller:</span>
+                <span className="text-foreground/60">{t('seller')}</span>
                 <span className="font-mono text-foreground/80">{nft.seller}</span>
               </div>
 
               <div className="flex justify-between items-center text-xs">
-                <span className="text-foreground/60">Views:</span>
+                <span className="text-foreground/60">{t('views')}</span>
                 <span className="text-foreground/80">{nft.views}</span>
               </div>
             </div>
@@ -352,7 +356,7 @@ function MarketplaceNFTCard({ nft }: { nft: NFT }) {
             <div className="pt-2 border-t border-foreground/10">
               <div className="flex items-center justify-center gap-2 text-sm text-purple-400 font-semibold">
                 <ShoppingBag className="w-4 h-4" />
-                <span>View Details</span>
+                <span>{t('viewDetails')}</span>
               </div>
             </div>
           </div>

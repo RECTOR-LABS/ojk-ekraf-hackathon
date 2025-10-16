@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { useRegistrationStore } from '@/lib/stores/registrationStore';
@@ -18,6 +19,16 @@ const steps = [
 
 export default function RegisterPage() {
   const currentStep = useRegistrationStore((state) => state.currentStep);
+  const registrationId = useRegistrationStore((state) => state.registrationId);
+  const reset = useRegistrationStore((state) => state.reset);
+
+  // Reset store when visiting after successful registration
+  useEffect(() => {
+    if (registrationId && currentStep === 3) {
+      // User came back from success page, reset the form
+      reset();
+    }
+  }, [registrationId, currentStep, reset]);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">

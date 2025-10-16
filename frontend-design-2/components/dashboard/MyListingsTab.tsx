@@ -1,51 +1,40 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Badge } from '@/components/ui/glass/Badge';
-import { ShoppingBag, Eye, TrendingUp, Calendar, Image } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/glass/Loading';
+import { ShoppingBag, Eye, TrendingUp, Calendar, Image, Music, BookOpen, Video, File } from 'lucide-react';
 import Link from 'next/link';
-
-interface Listing {
-  listingId: string;
-  tokenId: string;
-  title: string;
-  assetType: string;
-  price: string;
-  listedAt: string;
-  views: number;
-  royaltyPercentage: number;
-}
-
-// TODO: Fetch from blockchain using wagmi
-const mockListings = [
-  {
-    listingId: '456',
-    tokenId: '42',
-    title: 'Music Album - Nusantara Dreams',
-    assetType: 'MUSIC',
-    price: '0.5',
-    listedAt: '2025-01-12',
-    views: 127,
-    royaltyPercentage: 10,
-  },
-  {
-    listingId: '789',
-    tokenId: '156',
-    title: 'Documentary Film - Heritage Stories',
-    assetType: 'VIDEO',
-    price: '1.2',
-    listedAt: '2025-01-16',
-    views: 89,
-    royaltyPercentage: 12,
-  },
-];
+import NextImage from 'next/image';
+import { useUserListings, type UserListing } from '@/lib/hooks/useUserListings';
 
 export function MyListingsTab() {
-  const totalListings = mockListings.length;
-  const totalValue = mockListings.reduce((sum, listing) => sum + Number(listing.price), 0);
-  const totalViews = mockListings.reduce((sum, listing) => sum + listing.views, 0);
+  const { listings, isLoading, error, totalListings } = useUserListings();
+
+  const totalValue = listings.reduce((sum, listing) => sum + Number(listing.price), 0);
+  const avgPrice = totalListings > 0 ? (totalValue / totalListings).toFixed(3) : '0.000';
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-16">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <GlassCard>
+        <div className="text-center py-12">
+          <p className="text-red-400 mb-2">Failed to load listings</p>
+          <p className="text-sm text-foreground/60">Please check your wallet connection</p>
+        </div>
+      </GlassCard>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -82,8 +71,8 @@ export function MyListingsTab() {
         >
           <GlassCard>
             <div className="text-center">
-              <p className="text-3xl font-bold text-blue-400 mb-2">{totalViews}</p>
-              <p className="text-sm text-foreground/60">Total Views</p>
+              <p className="text-3xl font-bold text-blue-400 mb-2">{avgPrice} ETH</p>
+              <p className="text-sm text-foreground/60">Average Price</p>
             </div>
           </GlassCard>
         </motion.div>
@@ -91,7 +80,7 @@ export function MyListingsTab() {
 
       {/* Listing Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockListings.map((listing, index) => (
+        {listings.map((listing, index) => (
           <motion.div
             key={listing.listingId}
             initial={{ opacity: 0, y: 20 }}
@@ -103,7 +92,7 @@ export function MyListingsTab() {
         ))}
       </div>
 
-      {mockListings.length === 0 && (
+      {listings.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <GlassCard>
             <div className="text-center py-12">
@@ -123,7 +112,9 @@ export function MyListingsTab() {
   );
 }
 
-function ListingCard({ listing }: { listing: Listing }) {
+function ListingCard({ listing }: { listing: UserListing }) {
+  const [imageError, setImageError] = useState(false);
+
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -132,13 +123,44 @@ function ListingCard({ listing }: { listing: Listing }) {
     OTHER: 'Other',
   };
 
+  const imageUrl = listing.ipfsCID && listing.assetType === 'VISUAL_ART'
+    ? `https://gateway.pinata.cloud/ipfs/${listing.ipfsCID}`
+    : null;
+
+  // Asset type icon mapping
+  const getAssetIcon = () => {
+    switch (listing.assetType) {
+      case 'MUSIC':
+        return <Music className="w-16 h-16 text-purple-400" aria-label="Music" />;
+      case 'LITERATURE':
+        return <BookOpen className="w-16 h-16 text-blue-400" aria-label="Literature" />;
+      case 'VIDEO':
+        return <Video className="w-16 h-16 text-green-400" aria-label="Video" />;
+      case 'OTHER':
+        return <File className="w-16 h-16 text-gray-400" aria-label="Other" />;
+      default:
+        return <Image className="w-16 h-16 text-green-400" aria-label="Visual Art" />;
+    }
+  };
+
   return (
     <GlassCard hover>
       <div className="space-y-4">
         {/* Thumbnail */}
         <div className="relative">
-          <div className="aspect-video rounded-xl bg-gradient-to-br from-green-600/20 to-blue-600/20 flex items-center justify-center">
-            <Image className="w-16 h-16 text-green-400" aria-label="Listing preview" />
+          <div className="aspect-video rounded-xl bg-gradient-to-br from-green-600/20 to-blue-600/20 flex items-center justify-center overflow-hidden">
+            {imageUrl && !imageError ? (
+              <NextImage
+                src={imageUrl}
+                alt={listing.title}
+                fill
+                className="object-cover"
+                onError={() => setImageError(true)}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            ) : (
+              getAssetIcon()
+            )}
           </div>
 
           {/* Status Badge */}
@@ -182,27 +204,11 @@ function ListingCard({ listing }: { listing: Listing }) {
               <span>{new Date(listing.listedAt).toLocaleDateString()}</span>
             </div>
             <div className="flex justify-between text-foreground/60">
-              <span className="flex items-center gap-1">
-                <Eye className="w-3 h-3" />
-                Views:
-              </span>
-              <span>{listing.views}</span>
+              <span>Copyright ID:</span>
+              <span className="font-mono">#{listing.copyrightId}</span>
             </div>
           </div>
         </div>
-
-        {/* Performance Indicator */}
-        <GlassCard className="bg-gradient-to-r from-green-600/10 to-blue-600/10">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center gap-1 text-foreground/70">
-              <TrendingUp className="w-3 h-3 text-green-400" />
-              <span>Performance</span>
-            </div>
-            <Badge variant="success" className="text-xs">
-              {listing.views > 100 ? 'High' : listing.views > 50 ? 'Medium' : 'Low'}
-            </Badge>
-          </div>
-        </GlassCard>
 
         {/* Actions */}
         <div className="flex gap-2">

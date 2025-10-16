@@ -17,6 +17,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 // TODO: Fetch from blockchain using wagmi and IPFS
 const mockNFTDetail = {
@@ -42,6 +43,7 @@ const mockNFTDetail = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function NFTDetailPage({ params }: { params: { tokenId: string } }) {
+  const t = useTranslations('marketplace.detail');
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [purchaseSuccess, setPurchaseSuccess] = useState(false);
   const [purchaseError, setPurchaseError] = useState('');
@@ -78,7 +80,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="mb-8">
         <Link href="/marketplace">
           <GlassButton variant="ghost" size="sm">
-            ← Back to Marketplace
+            {t('backButton')}
           </GlassButton>
         </Link>
       </motion.div>
@@ -96,9 +98,9 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
               {/* Badges Overlay */}
               <div className="absolute top-4 right-4 flex gap-2">
                 <Badge variant="default" className="bg-purple-600/80 backdrop-blur-sm">
-                  {nft.royaltyPercentage}% Royalty
+                  {nft.royaltyPercentage}% {t('royalty')}
                 </Badge>
-                <Badge variant="success">For Sale</Badge>
+                <Badge variant="success">{t('forSale')}</Badge>
               </div>
 
               {/* Views Counter */}
@@ -106,7 +108,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                 <div className="glass rounded-lg px-3 py-1.5 bg-background/80 backdrop-blur-md">
                   <div className="flex items-center gap-2 text-sm">
                     <Eye className="w-4 h-4 text-foreground/60" />
-                    <span className="font-semibold">{nft.views} views</span>
+                    <span className="font-semibold">{nft.views} {t('views')}</span>
                   </div>
                 </div>
               </div>
@@ -120,22 +122,22 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
             transition={{ delay: 0.1 }}
           >
             <GlassCard>
-              <h3 className="font-bold text-lg mb-4">Properties</h3>
+              <h3 className="font-bold text-lg mb-4">{t('properties.title')}</h3>
               <div className="grid grid-cols-2 gap-3">
                 <div className="glass rounded-lg p-3 border border-foreground/10">
-                  <p className="text-xs text-foreground/60 mb-1">Asset Type</p>
+                  <p className="text-xs text-foreground/60 mb-1">{t('properties.assetType')}</p>
                   <p className="font-semibold">{assetTypeLabels[nft.assetType]}</p>
                 </div>
                 <div className="glass rounded-lg p-3 border border-foreground/10">
-                  <p className="text-xs text-foreground/60 mb-1">Token ID</p>
+                  <p className="text-xs text-foreground/60 mb-1">{t('properties.tokenId')}</p>
                   <p className="font-mono font-semibold">#{nft.tokenId}</p>
                 </div>
                 <div className="glass rounded-lg p-3 border border-foreground/10">
-                  <p className="text-xs text-foreground/60 mb-1">Listing ID</p>
+                  <p className="text-xs text-foreground/60 mb-1">{t('properties.listingId')}</p>
                   <p className="font-mono font-semibold">#{nft.listingId}</p>
                 </div>
                 <div className="glass rounded-lg p-3 border border-foreground/10">
-                  <p className="text-xs text-foreground/60 mb-1">Copyright ID</p>
+                  <p className="text-xs text-foreground/60 mb-1">{t('properties.copyrightId')}</p>
                   <p className="font-mono font-semibold">#{nft.registrationId}</p>
                 </div>
               </div>
@@ -154,17 +156,17 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                   <Shield className="w-5 h-5 text-green-400" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold mb-1">Copyright Verified</h3>
+                  <h3 className="font-bold mb-1">{t('copyright.title')}</h3>
                   <p className="text-sm text-foreground/70 mb-3">
-                    This NFT is backed by a verified copyright registration on the blockchain.
+                    {t('copyright.description')}
                   </p>
                   <div className="space-y-1 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-foreground/60">Registered:</span>
+                      <span className="text-foreground/60">{t('copyright.registered')}</span>
                       <span>{new Date(nft.registeredAt).toLocaleDateString()}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-foreground/60">Content Hash:</span>
+                      <span className="text-foreground/60">{t('copyright.contentHash')}</span>
                       <span className="font-mono">{nft.contentHash.slice(0, 10)}...</span>
                     </div>
                   </div>
@@ -196,7 +198,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
             <GlassCard className="bg-gradient-to-br from-purple-600/10 to-blue-600/10">
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm text-foreground/60 mb-1">Current Price</p>
+                  <p className="text-sm text-foreground/60 mb-1">{t('price.title')}</p>
                   <p className="text-4xl font-bold text-green-400">{nft.price} ETH</p>
                 </div>
 
@@ -212,9 +214,9 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                         <Check className="w-5 h-5 text-green-400" />
                       </div>
                       <div className="flex-1">
-                        <p className="font-bold text-green-400 mb-1">Purchase Successful!</p>
+                        <p className="font-bold text-green-400 mb-1">{t('purchase.success.title')}</p>
                         <p className="text-sm text-foreground/70">
-                          The NFT is now in your wallet. View it in your dashboard.
+                          {t('purchase.success.description')}
                         </p>
                       </div>
                     </div>
@@ -231,7 +233,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                     <div className="flex items-center gap-3">
                       <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
                       <div className="flex-1">
-                        <p className="font-bold text-red-400 mb-1">Purchase Failed</p>
+                        <p className="font-bold text-red-400 mb-1">{t('purchase.error.title')}</p>
                         <p className="text-sm text-foreground/70">{purchaseError}</p>
                       </div>
                     </div>
@@ -249,24 +251,24 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                 >
                   <ShoppingBag className="w-5 h-5 mr-2" />
                   {isPurchasing
-                    ? 'Processing...'
+                    ? t('purchase.processing')
                     : purchaseSuccess
-                      ? 'Purchased'
-                      : `Buy for ${nft.price} ETH`}
+                      ? t('purchase.purchased')
+                      : `${t('purchase.button')} ${nft.price} ETH`}
                 </GlassButton>
 
                 {/* Fee Breakdown */}
                 <div className="space-y-2 text-sm pt-3 border-t border-foreground/10">
                   <div className="flex justify-between text-foreground/60">
-                    <span>Listing Price:</span>
+                    <span>{t('price.listingPrice')}</span>
                     <span>{nft.price} ETH</span>
                   </div>
                   <div className="flex justify-between text-foreground/60">
-                    <span>Platform Fee (2.5%):</span>
+                    <span>{t('price.platformFee')}</span>
                     <span>{platformFee.toFixed(4)} ETH</span>
                   </div>
                   <div className="flex justify-between text-foreground/60">
-                    <span>Creator Royalty ({nft.royaltyPercentage}%):</span>
+                    <span>{t('price.creatorRoyalty')} ({nft.royaltyPercentage}%):</span>
                     <span>{creatorRoyalty.toFixed(4)} ETH</span>
                   </div>
                 </div>
@@ -281,25 +283,25 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
             transition={{ delay: 0.2 }}
           >
             <GlassCard>
-              <h3 className="font-bold mb-4">Seller Information</h3>
+              <h3 className="font-bold mb-4">{t('seller.title')}</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
                     <User className="w-6 h-6 text-purple-400" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-foreground/60">Seller Address</p>
+                    <p className="text-sm text-foreground/60">{t('seller.address')}</p>
                     <p className="font-mono font-semibold">{nft.seller}</p>
                   </div>
                 </div>
 
                 <div className="space-y-2 text-sm pt-3 border-t border-foreground/10">
                   <div className="flex justify-between">
-                    <span className="text-foreground/60">Creator:</span>
+                    <span className="text-foreground/60">{t('seller.creator')}</span>
                     <span className="font-mono">{nft.creator}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-foreground/60">Owner:</span>
+                    <span className="text-foreground/60">{t('seller.owner')}</span>
                     <span className="font-mono">{nft.owner}</span>
                   </div>
                 </div>
@@ -314,12 +316,12 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
             transition={{ delay: 0.3 }}
           >
             <GlassCard>
-              <h3 className="font-bold mb-4">Timeline</h3>
+              <h3 className="font-bold mb-4">{t('timeline.title')}</h3>
               <div className="space-y-3">
                 {[
-                  { label: 'Copyright Registered', date: nft.registeredAt },
-                  { label: 'NFT Minted', date: nft.mintedAt },
-                  { label: 'Listed for Sale', date: nft.listedAt },
+                  { label: t('timeline.copyrightRegistered'), date: nft.registeredAt },
+                  { label: t('timeline.nftMinted'), date: nft.mintedAt },
+                  { label: t('timeline.listedForSale'), date: nft.listedAt },
                 ].map((event, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0">
@@ -344,7 +346,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
             transition={{ delay: 0.4 }}
           >
             <GlassCard>
-              <h3 className="font-bold mb-3">External Links</h3>
+              <h3 className="font-bold mb-3">{t('externalLinks.title')}</h3>
               <div className="space-y-2">
                 <a
                   href={`https://sepolia.etherscan.io/token/CONTRACT_ADDRESS/${nft.tokenId}`}
@@ -352,7 +354,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors"
                 >
-                  <span className="text-sm font-medium">View on Etherscan</span>
+                  <span className="text-sm font-medium">{t('externalLinks.etherscan')}</span>
                   <ExternalLink className="w-4 h-4 text-foreground/60" />
                 </a>
                 <a
@@ -361,7 +363,7 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors"
                 >
-                  <span className="text-sm font-medium">View on IPFS</span>
+                  <span className="text-sm font-medium">{t('externalLinks.ipfs')}</span>
                   <ExternalLink className="w-4 h-4 text-foreground/60" />
                 </a>
               </div>

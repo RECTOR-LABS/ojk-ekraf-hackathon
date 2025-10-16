@@ -7,6 +7,7 @@ import { Check, Download, ExternalLink, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Confetti from 'react-confetti';
 import { useEffect, useState } from 'react';
+import { useRegistrationStore } from '@/lib/stores/registrationStore';
 
 interface SuccessPageProps {
   registrationId: string;
@@ -23,6 +24,7 @@ export function SuccessPage({
 }: SuccessPageProps) {
   const [showConfetti, setShowConfetti] = useState(true);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const { reset } = useRegistrationStore();
 
   useEffect(() => {
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
@@ -31,6 +33,10 @@ export function SuccessPage({
   }, []);
 
   const etherscanUrl = `https://sepolia.etherscan.io/tx/${transactionHash}`;
+
+  const handleRegisterAnother = () => {
+    reset(); // Clear the registration store
+  };
 
   return (
     <div className="space-y-6">
@@ -167,7 +173,7 @@ export function SuccessPage({
         <Link href="/dashboard">
           <GlassButton variant="secondary">View Dashboard</GlassButton>
         </Link>
-        <Link href="/register">
+        <Link href="/register" onClick={handleRegisterAnother}>
           <GlassButton variant="ghost">Register Another Copyright</GlassButton>
         </Link>
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAccount } from 'wagmi';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Shield, Sparkles, ShoppingBag } from 'lucide-react';
 import { MyCopyrightsTab } from '@/components/dashboard/MyCopyrightsTab';
@@ -16,9 +17,10 @@ const tabs = [
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('copyrights');
+  const { address } = useAccount();
 
-  // TODO: Get wallet address from wagmi
-  const userAddress = '0xcAfe...f8Bf';
+  // Format address for display
+  const userAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Not Connected';
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">

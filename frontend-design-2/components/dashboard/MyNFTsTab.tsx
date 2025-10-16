@@ -5,62 +5,41 @@ import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Badge } from '@/components/ui/glass/Badge';
-import { Sparkles, Eye, Image, ShoppingBag } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/glass/Loading';
+import { Sparkles, Eye, Image, ShoppingBag, Music, BookOpen, Video, File, Check } from 'lucide-react';
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { ListNFTModal } from '@/components/features/marketplace/ListNFTModal';
-
-interface NFT {
-  tokenId: string;
-  title: string;
-  assetType: string;
-  mintedAt: string;
-  isListed: boolean;
-  price?: string;
-  royaltyPercentage: number;
-}
-
-// TODO: Fetch from blockchain using wagmi
-const mockNFTs = [
-  {
-    tokenId: '42',
-    title: 'Music Album - Nusantara Dreams',
-    assetType: 'MUSIC',
-    mintedAt: '2025-01-08',
-    isListed: true,
-    price: '0.5',
-    royaltyPercentage: 10,
-  },
-  {
-    tokenId: '87',
-    title: 'Digital Artwork - Batik Modern',
-    assetType: 'VISUAL_ART',
-    mintedAt: '2025-01-12',
-    isListed: false,
-    royaltyPercentage: 15,
-  },
-  {
-    tokenId: '156',
-    title: 'Documentary Film - Heritage Stories',
-    assetType: 'VIDEO',
-    mintedAt: '2025-01-15',
-    isListed: true,
-    price: '1.2',
-    royaltyPercentage: 12,
-  },
-];
+import { useUserNFTs, type UserNFT } from '@/lib/hooks/useUserNFTs';
 
 export function MyNFTsTab() {
-  const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
+  const { nfts, isLoading, error, totalNFTs, listedCount, notListedCount } = useUserNFTs();
+  const [selectedNFT, setSelectedNFT] = useState<UserNFT | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const totalNFTs = mockNFTs.length;
-  const listedCount = mockNFTs.filter((nft) => nft.isListed).length;
-  const unlistedCount = totalNFTs - listedCount;
-
-  const openListModal = (nft: NFT) => {
+  const openListModal = (nft: UserNFT) => {
     setSelectedNFT(nft);
     setIsModalOpen(true);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-16">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <GlassCard>
+        <div className="text-center py-12">
+          <p className="text-red-400 mb-2">Failed to load NFTs</p>
+          <p className="text-sm text-foreground/60">Please check your wallet connection</p>
+        </div>
+      </GlassCard>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -95,7 +74,7 @@ export function MyNFTsTab() {
         >
           <GlassCard>
             <div className="text-center">
-              <p className="text-3xl font-bold text-orange-400 mb-2">{unlistedCount}</p>
+              <p className="text-3xl font-bold text-orange-400 mb-2">{notListedCount}</p>
               <p className="text-sm text-foreground/60">Not Listed</p>
             </div>
           </GlassCard>
@@ -104,7 +83,7 @@ export function MyNFTsTab() {
 
       {/* NFT Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockNFTs.map((nft, index) => (
+        {nfts.map((nft, index) => (
           <motion.div
             key={nft.tokenId}
             initial={{ opacity: 0, y: 20 }}
@@ -125,7 +104,7 @@ export function MyNFTsTab() {
         />
       )}
 
-      {mockNFTs.length === 0 && (
+      {nfts.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <GlassCard>
             <div className="text-center py-12">
@@ -145,7 +124,9 @@ export function MyNFTsTab() {
   );
 }
 
-function NFTCard({ nft, onListForSale }: { nft: NFT; onListForSale: () => void }) {
+function NFTCard({ nft, onListForSale }: { nft: UserNFT; onListForSale: () => void }) {
+  const [imageError, setImageError] = useState(false);
+
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -154,13 +135,44 @@ function NFTCard({ nft, onListForSale }: { nft: NFT; onListForSale: () => void }
     OTHER: 'Other',
   };
 
+  const imageUrl = nft.ipfsCID && nft.assetType === 'VISUAL_ART'
+    ? `https://gateway.pinata.cloud/ipfs/${nft.ipfsCID}`
+    : null;
+
+  // Asset type icon mapping
+  const getAssetIcon = () => {
+    switch (nft.assetType) {
+      case 'MUSIC':
+        return <Music className="w-16 h-16 text-purple-400" aria-label="Music" />;
+      case 'LITERATURE':
+        return <BookOpen className="w-16 h-16 text-blue-400" aria-label="Literature" />;
+      case 'VIDEO':
+        return <Video className="w-16 h-16 text-green-400" aria-label="Video" />;
+      case 'OTHER':
+        return <File className="w-16 h-16 text-gray-400" aria-label="Other" />;
+      default:
+        return <Image className="w-16 h-16 text-blue-400" aria-label="Visual Art" />;
+    }
+  };
+
   return (
     <GlassCard hover>
       <div className="space-y-4">
         {/* Thumbnail */}
         <div className="relative">
-          <div className="aspect-video rounded-xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
-            <Image className="w-16 h-16 text-blue-400" aria-label="NFT preview" />
+          <div className="aspect-video rounded-xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
+            {imageUrl && !imageError ? (
+              <NextImage
+                src={imageUrl}
+                alt={nft.title}
+                fill
+                className="object-cover"
+                onError={() => setImageError(true)}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            ) : (
+              getAssetIcon()
+            )}
           </div>
 
           {/* Status Badges */}
@@ -198,10 +210,10 @@ function NFTCard({ nft, onListForSale }: { nft: NFT; onListForSale: () => void }
               <span className="font-mono">#{nft.tokenId}</span>
             </div>
             <div className="flex justify-between text-foreground/60">
-              <span>Minted:</span>
-              <span>{new Date(nft.mintedAt).toLocaleDateString()}</span>
+              <span>Copyright ID:</span>
+              <span className="font-mono">#{nft.copyrightId}</span>
             </div>
-            {nft.isListed && (
+            {nft.isListed && nft.price && (
               <div className="flex justify-between text-foreground/60">
                 <span>Price:</span>
                 <span className="font-bold text-foreground">{nft.price} ETH</span>

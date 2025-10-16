@@ -1,0 +1,156 @@
+{
+  "hero": {
+    "title": "Protect Your Creativity",
+    "subtitle": "On The Blockchain",
+    "description": "Tamper-proof copyright registration, NFT creation, and perpetual royalties for Indonesian creators.",
+    "registerButton": "Register Copyright",
+    "exploreButton": "Explore Marketplace",
+    "stats": {
+      "copyrights": "Copyrights Registered",
+      "nfts": "NFTs Minted",
+      "listings": "Active Listings"
+    }
+  },
+  "howItWorks": {
+    "title": "Get Started in",
+    "titleHighlight": "4 Simple Steps",
+    "subtitle": "From registration to perpetual earnings in minutes",
+    "steps": {
+      "register": {
+        "title": "Register Copyright",
+        "description": "Upload your creative work and add metadata. We generate a tamper-proof hash and store it on the blockchain."
+      },
+      "mint": {
+        "title": "Mint NFT",
+        "description": "Transform your registered copyright into an NFT. Set your royalty percentage (5-20%) for all future sales."
+      },
+      "list": {
+        "title": "List on Marketplace",
+        "description": "Set your price and list your NFT on our marketplace. Your work is now ready for collectors."
+      },
+      "earn": {
+        "title": "Earn Forever",
+        "description": "Receive automatic royalty payments on every resale. Your creativity pays you perpetually."
+      }
+    }
+  },
+  "trust": {
+    "blockchain": {
+      "title": "Blockchain Security",
+      "description": "Ethereum Sepolia Testnet",
+      "detail": "Immutable and tamper-proof records"
+    },
+    "ipfs": {
+      "title": "IPFS Storage",
+      "description": "Decentralized & Permanent",
+      "detail": "Your files stored forever on IPFS"
+    },
+    "verified": {
+      "title": "Smart Contracts Verified",
+      "description": "Audited & Open Source",
+      "detail": "Transparent and trustworthy code"
+    }
+  },
+  "cta": {
+    "title": "Start Protecting Your Work Today",
+    "subtitle": "Join Indonesian creators securing their digital rights on blockchain. Register your first copyright in minutes.",
+    "button": "Register Your First Copyright",
+    "features": "Free to register • No credit card required • Secured by blockchain"
+  },
+  "marketplace": {
+    "title": "NFT Marketplace",
+    "subtitle": "Discover and collect unique creative works from Indonesian creators",
+    "stats": {
+      "listed": "Listed NFTs",
+      "volume": "Total Volume",
+      "avgPrice": "Average Price"
+    },
+    "search": "Search by title or creator address...",
+    "filters": {
+      "label": "Filter by:",
+      "allTypes": "All Types",
+      "visualArt": "Visual Art",
+      "music": "Music",
+      "literature": "Literature",
+      "video": "Video"
+    },
+    "sort": {
+      "label": "Sort by:",
+      "recent": "Recently Listed",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "popular": "Most Popular"
+    },
+    "card": {
+      "price": "Price:",
+      "seller": "Seller:",
+      "views": "Views:",
+      "viewDetails": "View Details"
+    },
+    "empty": {
+      "title": "No NFTs Found",
+      "description": "Try adjusting your search or filters"
+    },
+    "detail": {
+      "backButton": "← Back to Marketplace",
+      "forSale": "For Sale",
+      "royalty": "Royalty",
+      "views": "views",
+      "properties": {
+        "title": "Properties",
+        "assetType": "Asset Type",
+        "tokenId": "Token ID",
+        "listingId": "Listing ID",
+        "copyrightId": "Copyright ID"
+      },
+      "copyright": {
+        "title": "Copyright Verified",
+        "description": "This NFT is backed by a verified copyright registration on the blockchain.",
+        "registered": "Registered:",
+        "contentHash": "Content Hash:"
+      },
+      "price": {
+        "title": "Current Price",
+        "listingPrice": "Listing Price:",
+        "platformFee": "Platform Fee (2.5%):",
+        "creatorRoyalty": "Creator Royalty"
+      },
+      "purchase": {
+        "button": "Buy for",
+        "processing": "Processing...",
+        "purchased": "Purchased",
+        "success": {
+          "title": "Purchase Successful!",
+          "description": "The NFT is now in your wallet. View it in your dashboard."
+        },
+        "error": {
+          "title": "Purchase Failed"
+        }
+      },
+      "seller": {
+        "title": "Seller Information",
+        "address": "Seller Address",
+        "creator": "Creator:",
+        "owner": "Owner:"
+      },
+      "timeline": {
+        "title": "Timeline",
+        "copyrightRegistered": "Copyright Registered",
+        "nftMinted": "NFT Minted",
+        "listedForSale": "Listed for Sale"
+      },
+      "externalLinks": {
+        "title": "External Links",
+        "etherscan": "View on Etherscan",
+        "ipfs": "View on IPFS"
+      }
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "connectWallet": "Connect Wallet",
+    "disconnect": "Disconnect"
+  }
+}

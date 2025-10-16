@@ -4,48 +4,34 @@ import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { Badge } from '@/components/ui/glass/Badge';
-import { Sparkles, Eye, Image, FileText } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/glass/Loading';
+import { Sparkles, Eye, Image, FileText, Music, BookOpen, Video, File, Check } from 'lucide-react';
 import Link from 'next/link';
-
-interface Copyright {
-  id: string;
-  title: string;
-  assetType: string;
-  registeredAt: string;
-  isMinted: boolean;
-  tokenId?: string;
-}
-
-// TODO: Fetch from blockchain using wagmi
-const mockCopyrights = [
-  {
-    id: '1',
-    title: 'Digital Artwork Collection',
-    assetType: 'VISUAL_ART',
-    registeredAt: '2025-01-10',
-    isMinted: false,
-  },
-  {
-    id: '2',
-    title: 'Music Album - Nusantara Dreams',
-    assetType: 'MUSIC',
-    registeredAt: '2025-01-08',
-    isMinted: true,
-    tokenId: '42',
-  },
-  {
-    id: '3',
-    title: 'Short Story: Tales of Indonesia',
-    assetType: 'LITERATURE',
-    registeredAt: '2025-01-05',
-    isMinted: false,
-  },
-];
+import NextImage from 'next/image';
+import { useState } from 'react';
+import { useUserCopyrights, type Copyright } from '@/lib/hooks/useUserCopyrights';
 
 export function MyCopyrightsTab() {
-  const totalCopyrights = mockCopyrights.length;
-  const mintedCount = mockCopyrights.filter((c) => c.isMinted).length;
-  const readyToMintCount = totalCopyrights - mintedCount;
+  const { copyrights, isLoading, error, totalCopyrights, mintedCount, unmintedCount } = useUserCopyrights();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-16">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <GlassCard>
+        <div className="text-center py-12">
+          <p className="text-red-400 mb-2">Failed to load copyrights</p>
+          <p className="text-sm text-foreground/60">Please check your wallet connection</p>
+        </div>
+      </GlassCard>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -80,7 +66,7 @@ export function MyCopyrightsTab() {
         >
           <GlassCard>
             <div className="text-center">
-              <p className="text-3xl font-bold text-purple-400 mb-2">{readyToMintCount}</p>
+              <p className="text-3xl font-bold text-purple-400 mb-2">{unmintedCount}</p>
               <p className="text-sm text-foreground/60">Ready to Mint</p>
             </div>
           </GlassCard>
@@ -89,7 +75,7 @@ export function MyCopyrightsTab() {
 
       {/* Copyright Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockCopyrights.map((copyright, index) => (
+        {copyrights.map((copyright, index) => (
           <motion.div
             key={copyright.id}
             initial={{ opacity: 0, y: 20 }}
@@ -101,7 +87,7 @@ export function MyCopyrightsTab() {
         ))}
       </div>
 
-      {mockCopyrights.length === 0 && (
+      {copyrights.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <GlassCard>
             <div className="text-center py-12">
@@ -122,6 +108,8 @@ export function MyCopyrightsTab() {
 }
 
 function CopyrightCard({ copyright }: { copyright: Copyright }) {
+  const [imageError, setImageError] = useState(false);
+
   const assetTypeLabels: { [key: string]: string } = {
     VISUAL_ART: 'Visual Art',
     MUSIC: 'Music',
@@ -130,13 +118,48 @@ function CopyrightCard({ copyright }: { copyright: Copyright }) {
     OTHER: 'Other',
   };
 
+  const imageUrl = copyright.ipfsCID && copyright.assetType === 'VISUAL_ART'
+    ? `https://gateway.pinata.cloud/ipfs/${copyright.ipfsCID}`
+    : null;
+
+  // Asset type icon mapping
+  const getAssetIcon = () => {
+    if (copyright.isMinted) {
+      return <Check className="w-16 h-16 text-green-400" aria-label="Minted" />;
+    }
+
+    switch (copyright.assetType) {
+      case 'MUSIC':
+        return <Music className="w-16 h-16 text-purple-400" aria-label="Music" />;
+      case 'LITERATURE':
+        return <BookOpen className="w-16 h-16 text-blue-400" aria-label="Literature" />;
+      case 'VIDEO':
+        return <Video className="w-16 h-16 text-green-400" aria-label="Video" />;
+      case 'OTHER':
+        return <File className="w-16 h-16 text-gray-400" aria-label="Other" />;
+      default:
+        return <Image className="w-16 h-16 text-purple-400" aria-label="Visual Art" />;
+    }
+  };
+
   return (
     <GlassCard hover>
       <div className="space-y-4">
         {/* Thumbnail */}
         <div className="relative">
-          <div className="aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
-            <Image className="w-16 h-16 text-purple-400" aria-label="Copyright preview" />
+          <div className="aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center overflow-hidden">
+            {imageUrl && !imageError ? (
+              <NextImage
+                src={imageUrl}
+                alt={copyright.title}
+                fill
+                className="object-cover"
+                onError={() => setImageError(true)}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            ) : (
+              getAssetIcon()
+            )}
           </div>
 
           {/* Status Badge */}

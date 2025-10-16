@@ -4,30 +4,32 @@ import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Lock, Database, CheckCircle2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
-const trustIndicators = [
-  {
-    icon: Lock,
-    title: 'Blockchain Security',
-    description: 'Ethereum Sepolia Testnet',
-    detail: 'Immutable and tamper-proof records',
-  },
-  {
-    icon: Database,
-    title: 'IPFS Storage',
-    description: 'Decentralized & Permanent',
-    detail: 'Your files stored forever on IPFS',
-  },
-  {
-    icon: CheckCircle2,
-    title: 'Smart Contracts Verified',
-    description: 'Audited & Open Source',
-    detail: 'Transparent and trustworthy code',
-  },
-];
+import { useTranslations } from 'next-intl';
 
 export function TrustSection() {
+  const t = useTranslations('trust');
   const [inView, setInView] = useState(false);
+
+  const trustIndicators = [
+    {
+      icon: Lock,
+      title: t('blockchain.title'),
+      description: t('blockchain.description'),
+      detail: t('blockchain.detail'),
+    },
+    {
+      icon: Database,
+      title: t('ipfs.title'),
+      description: t('ipfs.description'),
+      detail: t('ipfs.detail'),
+    },
+    {
+      icon: CheckCircle2,
+      title: t('verified.title'),
+      description: t('verified.description'),
+      detail: t('verified.detail'),
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
