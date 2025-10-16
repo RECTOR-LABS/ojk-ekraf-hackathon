@@ -45,6 +45,10 @@ export function useUserListings() {
     },
   });
 
+  // DEBUG: Log listing IDs from blockchain
+  console.log('🔍 [useUserListings] All Listing IDs from blockchain:', allListingIds);
+  console.log('🔍 [useUserListings] User address:', address);
+
   // 2. Build contract calls to fetch listing details
   const listingCalls = useMemo(() => {
     if (!allListingIds || !Array.isArray(allListingIds) || allListingIds.length === 0) {
@@ -81,9 +85,16 @@ export function useUserListings() {
 
     const listings: any[] = [];
 
-    listingData.forEach((result) => {
+    listingData.forEach((result, index) => {
       if (result.status === 'success' && result.result) {
         const listing = result.result as any;
+        console.log(`🔍 [useUserListings] Listing ${index}:`, {
+          listingId: String(listing.listingId),
+          seller: listing.seller,
+          userAddress: address,
+          active: listing.active,
+          matches: listing.seller.toLowerCase() === address.toLowerCase(),
+        });
         // Check if seller matches user address AND listing is active
         if (listing.seller.toLowerCase() === address.toLowerCase() && listing.active) {
           listings.push(listing);
@@ -91,6 +102,7 @@ export function useUserListings() {
       }
     });
 
+    console.log('🔍 [useUserListings] Filtered user listings:', listings.length);
     return listings;
   }, [listingData, address]);
 
