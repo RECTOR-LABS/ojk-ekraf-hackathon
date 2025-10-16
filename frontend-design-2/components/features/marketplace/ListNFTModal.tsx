@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { GlassModal } from '@/components/ui/glass/GlassModal';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
@@ -9,6 +10,9 @@ import { GlassInput } from '@/components/ui/glass/GlassInput';
 import { Badge } from '@/components/ui/glass/Badge';
 import { ShoppingBag, TrendingUp, Check, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import { KaryaNFTAddress, KaryaNFTABI } from '@/lib/contracts/KaryaNFT';
+import { KaryaMarketplaceAddress, KaryaMarketplaceABI } from '@/lib/contracts/KaryaMarketplace';
+import { parseEther } from 'viem';
 
 interface NFT {
   tokenId: string;
@@ -25,9 +29,45 @@ interface ListNFTModalProps {
 
 export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
   const [price, setPrice] = useState('');
-  const [isListing, setIsListing] = useState(false);
   const [listSuccess, setListSuccess] = useState(false);
   const [listingId, setListingId] = useState('');
+  const [error, setError] = useState<string>('');
+  const [currentStep, setCurrentStep] = useState<'idle' | 'approving' | 'listing'>('idle');
+
+  // Wagmi hooks for approve transaction
+  const {
+    writeContract: approveWrite,
+    data: approveTxHash,
+    isPending: isApprovePending,
+    error: approveWriteError,
+  } = useWriteContract();
+
+  const {
+    isLoading: isApproveTxPending,
+    isSuccess: isApproveTxSuccess,
+    error: approveTxError,
+  } = useWaitForTransactionReceipt({
+    hash: approveTxHash,
+  });
+
+  // Wagmi hooks for listNFT transaction
+  const {
+    writeContract: listWrite,
+    data: listTxHash,
+    isPending: isListPending,
+    error: listWriteError,
+  } = useWriteContract();
+
+  const {
+    isLoading: isListTxPending,
+    isSuccess: isListTxSuccess,
+    error: listTxError,
+    data: listReceipt,
+  } = useWaitForTransactionReceipt({
+    hash: listTxHash,
+  });
+
+  const isListing = currentStep !== 'idle';
 
   // Platform fee (2.5%)
   const platformFeePercentage = 2.5;
@@ -38,18 +78,106 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
   const minPrice = 0.001;
   const isPriceValid = price && Number(price) >= minPrice;
 
+  // Extract listing ID from transaction receipt
+  useEffect(() => {
+    if (isListTxSuccess && listReceipt) {
+      console.log('🔍 [ListNFTModal] List transaction receipt:', listReceipt);
+
+      // Extract listing ID from NFTListed event logs
+      const nftListedEvent = listReceipt.logs.find((log: any) => {
+        try {
+          return log.address.toLowerCase() === KaryaMarketplaceAddress.toLowerCase();
+        } catch {
+          return false;
+        }
+      });
+
+      if (nftListedEvent && nftListedEvent.topics[1]) {
+        // Listing ID is the first indexed parameter (topics[1])
+        const extractedListingId = BigInt(nftListedEvent.topics[1]).toString();
+        console.log('✅ [ListNFTModal] Extracted listing ID:', extractedListingId);
+        setListingId(extractedListingId);
+        setListSuccess(true);
+        setCurrentStep('idle');
+      } else {
+        console.warn('⚠️ [ListNFTModal] Could not extract listing ID from receipt');
+        setListingId('Unknown');
+        setListSuccess(true);
+        setCurrentStep('idle');
+      }
+    }
+  }, [isListTxSuccess, listReceipt]);
+
+  // Handle approve success → trigger listNFT
+  useEffect(() => {
+    if (isApproveTxSuccess && currentStep === 'approving') {
+      console.log('✅ [ListNFTModal] Approval successful, proceeding to list...');
+      setCurrentStep('listing');
+
+      try {
+        const priceWei = parseEther(price);
+        console.log('🚀 [ListNFTModal] Calling listNFT with:', {
+          nftContract: KaryaNFTAddress,
+          tokenId: nft.tokenId,
+          price: priceWei.toString(),
+        });
+
+        listWrite({
+          address: KaryaMarketplaceAddress,
+          abi: KaryaMarketplaceABI,
+          functionName: 'listNFT',
+          args: [KaryaNFTAddress, BigInt(nft.tokenId), priceWei],
+        });
+      } catch (err) {
+        console.error('❌ [ListNFTModal] List error:', err);
+        setError(err instanceof Error ? err.message : 'Failed to list NFT');
+        setCurrentStep('idle');
+      }
+    }
+  }, [isApproveTxSuccess, currentStep, price, nft.tokenId, listWrite]);
+
+  // Handle errors
+  useEffect(() => {
+    if (approveWriteError) {
+      setError(approveWriteError.message || 'Failed to approve marketplace');
+      setCurrentStep('idle');
+    } else if (approveTxError) {
+      setError(approveTxError.message || 'Approval transaction failed');
+      setCurrentStep('idle');
+    } else if (listWriteError) {
+      setError(listWriteError.message || 'Failed to list NFT');
+      setCurrentStep('idle');
+    } else if (listTxError) {
+      setError(listTxError.message || 'Listing transaction failed');
+      setCurrentStep('idle');
+    }
+  }, [approveWriteError, approveTxError, listWriteError, listTxError]);
+
   const handleList = async () => {
     if (!isPriceValid) return;
 
-    setIsListing(true);
+    try {
+      console.log('🚀 [ListNFTModal] Starting listing process...');
+      console.log('NFT Token ID:', nft.tokenId);
+      console.log('Price:', price, 'ETH');
 
-    // TODO: Implement actual listing with wagmi
-    // Simulate listing process
-    setTimeout(() => {
-      setIsListing(false);
-      setListSuccess(true);
-      setListingId('456'); // Mock listing ID
-    }, 3000);
+      setError('');
+      setCurrentStep('approving');
+
+      // Step 1: Approve marketplace to transfer NFT
+      console.log('Step 1: Approving marketplace...');
+      approveWrite({
+        address: KaryaNFTAddress,
+        abi: KaryaNFTABI,
+        functionName: 'approve',
+        args: [KaryaMarketplaceAddress, BigInt(nft.tokenId)],
+      });
+      console.log('✅ Approve transaction initiated');
+    } catch (err) {
+      console.error('❌ [ListNFTModal] Listing error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to list NFT');
+      setCurrentStep('idle');
+    }
   };
 
   const assetTypeLabels: { [key: string]: string } = {
@@ -193,6 +321,21 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
               </motion.div>
             )}
 
+            {/* Error Display */}
+            {error && (
+              <GlassCard className="border-2 border-red-500/50">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <h4 className="font-bold text-red-400">Transaction Error</h4>
+                    <div className="max-h-32 overflow-y-auto">
+                      <p className="text-sm text-foreground/70 break-words whitespace-pre-wrap">{error}</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+            )}
+
             {/* List Button */}
             <div className="flex gap-3">
               <GlassButton
@@ -213,7 +356,9 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
                 className="flex-1"
               >
                 <ShoppingBag className="w-5 h-5 mr-2" />
-                {isListing ? 'Listing...' : 'List NFT'}
+                {currentStep === 'approving' && 'Approving...'}
+                {currentStep === 'listing' && 'Listing...'}
+                {currentStep === 'idle' && 'List NFT'}
               </GlassButton>
             </div>
           </motion.div>

@@ -223,7 +223,11 @@ export function TransactionStep() {
           )}
 
           {uploadStatus === 'error' && (
-            <div className="text-sm text-red-400 bg-red-500/10 p-3 rounded-lg">{uploadError}</div>
+            <div className="bg-red-500/10 p-3 rounded-lg">
+              <div className="max-h-32 overflow-y-auto">
+                <p className="text-sm text-red-400 break-words whitespace-pre-wrap">{uploadError}</p>
+              </div>
+            </div>
           )}
         </div>
       </GlassCard>
@@ -266,8 +270,12 @@ export function TransactionStep() {
             )}
 
             {(writeError || txError) && (
-              <div className="text-sm text-red-400 bg-red-500/10 p-3 rounded-lg">
-                {writeError?.message || txError?.message || 'Transaction failed'}
+              <div className="bg-red-500/10 p-3 rounded-lg">
+                <div className="max-h-32 overflow-y-auto">
+                  <p className="text-sm text-red-400 break-words whitespace-pre-wrap">
+                    {writeError?.message || txError?.message || 'Transaction failed'}
+                  </p>
+                </div>
               </div>
             )}
           </div>

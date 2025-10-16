@@ -14,6 +14,7 @@ interface Copyright {
   id: string;
   title: string;
   assetType: string;
+  ipfsCID: string;
 }
 
 interface MintNFTModalProps {
@@ -84,19 +85,37 @@ export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) 
 
   const handleMint = async () => {
     try {
+      console.log('🚀 handleMint called');
+      console.log('Copyright ID:', copyright.id);
+      console.log('Copyright IPFS CID:', copyright.ipfsCID);
+      console.log('Royalty Percentage:', royaltyPercentage);
+
       setError('');
+
+      // Validate IPFS CID
+      if (!copyright.ipfsCID) {
+        setError('IPFS CID is missing. Cannot mint NFT.');
+        return;
+      }
+
+      // Build token URI (IPFS metadata URI)
+      const tokenURI = `ipfs://${copyright.ipfsCID}`;
+      console.log('Token URI:', tokenURI);
 
       // Convert royalty percentage to basis points (e.g., 10% = 1000)
       const royaltyBps = royaltyPercentage * 100;
+      console.log('Royalty BPS:', royaltyBps);
 
+      console.log('Calling writeContract with mint function...');
       writeContract({
         address: KaryaNFTAddress,
         abi: KaryaNFTABI,
-        functionName: 'mintNFT',
-        args: [BigInt(copyright.id), BigInt(royaltyBps)],
+        functionName: 'mint',
+        args: [BigInt(copyright.id), tokenURI, BigInt(royaltyBps)],
       });
+      console.log('✅ writeContract called successfully');
     } catch (err) {
-      console.error('Minting error:', err);
+      console.error('❌ Minting error:', err);
       setError(err instanceof Error ? err.message : 'Failed to mint NFT');
     }
   };
@@ -249,6 +268,21 @@ export function MintNFTModal({ isOpen, onClose, copyright }: MintNFTModalProps) 
                 </div>
               </div>
             </GlassCard>
+
+            {/* Error Display */}
+            {error && (
+              <GlassCard className="border-2 border-red-500/50">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <h4 className="font-bold text-red-400">Transaction Error</h4>
+                    <div className="max-h-32 overflow-y-auto">
+                      <p className="text-sm text-foreground/70 break-words whitespace-pre-wrap">{error}</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+            )}
 
             {/* Mint Button */}
             <div className="flex gap-3">

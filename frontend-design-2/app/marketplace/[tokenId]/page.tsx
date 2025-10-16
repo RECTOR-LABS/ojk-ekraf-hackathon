@@ -28,11 +28,13 @@ import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagm
 import { KaryaMarketplaceAddress, KaryaMarketplaceABI } from '@/lib/contracts/KaryaMarketplace';
 import { KaryaNFTAddress } from '@/lib/contracts/KaryaNFT';
 import { parseEther } from 'viem';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function NFTDetailPage({ params }: { params: { tokenId: string } }) {
   const t = useTranslations('marketplace.detail');
   const { address: userAddress } = useAccount();
   const { nft, isLoading, error } = useNFTDetail(params.tokenId);
+  const queryClient = useQueryClient();
 
   const [purchaseError, setPurchaseError] = useState('');
   const [imageError, setImageError] = useState(false);
@@ -56,10 +58,10 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
       writeContract({
         address: KaryaMarketplaceAddress,
         abi: KaryaMarketplaceABI,
-        functionName: 'purchaseNFT',
+        functionName: 'buyNFT',
         args: [BigInt(nft.listingId)],
         value: BigInt(nft.priceWei),
-      });
+      } as any);
     } catch (err) {
       console.error('Purchase error:', err);
       setPurchaseError(err instanceof Error ? err.message : 'Failed to purchase NFT');
@@ -75,6 +77,27 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
       setPurchaseError(txError.message);
     }
   }, [writeError, txError]);
+
+  // Invalidate cache after successful purchase
+  useEffect(() => {
+    if (isTxSuccess) {
+      console.log('✅ [NFTDetailPage] Purchase successful, invalidating cache...');
+
+      // Invalidate marketplace listings cache (auto-refresh marketplace page)
+      queryClient.invalidateQueries({ queryKey: ['marketplaceListings'] });
+
+      // Invalidate NFT detail cache (auto-refresh current page)
+      queryClient.invalidateQueries({ queryKey: ['nftDetail', params.tokenId] });
+
+      // Invalidate user NFTs cache (auto-refresh dashboard)
+      queryClient.invalidateQueries({ queryKey: ['userNFTs'] });
+
+      // Invalidate user listings cache (auto-refresh seller's dashboard)
+      queryClient.invalidateQueries({ queryKey: ['userListings'] });
+
+      console.log('✅ [NFTDetailPage] Cache invalidated successfully');
+    }
+  }, [isTxSuccess, queryClient, params.tokenId]);
 
   // Loading state
   if (isLoading) {
@@ -307,11 +330,15 @@ export default function NFTDetailPage({ params }: { params: { tokenId: string } 
                     animate={{ opacity: 1, height: 'auto' }}
                     className="bg-red-600/20 border border-red-600/30 rounded-lg p-4"
                   >
-                    <div className="flex items-center gap-3">
-                      <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                      <div className="flex-1">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1 min-w-0">
                         <p className="font-bold text-red-400 mb-1">{t('purchase.error.title')}</p>
-                        <p className="text-sm text-foreground/70">{purchaseError}</p>
+                        <div className="max-h-32 overflow-y-auto">
+                          <p className="text-sm text-foreground/70 break-words whitespace-pre-wrap">
+                            {purchaseError}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
