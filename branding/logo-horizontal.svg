@@ -1,0 +1,16 @@
+<svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shield Icon with Gradient Background -->
+  <rect x="10" y="15" width="70" height="70" rx="12" fill="url(#gradient)"/>
+  <path d="M45 30L28 36V50C28 61.5 35.26 71.98 45 74C54.74 71.98 62 61.5 62 50V36L45 30ZM45 50H58C57.36 58.75 51.22 66.45 45 68C38.78 66.45 32.64 58.75 32 50H45V34.5L58 39V50H45Z" fill="white"/>
+
+  <!-- KaryaChain Text -->
+  <text x="100" y="60" font-family="'Arial', 'Helvetica', sans-serif" font-size="36" font-weight="bold" fill="url(#gradient)">KaryaChain</text>
+</svg>
