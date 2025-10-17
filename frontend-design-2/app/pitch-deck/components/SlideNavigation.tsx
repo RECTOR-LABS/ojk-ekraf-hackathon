@@ -1,7 +1,8 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize, Minimize } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useFullscreen } from '@/lib/hooks/useFullscreen';
 
 interface SlideNavigationProps {
   current: number;
@@ -18,9 +19,11 @@ export function SlideNavigation({
   onNext,
   onSlideClick,
 }: SlideNavigationProps) {
+  const { isFullscreen, isSupported, toggleFullscreen } = useFullscreen();
+
   return (
     <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-3 sm:gap-4">
         {/* Left Arrow */}
         <button
           onClick={onPrev}
@@ -61,20 +64,39 @@ export function SlideNavigation({
           </span>
         </div>
 
-        {/* Right Arrow */}
-        <button
-          onClick={onNext}
-          disabled={current === total - 1}
-          className={cn(
-            'glass rounded-full p-3 sm:p-4 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center',
-            current === total - 1
-              ? 'opacity-30 cursor-not-allowed'
-              : 'hover:scale-110 hover:bg-purple-600/20'
+        {/* Control Buttons Group */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Fullscreen Toggle */}
+          {isSupported && (
+            <button
+              onClick={toggleFullscreen}
+              className="glass rounded-full p-3 sm:p-4 hover:scale-110 hover:bg-purple-600/20 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+              title={isFullscreen ? 'Exit fullscreen (ESC)' : 'Enter fullscreen'}
+            >
+              {isFullscreen ? (
+                <Minimize className="w-5 h-5 sm:w-6 sm:h-6" />
+              ) : (
+                <Maximize className="w-5 h-5 sm:w-6 sm:h-6" />
+              )}
+            </button>
           )}
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
+
+          {/* Right Arrow */}
+          <button
+            onClick={onNext}
+            disabled={current === total - 1}
+            className={cn(
+              'glass rounded-full p-3 sm:p-4 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center',
+              current === total - 1
+                ? 'opacity-30 cursor-not-allowed'
+                : 'hover:scale-110 hover:bg-purple-600/20'
+            )}
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+        </div>
       </div>
     </div>
   );

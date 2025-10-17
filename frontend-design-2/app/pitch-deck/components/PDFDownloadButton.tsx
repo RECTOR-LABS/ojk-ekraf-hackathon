@@ -1,9 +1,31 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download } from 'lucide-react';
 
 export function PDFDownloadButton() {
+  const [hasPDF, setHasPDF] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    // Check if PDF file exists
+    fetch('/pitch-deck.pdf', { method: 'HEAD' })
+      .then((res) => {
+        setHasPDF(res.ok);
+        setIsChecking(false);
+      })
+      .catch(() => {
+        setHasPDF(false);
+        setIsChecking(false);
+      });
+  }, []);
+
+  // Don't render anything while checking or if PDF doesn't exist
+  if (isChecking || !hasPDF) {
+    return null;
+  }
+
   return (
     <motion.a
       href="/pitch-deck.pdf"

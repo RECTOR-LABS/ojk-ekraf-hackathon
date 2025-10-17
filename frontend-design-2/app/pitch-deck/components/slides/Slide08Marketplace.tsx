@@ -53,7 +53,7 @@ export function Slide08Marketplace() {
         <GlassCard variant="elevated" className="overflow-hidden p-0">
           <div className="relative w-full aspect-[16/9]">
             <Image
-              src="/.pitch-deck-assets/screenshots/08-marketplace-browse.png"
+              src="/screenshots/08-marketplace-browse.png"
               alt="KaryaChain Marketplace - Browse and discover creative works"
               fill
               className="object-cover object-top"

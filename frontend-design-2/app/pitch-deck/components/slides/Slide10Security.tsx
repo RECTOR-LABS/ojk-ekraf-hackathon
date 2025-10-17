@@ -101,7 +101,7 @@ export function Slide10Security() {
         <GlassCard variant="elevated" className="overflow-hidden p-0">
           <div className="relative w-full aspect-[16/9]">
             <Image
-              src="/.pitch-deck-assets/screenshots/11-etherscan-verification.png"
+              src="/screenshots/11-etherscan-verification.png"
               alt="Etherscan Contract Verification - All contracts verified with public source code"
               fill
               className="object-cover object-top"
