@@ -1,0 +1,515 @@
+=================================================================
+KARYACHAIN PITCH DECK - TEXT ONLY (Copy-Paste Ready)
+=================================================================
+
+USE THIS FILE: Copy text from each slide directly into Google Slides or Canva
+SCREENSHOTS: Located in screenshots/ folder (see README.md for mapping)
+
+=================================================================
+SLIDE 1: COVER
+=================================================================
+
+[TITLE - Large, Bold]
+KaryaChain
+
+[SUBTITLE]
+Blockchain-Powered Copyright Protection
+for Indonesian Creators
+
+OJK-Ekraf Infinity Hackathon 2025
+Category: Digital Rights & Authentication
+
+Live Demo: https://karyachain.rectorspace.com
+Team: RECTOR
+
+[VISUAL: Use 01-landing-page-hero.png as background with 50% opacity]
+
+=================================================================
+SLIDE 2: THE PROBLEM
+=================================================================
+
+[TITLE]
+Indonesian Creators Face Critical Challenges
+
+[CONTENT]
+
+🚫 No Accessible Copyright Protection
+• Traditional registration: expensive, slow, bureaucratic
+• Average cost: IDR 1-5 million per work
+• Processing time: 3-6 months
+
+⚠️ Rampant IP Theft
+• 70%+ of digital creators experience unauthorized use
+• Difficult to prove ownership and creation date
+• Limited legal recourse for small creators
+
+💸 Lost Revenue
+• Creators can't monetize secondary sales
+• No infrastructure for perpetual royalties
+• Global marketplace access barriers
+
+🎯 Target Market
+• 63 million+ creative economy workers in Indonesia
+• Growing digital creator ecosystem
+• Need for affordable, accessible protection
+
+=================================================================
+SLIDE 3: THE SOLUTION
+=================================================================
+
+[TITLE]
+Blockchain-Based Copyright Registry + NFT Marketplace
+
+[SUBTITLE]
+What is KaryaChain?
+
+[CONTENT]
+
+A decentralized platform that provides:
+
+✅ Instant Copyright Registration
+• One-click registration with blockchain timestamp
+• Immutable proof of ownership
+• Cost: ~$0.50 (gas fees only)
+
+✅ NFT Minting with Royalties
+• Convert copyrights into tradeable NFTs
+• Set custom royalties: 5-20%
+• Earn on every resale, forever
+
+✅ Decentralized Marketplace
+• List and sell creative works globally
+• Automatic royalty distribution
+• Transparent, secure transactions
+
+✅ IPFS Storage
+• Decentralized file storage
+• Permanent, censorship-resistant
+• Content addressing for verification
+
+=================================================================
+SLIDE 4: HOW IT WORKS
+=================================================================
+
+[TITLE]
+Simple 4-Step Process
+
+[CONTENT]
+
+1. Upload Creative Work
+   ↓
+   File stored on IPFS (decentralized storage)
+
+2. Register Copyright
+   ↓
+   Smart contract records proof (timestamp + content hash)
+
+3. Mint as NFT
+   ↓
+   ERC-721 token with customizable royalties
+
+4. List on Marketplace
+   ↓
+   Buyers purchase → Creator earns forever
+
+Key Innovation:
+• Perpetual Royalties: Creators earn 5-20% on every resale
+• Verifiable Ownership: Blockchain timestamp proves creation date
+• Global Access: Anyone can discover and purchase works
+
+[VISUAL: Use 02, 04, 08 screenshots to show the flow]
+
+=================================================================
+SLIDE 5: DEMO - REGISTRATION
+=================================================================
+
+[TITLE]
+Demo: Copyright Registration
+
+[CONTENT]
+
+Complete Registration Flow:
+
+Step 1: Upload creative work (images, music, video, documents)
+Step 2: Add metadata (title, description, asset type, tags)
+Step 3: Review all information
+Step 4: Submit to blockchain + IPFS
+
+Result:
+✅ Copyright registered in <2 minutes
+✅ Immutable blockchain proof
+✅ Decentralized IPFS storage
+✅ Ready to mint as NFT
+
+[VISUAL: Use 03-registration-ipfs-upload.png - make it 70% of slide]
+
+=================================================================
+SLIDE 6: DEMO - DASHBOARD
+=================================================================
+
+[TITLE]
+Demo: Creator Dashboard
+
+[CONTENT]
+
+Manage All Your Creative Works:
+
+📄 My Copyrights Tab
+• View all registered works
+• Track registration IDs
+• Quick access to mint NFTs
+
+🎨 NFT Collection Tab
+• Your minted NFTs
+• Ownership verification
+• List for sale management
+
+📊 My Listings Tab
+• Active marketplace listings
+• Sales tracking
+• Revenue analytics
+
+[VISUAL: Use 05-dashboard-copyrights.png]
+
+=================================================================
+SLIDE 7: DEMO - MINT & ROYALTIES
+=================================================================
+
+[TITLE]
+Demo: NFT Minting with Perpetual Royalties
+
+[CONTENT]
+
+Customizable Royalty System:
+
+🎚️ Set Your Royalty Rate (5-20%)
+• Flexible royalty percentage
+• You decide your earnings
+
+📊 Earnings Calculator
+• Real-time projections
+• See potential lifetime earnings
+• Based on resale data
+
+💰 Example:
+Sale Price: 1 ETH
+Your Royalty: 10%
+Per Resale: 0.100 ETH
+5 Resales: 0.500 ETH lifetime earnings
+
+Key Benefit: Earn passive income forever, not just on first sale!
+
+[VISUAL: Use 06-mint-nft-modal.png - highlight the earnings calculator]
+
+=================================================================
+SLIDE 8: DEMO - MARKETPLACE
+=================================================================
+
+[TITLE]
+Demo: Decentralized Marketplace
+
+[CONTENT]
+
+Discover & Trade Creative Works:
+
+🔍 Smart Search & Filters
+• Filter by asset type (Art, Music, Literature, Video)
+• Sort by price, recency, popularity
+• Search by title or creator
+
+🛒 Secure Purchasing
+• Connect Web3 wallet (Rabby, MetaMask, etc.)
+• Instant ownership transfer
+• Automatic royalty distribution
+
+✅ Transparency
+• View full ownership history
+• See all past transactions on Etherscan
+• Verify authenticity on-chain
+
+[VISUAL: Use 08-marketplace-browse.png or 09-nft-detail-page.png]
+
+=================================================================
+SLIDE 9: TECHNICAL ARCHITECTURE
+=================================================================
+
+[TITLE]
+Enterprise-Grade Technical Stack
+
+[CONTENT]
+
+Architecture:
+
+Frontend (Next.js 14 + wagmi v2)
+         ↓
+RainbowKit (Wallet Connection)
+         ↓
+    3 Smart Contracts
+         ↓
+  IPFS (Pinata Storage)
+
+
+3 Production-Ready Smart Contracts:
+
+1️⃣ CopyrightRegistry
+   • Copyright registration & verification
+   • 100% test coverage (19 tests)
+   • ~412k gas per registration
+
+2️⃣ KaryaNFT (ERC-721 + ERC-2981)
+   • NFT minting with metadata
+   • Royalty standard compliance
+   • ~275k gas per mint
+
+3️⃣ KaryaMarketplace
+   • Listing & purchasing
+   • Automatic royalty distribution
+   • Platform fee: 2.5%
+
+Tech Stack:
+• Blockchain: Ethereum (Sepolia), Solidity 0.8.20
+• Frontend: Next.js 14, TypeScript, Tailwind CSS
+• Web3: wagmi v2, viem, RainbowKit
+• Storage: Pinata IPFS
+• Testing: Hardhat (90 tests, 100% coverage)
+
+=================================================================
+SLIDE 10: SECURITY & QUALITY
+=================================================================
+
+[TITLE]
+Built for Production: Security & Quality
+
+[CONTENT]
+
+100% Test Coverage
+✅ 90 automated tests (all passing)
+✅ Unit, integration, and end-to-end tests
+✅ Gas optimization verified
+
+Security Audit (Slither)
+✅ 0 critical vulnerabilities
+✅ 0 high-severity issues
+✅ ReentrancyGuard on all transfers
+✅ Input validation & access control
+
+Deployed & Verified
+✅ All 3 contracts on Sepolia
+✅ Source code verified on Etherscan
+✅ Public audit trail
+
+Production-Ready Features
+✅ 100% blockchain integration (no mock data)
+✅ 5 custom hooks (~1000+ lines wagmi integration)
+✅ Mobile responsive design
+✅ Error handling & edge cases covered
+
+[VISUAL: Use 11-etherscan-verification.png]
+
+=================================================================
+SLIDE 11: UNIQUE INNOVATION
+=================================================================
+
+[TITLE]
+What Makes KaryaChain Unique?
+
+[CONTENT]
+
+Innovation Highlights:
+
+🇮🇩 First for Indonesia
+• Tailored for Indonesian creative economy (63M+ workers)
+• Multi-language support (Bahasa Indonesia + English)
+• Local market understanding
+
+♾️ Perpetual Royalties
+• Most NFT platforms: 1-time sale only
+• KaryaChain: Earn forever on every resale
+• ERC-2981 royalty standard compliance
+
+🎨 5 Asset Types Supported
+• Visual Art, Music, Literature, Video, Other
+• Most platforms only support images
+• Complete coverage for all creators
+
+🏗️ Complete Ecosystem
+• Registration + Minting + Marketplace in one platform
+• Seamless user experience
+• No need to use multiple dApps
+
+🎨 Beautiful UX
+• Glassmorphism design system
+• Dual layout (Marketing + App dashboard)
+• Mobile-first responsive design
+
+=================================================================
+SLIDE 12: BUSINESS MODEL
+=================================================================
+
+[TITLE]
+Sustainable Revenue Model
+
+[CONTENT]
+
+Revenue Streams:
+
+💰 Platform Fee: 2.5%
+• Applied to all marketplace sales
+• Industry-standard rate
+• Transparent, on-chain deduction
+
+📊 Revenue Projection Example:
+
+Monthly Sales Volume: 100 ETH
+Platform Fee (2.5%): 2.5 ETH
+Annual Revenue: 30 ETH (~$60,000 at current prices)
+
+Creator Benefits:
+
+✅ Perpetual Royalties (5-20%)
+• Set your own rate
+• Earn on every secondary sale
+• Passive income for life
+
+✅ Global Market Access
+• Reach international buyers
+• 24/7 marketplace
+• Trustless transactions
+
+✅ Affordable Registration
+• Gas fees only (~$0.50)
+• No middlemen or bureaucracy
+• Instant verification
+
+Market Opportunity:
+• Indonesia: 63M+ creative workers
+• Southeast Asia: 200M+ potential users
+• Global market: $2.6 trillion creative economy
+
+=================================================================
+SLIDE 13: ROADMAP
+=================================================================
+
+[TITLE]
+Roadmap: From Testnet to Ecosystem
+
+[CONTENT]
+
+Phase 1: MVP (✅ Current - October 2025)
+✅ 3 smart contracts deployed & verified (Sepolia)
+✅ Full-stack dApp (100% blockchain integrated)
+✅ 5 asset types supported
+✅ 90 tests, 100% coverage
+✅ Security audit passed
+
+Phase 2: Mainnet Launch (Q1 2026)
+• Deploy to Ethereum Mainnet or Polygon
+• Creator onboarding campaign
+• Partnership with Indonesian creator communities
+• Mobile app development (React Native)
+
+Phase 3: Ecosystem Growth (Q2-Q3 2026)
+• Multi-chain support (Solana, Base, etc.)
+• AI-powered content verification
+• Integration with Indonesian legal system
+• Dispute resolution mechanism
+
+Phase 4: Regional Expansion (Q4 2026)
+• Expand to Southeast Asian markets
+• Localization (Thai, Vietnamese, Filipino)
+• Institutional partnerships (galleries, studios)
+• Creator education programs
+
+Long-term Vision:
+Become the standard for copyright protection in Indonesia
+Bridge Web2 creators to Web3
+Enable economic empowerment for 63M+ creative workers
+
+=================================================================
+SLIDE 14: IMPACT
+=================================================================
+
+[TITLE]
+Empowering Indonesia's Creative Economy
+
+[CONTENT]
+
+Social Impact:
+
+🎯 Economic Empowerment
+• 63 million+ creative workers gain access to affordable copyright protection
+• Democratize IP rights (not just for big corporations)
+• Enable micro-creators to monetize their work
+
+🌍 Global Market Access
+• Indonesian creators can sell to international buyers
+• Remove geographic barriers
+• Compete on global Web3 marketplace
+
+💪 Strengthen IP Culture
+• Educate creators about copyright importance
+• Build IP-aware creative community
+• Reduce piracy through easy registration
+
+🏛️ Align with National Goals
+• Support OJK's digital financial innovation vision
+• Contribute to Indonesia's creative economy GDP (8%+)
+• Foster blockchain adoption in creative sector
+
+Real-World Impact:
+
+If 1% of 63M creators use KaryaChain:
+• 630,000 creators protected
+• $300,000+ saved in registration fees
+• Millions in royalties earned over time
+
+=================================================================
+SLIDE 15: CALL TO ACTION
+=================================================================
+
+[TITLE]
+Try KaryaChain Today
+
+[CONTENT - Make URL HUGE]
+
+🌐 Live Demo
+
+https://karyachain.rectorspace.com
+
+What You Can Do:
+1. Connect your Web3 wallet (Rabby, MetaMask)
+2. Register a copyright (Sepolia testnet - free!)
+3. Mint an NFT with custom royalties
+4. Explore the marketplace
+
+📂 Open Source
+github.com/RECTOR-LABS/ojk-ekraf-hackathon
+
+• View all smart contracts
+• See 90 tests (100% coverage)
+• Verified on Etherscan
+
+📧 Contact
+Team: RECTOR
+[Add your email here]
+
+Join us in empowering Indonesia's creative economy! 🇮🇩
+
+[VISUAL: Use 01-landing-page-hero.png as background + add QR code to URL]
+
+=================================================================
+END OF SLIDES
+=================================================================
+
+EXPORT INSTRUCTIONS:
+1. File → Download → PDF Document (.pdf)
+2. Filename: KaryaChain-Pitch-Deck-OJK-Ekraf-2025.pdf
+3. Ensure file size < 10MB
+
+COLOR SCHEME:
+Primary Purple: #8B5CF6, #A855F7
+Secondary Blue: #3B82F6, #60A5FA
+Background Dark: #0F172A, #1E293B
+Text: White/Light gray
+
+GOOD LUCK! 🚀
