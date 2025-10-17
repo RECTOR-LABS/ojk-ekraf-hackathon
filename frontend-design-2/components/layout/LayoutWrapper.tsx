@@ -9,10 +9,10 @@ import { ReactNode } from 'react';
 export function LayoutWrapper({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  // Homepage uses marketing layout (Navbar), other pages use app layout (Sidebar + TopBar)
-  const isHomepage = pathname === '/';
+  // Marketing pages use Navbar layout, app pages use Sidebar + TopBar layout
+  const isMarketingPage = pathname === '/' || pathname === '/pitch-deck';
 
-  if (isHomepage) {
+  if (isMarketingPage) {
     return (
       <div className="min-h-screen overflow-x-hidden">
         <Navbar />
