@@ -3,15 +3,12 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, Play } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
-import { useState } from 'react';
 
 interface DemoVideoSectionProps {
   videoUrl?: string; // YouTube embed URL (to be added later)
 }
 
 export function DemoVideoSection({ videoUrl }: DemoVideoSectionProps) {
-  const [showVideo, setShowVideo] = useState(false);
-
   // If no video URL provided, show placeholder
   const hasVideo = videoUrl && videoUrl.trim() !== '';
 

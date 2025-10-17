@@ -12,7 +12,7 @@ export function useFullscreen() {
   // Check if fullscreen is supported
   const isSupported = typeof document !== 'undefined' &&
     (document.fullscreenEnabled ||
-     // @ts-ignore - Safari webkit prefix
+     // @ts-expect-error - Safari webkit prefix
      document.webkitFullscreenEnabled);
 
   // Update state when fullscreen changes
@@ -21,7 +21,7 @@ export function useFullscreen() {
 
     const handleFullscreenChange = () => {
       setIsFullscreen(
-        // @ts-ignore - Safari webkit prefix
+        // @ts-expect-error - Safari webkit prefix
         !!document.fullscreenElement || !!document.webkitFullscreenElement
       );
     };
@@ -43,16 +43,16 @@ export function useFullscreen() {
     }
 
     try {
-      // @ts-ignore - Safari webkit prefix
+      // @ts-expect-error - Safari webkit prefix
       if (!document.fullscreenElement && !document.webkitFullscreenElement) {
         // Enter fullscreen
         const element = document.documentElement;
         if (element.requestFullscreen) {
           await element.requestFullscreen();
         }
-        // @ts-ignore - Safari webkit prefix
+        // @ts-expect-error - Safari webkit prefix
         else if (element.webkitRequestFullscreen) {
-          // @ts-ignore - Safari webkit prefix
+          // @ts-expect-error - Safari webkit prefix
           await element.webkitRequestFullscreen();
         }
       } else {
@@ -60,9 +60,9 @@ export function useFullscreen() {
         if (document.exitFullscreen) {
           await document.exitFullscreen();
         }
-        // @ts-ignore - Safari webkit prefix
+        // @ts-expect-error - Safari webkit prefix
         else if (document.webkitExitFullscreen) {
-          // @ts-ignore - Safari webkit prefix
+          // @ts-expect-error - Safari webkit prefix
           await document.webkitExitFullscreen();
         }
       }

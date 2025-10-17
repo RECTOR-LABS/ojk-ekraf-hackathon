@@ -3,7 +3,6 @@
 import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Upload, FileCheck, Coins, ShoppingBag, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 
 export function Slide04HowItWorks() {
   const steps = [

@@ -20,10 +20,10 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
+      {/* Mobile Toggle Button - Only on mobile/tablet */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden glass rounded-lg p-3"
+        className="fixed top-4 left-4 z-50 flex lg:!hidden glass rounded-lg p-3"
       >
         {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>

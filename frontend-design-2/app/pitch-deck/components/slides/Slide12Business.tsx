@@ -2,7 +2,7 @@
 
 import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
-import { DollarSign, TrendingUp, Users, Globe } from 'lucide-react';
+import { DollarSign, TrendingUp, Globe } from 'lucide-react';
 
 export function Slide12Business() {
   return (

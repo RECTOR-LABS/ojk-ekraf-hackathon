@@ -2,7 +2,7 @@
 
 import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
-import { CheckCircle2, Calendar, Rocket, Globe2, Target } from 'lucide-react';
+import { CheckCircle2, Rocket, Globe2, Target } from 'lucide-react';
 
 export function Slide13Roadmap() {
   const phases = [

@@ -2,7 +2,7 @@
 
 import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
-import { Code2, Shield, Database, Zap, ArrowRight } from 'lucide-react';
+import { Code2, ArrowRight } from 'lucide-react';
 
 export function Slide09Technical() {
   const contracts = [

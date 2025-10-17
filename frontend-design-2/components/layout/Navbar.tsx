@@ -55,10 +55,10 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle - Only on mobile */}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="md:hidden glass rounded-lg p-3 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="flex md:!hidden glass rounded-lg p-3 min-h-[44px] min-w-[44px] items-center justify-center"
           >
             {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
