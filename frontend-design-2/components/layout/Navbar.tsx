@@ -3,21 +3,38 @@
 import { motion } from 'framer-motion';
 import { Shield, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
+  { label: 'Features', href: '/#features' },
+  { label: 'How It Works', href: '/#how-it-works' },
   { label: 'Marketplace', href: '/marketplace' },
 ];
 
 export function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Scroll detection for darker navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-glass-border">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-glass-border transition-all duration-300 ${
+        scrolled
+          ? 'bg-purple-950/95 backdrop-blur-xl shadow-xl shadow-purple-900/20'
+          : 'glass'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between min-h-[52px]">
           {/* Logo */}

@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 import { Navbar } from './Navbar';
+import { FloatingPitchDeckButton } from '@/components/ui/FloatingPitchDeckButton';
 import { ReactNode } from 'react';
 
 export function LayoutWrapper({ children }: { children: ReactNode }) {
@@ -11,12 +12,14 @@ export function LayoutWrapper({ children }: { children: ReactNode }) {
 
   // Marketing pages use Navbar layout, app pages use Sidebar + TopBar layout
   const isMarketingPage = pathname === '/' || pathname === '/pitch-deck';
+  const showPitchDeckButton = pathname !== '/pitch-deck';
 
   if (isMarketingPage) {
     return (
       <div className="min-h-screen overflow-x-hidden">
         <Navbar />
         <main className="pt-16 sm:pt-20 overflow-x-hidden">{children}</main>
+        {showPitchDeckButton && <FloatingPitchDeckButton />}
       </div>
     );
   }
@@ -35,6 +38,8 @@ export function LayoutWrapper({ children }: { children: ReactNode }) {
         {/* Page Content */}
         <main className="flex-1 p-4 sm:p-6 overflow-y-auto overflow-x-hidden">{children}</main>
       </div>
+
+      {showPitchDeckButton && <FloatingPitchDeckButton />}
     </div>
   );
 }

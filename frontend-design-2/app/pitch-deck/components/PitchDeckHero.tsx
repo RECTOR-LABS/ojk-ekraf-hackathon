@@ -1,14 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 
-interface PitchDeckHeroProps {
-  onStartClick: () => void;
-}
-
-export function PitchDeckHero({ onStartClick }: PitchDeckHeroProps) {
+export function PitchDeckHero() {
+  const scrollToContent = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+  };
   return (
     <section className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
       {/* Background Gradient */}
@@ -67,16 +66,16 @@ export function PitchDeckHero({ onStartClick }: PitchDeckHeroProps) {
           </GlassCard>
         </motion.div>
 
-        {/* Start Button */}
+        {/* Scroll Indicator */}
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          onClick={onStartClick}
+          onClick={scrollToContent}
           className="glass px-8 py-4 rounded-xl text-lg font-medium hover:scale-105 transition-transform inline-flex items-center gap-3"
         >
-          <span>Start Presentation</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
+          <span>View Presentation</span>
+          <ArrowDown className="w-5 h-5 animate-bounce" />
         </motion.button>
       </motion.div>
     </section>

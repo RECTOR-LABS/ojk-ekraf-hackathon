@@ -41,16 +41,17 @@ export function CTASection() {
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Animated Rainbow Border */}
+          {/* Animated Rainbow Border - Pulsing Glow */}
           <motion.div
             className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-purple-600 via-blue-600 to-pink-600 opacity-75 blur-xl"
             animate={{
-              rotate: [0, 360],
+              scale: [1, 1.05, 1],
+              opacity: [0.75, 0.9, 0.75],
             }}
             transition={{
-              duration: 8,
+              duration: 4,
               repeat: Infinity,
-              ease: 'linear',
+              ease: 'easeInOut',
             }}
           />
 
