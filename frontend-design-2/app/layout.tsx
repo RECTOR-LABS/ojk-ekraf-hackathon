@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     'Ethereum',
   ],
   authors: [{ name: 'RECTOR' }],
+  icons: {
+    icon: '/icon.svg',
+    apple: '/apple-icon.svg',
+  },
+  themeColor: '#9333ea',
   openGraph: {
     title: 'KaryaChain - Decentralized Copyright Protection',
     description: 'Protect your creative works on blockchain with tamper-proof copyright registration.',
