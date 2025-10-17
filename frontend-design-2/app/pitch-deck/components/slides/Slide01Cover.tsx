@@ -1,9 +1,31 @@
 'use client';
 
 import { SlideContent } from '../SlideContent';
+import { usePitchDeckLanguage } from '@/lib/hooks/usePitchDeckLanguage';
 import Image from 'next/image';
 
 export function Slide01Cover() {
+  const { language } = usePitchDeckLanguage();
+
+  const content = {
+    en: {
+      subtitle: 'Blockchain-Powered Copyright Protection',
+      forCreators: 'for Indonesian Creators',
+      hackathon: 'OJK-Ekraf Infinity Hackathon 2025',
+      category: 'Digital Rights & Authentication',
+      team: 'Team: RECTOR',
+    },
+    id: {
+      subtitle: 'Perlindungan Hak Cipta Berbasis Blockchain',
+      forCreators: 'untuk Kreator Indonesia',
+      hackathon: 'OJK-Ekraf Infinity Hackathon 2025',
+      category: 'Hak Digital & Autentikasi',
+      team: 'Tim: RECTOR',
+    },
+  };
+
+  const t = content[language];
+
   return (
     <SlideContent>
       {/* Background Image with Overlay */}
@@ -26,22 +48,22 @@ export function Slide01Cover() {
 
         <div className="space-y-4">
           <p className="text-2xl sm:text-3xl lg:text-4xl text-foreground/90 font-semibold">
-            Blockchain-Powered Copyright Protection
+            {t.subtitle}
           </p>
           <p className="text-xl sm:text-2xl lg:text-3xl text-foreground/70">
-            for Indonesian Creators
+            {t.forCreators}
           </p>
         </div>
 
         <div className="pt-8 space-y-3 text-sm sm:text-base text-foreground/60">
           <p className="font-semibold text-foreground/80">
-            OJK-Ekraf Infinity Hackathon 2025
+            {t.hackathon}
           </p>
-          <p>Digital Rights & Authentication</p>
+          <p>{t.category}</p>
           <p className="font-mono text-purple-400 text-base sm:text-lg">
             karyachain.rectorspace.com
           </p>
-          <p className="text-foreground/50">Team: RECTOR</p>
+          <p className="text-foreground/50">{t.team}</p>
         </div>
       </div>
     </SlideContent>

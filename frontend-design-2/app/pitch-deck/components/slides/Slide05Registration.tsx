@@ -4,62 +4,100 @@ import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Upload, FileText, Eye, CheckCircle2, Clock, Shield, Database } from 'lucide-react';
 import Image from 'next/image';
+import { usePitchDeckLanguage } from '@/lib/hooks/usePitchDeckLanguage';
 
 export function Slide05Registration() {
-  const flowSteps = [
-    {
-      icon: Upload,
-      label: 'Upload File',
-      color: 'from-blue-600/20 to-cyan-600/20',
-      iconColor: 'text-blue-400',
-    },
-    {
-      icon: FileText,
-      label: 'Add Metadata',
-      color: 'from-purple-600/20 to-pink-600/20',
-      iconColor: 'text-purple-400',
-    },
-    {
-      icon: Eye,
-      label: 'Review',
-      color: 'from-orange-600/20 to-yellow-600/20',
-      iconColor: 'text-orange-400',
-    },
-    {
-      icon: CheckCircle2,
-      label: 'Submit to Blockchain',
-      color: 'from-green-600/20 to-emerald-600/20',
-      iconColor: 'text-green-400',
-    },
-  ];
+  const { language } = usePitchDeckLanguage();
 
-  const results = [
-    {
-      icon: Clock,
-      label: '<2 min registration',
+  const content = {
+    en: {
+      title: 'Demo:',
+      titleHighlight: 'Copyright Registration',
+      subtitle: 'Complete flow from upload to blockchain',
+      flowSteps: [
+        {
+          icon: Upload,
+          label: 'Upload File',
+          color: 'from-blue-600/20 to-cyan-600/20',
+          iconColor: 'text-blue-400',
+        },
+        {
+          icon: FileText,
+          label: 'Add Metadata',
+          color: 'from-purple-600/20 to-pink-600/20',
+          iconColor: 'text-purple-400',
+        },
+        {
+          icon: Eye,
+          label: 'Review',
+          color: 'from-orange-600/20 to-yellow-600/20',
+          iconColor: 'text-orange-400',
+        },
+        {
+          icon: CheckCircle2,
+          label: 'Submit to Blockchain',
+          color: 'from-green-600/20 to-emerald-600/20',
+          iconColor: 'text-green-400',
+        },
+      ],
+      results: [
+        { icon: Clock, label: '<2 min registration' },
+        { icon: Shield, label: 'Immutable proof' },
+        { icon: Database, label: 'IPFS storage' },
+        { icon: CheckCircle2, label: 'Ready to mint' },
+      ],
     },
-    {
-      icon: Shield,
-      label: 'Immutable proof',
+    id: {
+      title: 'Demo:',
+      titleHighlight: 'Pendaftaran Hak Cipta',
+      subtitle: 'Alur lengkap dari unggah hingga blockchain',
+      flowSteps: [
+        {
+          icon: Upload,
+          label: 'Unggah File',
+          color: 'from-blue-600/20 to-cyan-600/20',
+          iconColor: 'text-blue-400',
+        },
+        {
+          icon: FileText,
+          label: 'Tambah Metadata',
+          color: 'from-purple-600/20 to-pink-600/20',
+          iconColor: 'text-purple-400',
+        },
+        {
+          icon: Eye,
+          label: 'Tinjau',
+          color: 'from-orange-600/20 to-yellow-600/20',
+          iconColor: 'text-orange-400',
+        },
+        {
+          icon: CheckCircle2,
+          label: 'Kirim ke Blockchain',
+          color: 'from-green-600/20 to-emerald-600/20',
+          iconColor: 'text-green-400',
+        },
+      ],
+      results: [
+        { icon: Clock, label: 'Pendaftaran <2 menit' },
+        { icon: Shield, label: 'Bukti permanen' },
+        { icon: Database, label: 'Penyimpanan IPFS' },
+        { icon: CheckCircle2, label: 'Siap di-mint' },
+      ],
     },
-    {
-      icon: Database,
-      label: 'IPFS storage',
-    },
-    {
-      icon: CheckCircle2,
-      label: 'Ready to mint',
-    },
-  ];
+  };
+
+  const t = content[language];
+  const flowSteps = t.flowSteps;
+  const results = t.results;
 
   return (
     <SlideContent>
       <div className="space-y-8">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Demo: <span className="gradient-text">Copyright Registration</span>
+            {t.title} <span className="gradient-text">{t.titleHighlight}</span>
           </h2>
-          <p className="text-xl text-foreground/70">Complete flow from upload to blockchain</p>
+          <p className="text-xl text-foreground/70">{t.subtitle}</p>
         </div>
 
         {/* Flow Steps */}

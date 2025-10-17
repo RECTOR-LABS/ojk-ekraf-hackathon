@@ -4,36 +4,71 @@ import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { Search, ShoppingCart, ExternalLink, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
+import { usePitchDeckLanguage } from '@/lib/hooks/usePitchDeckLanguage';
 
 export function Slide08Marketplace() {
-  const features = [
-    {
-      icon: Search,
-      title: 'Smart Search & Filters',
-      description: 'Find NFTs by asset type, price range, and keywords',
+  const { language } = usePitchDeckLanguage();
+
+  const content = {
+    en: {
+      title: 'Demo:',
+      titleHighlight: 'Decentralized Marketplace',
+      subtitle: 'Browse, discover, and purchase creative works on-chain',
+      features: [
+        {
+          icon: Search,
+          title: 'Smart Search & Filters',
+          description: 'Find NFTs by asset type, price range, and keywords',
+        },
+        {
+          icon: ShoppingCart,
+          title: 'Secure Purchasing',
+          description: 'Web3 wallet integration with automatic royalty distribution',
+        },
+        {
+          icon: ExternalLink,
+          title: 'Full Transparency',
+          description: 'View transaction history and ownership on Etherscan',
+        },
+      ],
+      footer: '100% Blockchain Integration - No Mock Data',
     },
-    {
-      icon: ShoppingCart,
-      title: 'Secure Purchasing',
-      description: 'Web3 wallet integration with automatic royalty distribution',
+    id: {
+      title: 'Demo:',
+      titleHighlight: 'Marketplace Terdesentralisasi',
+      subtitle: 'Jelajahi, temukan, dan beli karya kreatif on-chain',
+      features: [
+        {
+          icon: Search,
+          title: 'Pencarian & Filter Cerdas',
+          description: 'Temukan NFT berdasarkan jenis aset, rentang harga, dan kata kunci',
+        },
+        {
+          icon: ShoppingCart,
+          title: 'Pembelian Aman',
+          description: 'Integrasi wallet Web3 dengan distribusi royalti otomatis',
+        },
+        {
+          icon: ExternalLink,
+          title: 'Transparansi Penuh',
+          description: 'Lihat riwayat transaksi dan kepemilikan di Etherscan',
+        },
+      ],
+      footer: '100% Integrasi Blockchain - Tanpa Mock Data',
     },
-    {
-      icon: ExternalLink,
-      title: 'Full Transparency',
-      description: 'View transaction history and ownership on Etherscan',
-    },
-  ];
+  };
+
+  const t = content[language];
+  const features = t.features;
 
   return (
     <SlideContent>
       <div className="space-y-8">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Demo: <span className="gradient-text">Decentralized Marketplace</span>
+            {t.title} <span className="gradient-text">{t.titleHighlight}</span>
           </h2>
-          <p className="text-xl text-foreground/70">
-            Browse, discover, and purchase creative works on-chain
-          </p>
+          <p className="text-xl text-foreground/70">{t.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -64,9 +99,7 @@ export function Slide08Marketplace() {
 
         <div className="flex items-center justify-center gap-2 text-green-400">
           <CheckCircle2 className="w-5 h-5" />
-          <p className="text-sm font-medium">
-            100% Blockchain Integration - No Mock Data
-          </p>
+          <p className="text-sm font-medium">{t.footer}</p>
         </div>
       </div>
     </SlideContent>

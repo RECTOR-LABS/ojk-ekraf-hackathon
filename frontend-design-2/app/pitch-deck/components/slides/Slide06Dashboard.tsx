@@ -4,58 +4,117 @@ import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { FileCheck, Image as ImageIcon, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
+import { usePitchDeckLanguage } from '@/lib/hooks/usePitchDeckLanguage';
 
 export function Slide06Dashboard() {
-  const tabs = [
-    {
-      icon: FileCheck,
-      title: 'My Copyrights',
-      description: 'View all registered works',
-      features: [
-        'Copyright ID & timestamp',
-        'Asset type & metadata',
-        'IPFS storage links',
-        'Quick access to mint NFT',
+  const { language } = usePitchDeckLanguage();
+
+  const content = {
+    en: {
+      title: 'Demo:',
+      titleHighlight: 'Creator Dashboard',
+      subtitle: 'Manage your creative assets in one place',
+      tabs: [
+        {
+          icon: FileCheck,
+          title: 'My Copyrights',
+          description: 'View all registered works',
+          features: [
+            'Copyright ID & timestamp',
+            'Asset type & metadata',
+            'IPFS storage links',
+            'Quick access to mint NFT',
+          ],
+          color: 'from-blue-600/20 to-cyan-600/20',
+          iconColor: 'text-blue-400',
+        },
+        {
+          icon: ImageIcon,
+          title: 'NFT Collection',
+          description: 'Your minted NFTs',
+          features: [
+            'NFT ownership proof',
+            'Royalty settings',
+            'Transfer history',
+            'List on marketplace',
+          ],
+          color: 'from-purple-600/20 to-pink-600/20',
+          iconColor: 'text-purple-400',
+        },
+        {
+          icon: ShoppingBag,
+          title: 'My Listings',
+          description: 'Active marketplace sales',
+          features: [
+            'Current price & status',
+            'View count & analytics',
+            'Delist anytime',
+            'Track earnings',
+          ],
+          color: 'from-green-600/20 to-emerald-600/20',
+          iconColor: 'text-green-400',
+        },
       ],
-      color: 'from-blue-600/20 to-cyan-600/20',
-      iconColor: 'text-blue-400',
     },
-    {
-      icon: ImageIcon,
-      title: 'NFT Collection',
-      description: 'Your minted NFTs',
-      features: [
-        'NFT ownership proof',
-        'Royalty settings',
-        'Transfer history',
-        'List on marketplace',
+    id: {
+      title: 'Demo:',
+      titleHighlight: 'Dashboard Kreator',
+      subtitle: 'Kelola aset kreatif Anda di satu tempat',
+      tabs: [
+        {
+          icon: FileCheck,
+          title: 'Hak Cipta Saya',
+          description: 'Lihat semua karya terdaftar',
+          features: [
+            'ID Hak Cipta & timestamp',
+            'Jenis aset & metadata',
+            'Link penyimpanan IPFS',
+            'Akses cepat untuk mint NFT',
+          ],
+          color: 'from-blue-600/20 to-cyan-600/20',
+          iconColor: 'text-blue-400',
+        },
+        {
+          icon: ImageIcon,
+          title: 'Koleksi NFT',
+          description: 'NFT yang telah Anda mint',
+          features: [
+            'Bukti kepemilikan NFT',
+            'Pengaturan royalti',
+            'Riwayat transfer',
+            'Jual di marketplace',
+          ],
+          color: 'from-purple-600/20 to-pink-600/20',
+          iconColor: 'text-purple-400',
+        },
+        {
+          icon: ShoppingBag,
+          title: 'Listing Saya',
+          description: 'Penjualan aktif di marketplace',
+          features: [
+            'Harga & status terkini',
+            'Jumlah view & analitik',
+            'Hapus listing kapan saja',
+            'Lacak pendapatan',
+          ],
+          color: 'from-green-600/20 to-emerald-600/20',
+          iconColor: 'text-green-400',
+        },
       ],
-      color: 'from-purple-600/20 to-pink-600/20',
-      iconColor: 'text-purple-400',
     },
-    {
-      icon: ShoppingBag,
-      title: 'My Listings',
-      description: 'Active marketplace sales',
-      features: [
-        'Current price & status',
-        'View count & analytics',
-        'Delist anytime',
-        'Track earnings',
-      ],
-      color: 'from-green-600/20 to-emerald-600/20',
-      iconColor: 'text-green-400',
-    },
-  ];
+  };
+
+  const t = content[language];
+  const tabs = t.tabs;
 
   return (
     <SlideContent>
       <div className="space-y-8">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Demo: <span className="gradient-text">Creator Dashboard</span>
+            {t.title} <span className="gradient-text">{t.titleHighlight}</span>
           </h2>
-          <p className="text-xl text-foreground/70">Manage your creative assets in one place</p>
+          <p className="text-xl text-foreground/70">{t.subtitle}</p>
         </div>
 
         {/* 3 Tabs Overview */}

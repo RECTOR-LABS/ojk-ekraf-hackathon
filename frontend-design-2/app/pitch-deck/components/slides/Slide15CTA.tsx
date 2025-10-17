@@ -4,8 +4,36 @@ import { SlideContent } from '../SlideContent';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { ExternalLink, Github, Mail } from 'lucide-react';
 import Image from 'next/image';
+import { usePitchDeckLanguage } from '@/lib/hooks/usePitchDeckLanguage';
 
 export function Slide15CTA() {
+  const { language } = usePitchDeckLanguage();
+
+  const content = {
+    en: {
+      title: 'Try',
+      titleHighlight: 'KaryaChain',
+      titleEnd: 'Today',
+      experienceText: 'Experience the Platform Live:',
+      launchButton: 'Launch Live Demo',
+      whatYouCanDo: 'What You Can Do:',
+      actions: ['Connect Wallet', 'Register Copyright', 'Mint NFT', 'Explore Marketplace'],
+      finalMessage: "Join us in empowering Indonesia's creative economy! 🇮🇩",
+    },
+    id: {
+      title: 'Coba',
+      titleHighlight: 'KaryaChain',
+      titleEnd: 'Hari Ini',
+      experienceText: 'Rasakan Platform Secara Langsung:',
+      launchButton: 'Buka Demo Langsung',
+      whatYouCanDo: 'Yang Bisa Anda Lakukan:',
+      actions: ['Hubungkan Wallet', 'Daftar Hak Cipta', 'Mint NFT', 'Jelajahi Marketplace'],
+      finalMessage: 'Bergabunglah dengan kami dalam memberdayakan ekonomi kreatif Indonesia! 🇮🇩',
+    },
+  };
+
+  const t = content[language];
+
   return (
     <SlideContent>
       {/* Background Image with Overlay */}
@@ -24,14 +52,14 @@ export function Slide15CTA() {
         {/* Title */}
         <div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-            Try <span className="gradient-text">KaryaChain</span> Today
+            {t.title} <span className="gradient-text">{t.titleHighlight}</span> {t.titleEnd}
           </h2>
         </div>
 
         {/* Main CTA - HUGE URL */}
         <GlassCard variant="elevated" className="p-8 sm:p-12">
           <div className="space-y-6">
-            <p className="text-xl text-foreground/70 mb-6">Experience the Platform Live:</p>
+            <p className="text-xl text-foreground/70 mb-6">{t.experienceText}</p>
 
             {/* Huge Clickable URL */}
             <a
@@ -54,7 +82,7 @@ export function Slide15CTA() {
                 className="inline-flex items-center gap-3 glass px-8 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-transform"
               >
                 <ExternalLink className="w-5 h-5" />
-                <span>Launch Live Demo</span>
+                <span>{t.launchButton}</span>
               </a>
             </div>
           </div>
@@ -62,24 +90,14 @@ export function Slide15CTA() {
 
         {/* What You Can Do */}
         <GlassCard variant="elevated" className="p-6">
-          <h3 className="text-xl font-bold mb-4">What You Can Do:</h3>
+          <h3 className="text-xl font-bold mb-4">{t.whatYouCanDo}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div className="flex items-center gap-2 justify-center">
-              <span className="text-green-400">✓</span>
-              <span>Connect Wallet</span>
-            </div>
-            <div className="flex items-center gap-2 justify-center">
-              <span className="text-green-400">✓</span>
-              <span>Register Copyright</span>
-            </div>
-            <div className="flex items-center gap-2 justify-center">
-              <span className="text-green-400">✓</span>
-              <span>Mint NFT</span>
-            </div>
-            <div className="flex items-center gap-2 justify-center">
-              <span className="text-green-400">✓</span>
-              <span>Explore Marketplace</span>
-            </div>
+            {t.actions.map((action, index) => (
+              <div key={index} className="flex items-center gap-2 justify-center">
+                <span className="text-green-400">✓</span>
+                <span>{action}</span>
+              </div>
+            ))}
           </div>
         </GlassCard>
 
@@ -105,9 +123,7 @@ export function Slide15CTA() {
 
         {/* Final Message */}
         <div className="pt-4">
-          <p className="text-xl sm:text-2xl font-semibold text-foreground/90">
-            Join us in empowering Indonesia&apos;s creative economy! 🇮🇩
-          </p>
+          <p className="text-xl sm:text-2xl font-semibold text-foreground/90">{t.finalMessage}</p>
         </div>
       </div>
     </SlideContent>

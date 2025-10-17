@@ -3,53 +3,107 @@
 import { SlideContent } from '../SlideContent';
 import { AlertTriangle, Ban, DollarSign, Target } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
+import { usePitchDeckLanguage } from '@/lib/hooks/usePitchDeckLanguage';
 
 export function Slide02Problem() {
-  const problems = [
-    {
-      icon: Ban,
-      title: 'No Accessible Copyright Protection',
-      points: [
-        'Traditional registration: expensive, slow, bureaucratic',
-        'Average cost: IDR 1-5 million per work',
-        'Processing time: 3-6 months',
+  const { language } = usePitchDeckLanguage();
+
+  const content = {
+    en: {
+      title: 'Indonesian Creators Face',
+      titleHighlight: 'Critical Challenges',
+      problems: [
+        {
+          icon: Ban,
+          title: 'No Accessible Copyright Protection',
+          points: [
+            'Traditional registration: expensive, slow, bureaucratic',
+            'Average cost: IDR 1-5 million per work',
+            'Processing time: 3-6 months',
+          ],
+        },
+        {
+          icon: AlertTriangle,
+          title: 'Rampant IP Theft',
+          points: [
+            '70%+ of digital creators experience unauthorized use',
+            'Difficult to prove ownership and creation date',
+            'Limited legal recourse for small creators',
+          ],
+        },
+        {
+          icon: DollarSign,
+          title: 'Lost Revenue',
+          points: [
+            "Creators can't monetize secondary sales",
+            'No infrastructure for perpetual royalties',
+            'Global marketplace access barriers',
+          ],
+        },
+        {
+          icon: Target,
+          title: 'Target Market',
+          points: [
+            '63 million+ creative economy workers in Indonesia',
+            'Growing digital creator ecosystem',
+            'Need for affordable, accessible protection',
+          ],
+        },
       ],
     },
-    {
-      icon: AlertTriangle,
-      title: 'Rampant IP Theft',
-      points: [
-        '70%+ of digital creators experience unauthorized use',
-        'Difficult to prove ownership and creation date',
-        'Limited legal recourse for small creators',
+    id: {
+      title: 'Kreator Indonesia Menghadapi',
+      titleHighlight: 'Tantangan Kritis',
+      problems: [
+        {
+          icon: Ban,
+          title: 'Tidak Ada Perlindungan Hak Cipta yang Mudah Diakses',
+          points: [
+            'Pendaftaran tradisional: mahal, lambat, birokratis',
+            'Biaya rata-rata: IDR 1-5 juta per karya',
+            'Waktu proses: 3-6 bulan',
+          ],
+        },
+        {
+          icon: AlertTriangle,
+          title: 'Pencurian Kekayaan Intelektual yang Merajalela',
+          points: [
+            '70%+ kreator digital mengalami penggunaan tanpa izin',
+            'Sulit membuktikan kepemilikan dan tanggal pembuatan',
+            'Upaya hukum terbatas untuk kreator kecil',
+          ],
+        },
+        {
+          icon: DollarSign,
+          title: 'Kehilangan Pendapatan',
+          points: [
+            'Kreator tidak bisa monetisasi penjualan sekunder',
+            'Tidak ada infrastruktur untuk royalti perpetual',
+            'Hambatan akses pasar global',
+          ],
+        },
+        {
+          icon: Target,
+          title: 'Pasar Sasaran',
+          points: [
+            '63 juta+ pekerja ekonomi kreatif di Indonesia',
+            'Ekosistem kreator digital yang berkembang',
+            'Kebutuhan perlindungan yang terjangkau dan mudah diakses',
+          ],
+        },
       ],
     },
-    {
-      icon: DollarSign,
-      title: 'Lost Revenue',
-      points: [
-        "Creators can't monetize secondary sales",
-        'No infrastructure for perpetual royalties',
-        'Global marketplace access barriers',
-      ],
-    },
-    {
-      icon: Target,
-      title: 'Target Market',
-      points: [
-        '63 million+ creative economy workers in Indonesia',
-        'Growing digital creator ecosystem',
-        'Need for affordable, accessible protection',
-      ],
-    },
-  ];
+  };
+
+  const t = content[language];
+  const problems = t.problems;
 
   return (
     <SlideContent>
       <div className="space-y-8">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Indonesian Creators Face <span className="text-red-400">Critical Challenges</span>
+            {t.title} <span className="text-red-400">{t.titleHighlight}</span>
           </h2>
         </div>
 
