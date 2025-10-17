@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useAccount, useReadContract, useReadContracts } from 'wagmi';
 import { KaryaNFTAddress, KaryaNFTABI } from '@/lib/contracts/KaryaNFT';
 import { KaryaMarketplaceAddress, KaryaMarketplaceABI } from '@/lib/contracts/KaryaMarketplace';
@@ -90,13 +90,6 @@ export function useUserNFTs() {
 
     return tokenIds;
   }, [ownershipData, address]);
-
-  // Debug: Log owned token IDs
-  useEffect(() => {
-    if (ownedTokenIds.length > 0) {
-      console.log('[useUserNFTs] Owned token IDs:', ownedTokenIds.map(id => id.toString()));
-    }
-  }, [ownedTokenIds]);
 
   // 5. Build contract calls for each owned NFT
   const nftDataCalls = useMemo(() => {

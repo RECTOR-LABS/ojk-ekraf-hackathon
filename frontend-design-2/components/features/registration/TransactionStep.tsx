@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { decodeEventLog } from 'viem';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
 import { useRegistrationStore } from '@/lib/stores/registrationStore';
@@ -35,6 +36,7 @@ export function TransactionStep() {
 
   const { writeContract, data: txHash, isPending: isWritePending, error: writeError } = useWriteContract();
   const {
+    data: receipt,
     isLoading: isTxPending,
     isSuccess: isTxSuccess,
     error: txError,
@@ -56,18 +58,45 @@ export function TransactionStep() {
 
   // Extract registration ID from transaction receipt
   useEffect(() => {
-    if (isTxSuccess && txHash) {
-      // The contract returns the registrationId, we'll use a simulated ID for now
-      // In production, you'd decode the transaction logs
-      const simulatedId = Date.now().toString();
-      setRegistrationId(simulatedId, txHash);
+    if (isTxSuccess && txHash && receipt) {
+      try {
+        // Find the CopyrightRegistered event in the logs
+        const registeredEvent = receipt.logs.find((log) => {
+          try {
+            const decoded = decodeEventLog({
+              abi: CopyrightRegistryABI,
+              data: log.data,
+              topics: log.topics,
+            });
+            return decoded.eventName === 'CopyrightRegistered';
+          } catch {
+            return false;
+          }
+        });
+
+        if (registeredEvent) {
+          const decoded = decodeEventLog({
+            abi: CopyrightRegistryABI,
+            data: registeredEvent.data,
+            topics: registeredEvent.topics,
+          });
+
+          // Extract registration ID from event (first indexed parameter)
+          const registrationId = String(decoded.args.id);
+          setRegistrationId(registrationId, txHash);
+        }
+      } catch (error) {
+        console.error('Error extracting registration ID:', error);
+        // Fallback: use timestamp if event decoding fails
+        setRegistrationId(Date.now().toString(), txHash);
+      }
 
       // Redirect to success page after short delay
       setTimeout(() => {
         router.push('/register/success');
       }, 2000);
     }
-  }, [isTxSuccess, txHash, setRegistrationId, router]);
+  }, [isTxSuccess, txHash, receipt, setRegistrationId, router]);
 
   // Handle IPFS upload
   const handleIPFSUpload = async () => {

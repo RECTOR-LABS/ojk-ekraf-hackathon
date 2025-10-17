@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useAccount, useReadContract, useReadContracts } from 'wagmi';
 import { CopyrightRegistryAddress, CopyrightRegistryABI } from '@/lib/contracts/CopyrightRegistry';
 import { KaryaNFTAddress, KaryaNFTABI } from '@/lib/contracts/KaryaNFT';
@@ -41,13 +41,6 @@ export function useUserCopyrights() {
       retryDelay: 1000,
     },
   });
-
-  // Debug: Log the copyright IDs from blockchain
-  useEffect(() => {
-    if (copyrightIds) {
-      console.log('[useUserCopyrights] Copyright IDs from blockchain:', copyrightIds);
-    }
-  }, [copyrightIds]);
 
   // 2. Build contract calls for batch fetching
   const contractCalls = useMemo(() => {

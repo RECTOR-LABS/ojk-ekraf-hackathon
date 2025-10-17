@@ -1,10 +1,7 @@
 /**
- * IPFS Upload utilities using Pinata
+ * IPFS Upload utilities using Pinata (via secure API route)
+ * Security: JWT is hidden on server-side, not exposed to client
  */
-
-const PINATA_JWT = process.env.NEXT_PUBLIC_PINATA_JWT!;
-const PIN_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
-const PIN_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS';
 
 export interface IPFSUploadResult {
   cid: string;
@@ -12,7 +9,7 @@ export interface IPFSUploadResult {
 }
 
 /**
- * Upload a file to IPFS via Pinata
+ * Upload a file to IPFS via Pinata (through Next.js API route)
  */
 export async function uploadFileToIPFS(file: File): Promise<IPFSUploadResult> {
   try {
@@ -29,17 +26,15 @@ export async function uploadFileToIPFS(file: File): Promise<IPFSUploadResult> {
     });
     formData.append('pinataOptions', pinataOptions);
 
-    const response = await fetch(PIN_FILE_URL, {
+    // Use Next.js API route instead of direct Pinata API
+    const response = await fetch('/api/upload', {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${PINATA_JWT}`,
-      },
       body: formData,
     });
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`Pinata upload failed: ${error}`);
+      throw new Error(`IPFS upload failed: ${error}`);
     }
 
     const data = await response.json();
@@ -55,15 +50,15 @@ export async function uploadFileToIPFS(file: File): Promise<IPFSUploadResult> {
 }
 
 /**
- * Upload JSON metadata to IPFS via Pinata
+ * Upload JSON metadata to IPFS via Pinata (through Next.js API route)
  */
 export async function uploadJSONToIPFS(metadata: object): Promise<IPFSUploadResult> {
   try {
-    const response = await fetch(PIN_JSON_URL, {
-      method: 'POST',
+    // Use Next.js API route instead of direct Pinata API
+    const response = await fetch('/api/upload', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${PINATA_JWT}`,
       },
       body: JSON.stringify({
         pinataContent: metadata,
@@ -78,7 +73,7 @@ export async function uploadJSONToIPFS(metadata: object): Promise<IPFSUploadResu
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`Pinata JSON upload failed: ${error}`);
+      throw new Error(`Metadata upload failed: ${error}`);
     }
 
     const data = await response.json();

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useQueryClient } from '@tanstack/react-query';
 import { GlassModal } from '@/components/ui/glass/GlassModal';
 import { GlassButton } from '@/components/ui/glass/GlassButton';
 import { GlassCard } from '@/components/ui/glass/GlassCard';
@@ -28,6 +29,7 @@ interface ListNFTModalProps {
 }
 
 export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
+  const queryClient = useQueryClient();
   const [price, setPrice] = useState('');
   const [listSuccess, setListSuccess] = useState(false);
   const [listingId, setListingId] = useState('');
@@ -95,14 +97,22 @@ export function ListNFTModal({ isOpen, onClose, nft }: ListNFTModalProps) {
         setListingId(extractedListingId);
         setListSuccess(true);
         setCurrentStep('idle');
+
+        // Invalidate relevant queries to refresh data
+        queryClient.invalidateQueries({ queryKey: ['readContract'] });
+        queryClient.invalidateQueries({ queryKey: ['readContracts'] });
       } else {
         console.warn('⚠️ [ListNFTModal] Could not extract listing ID from receipt');
         setListingId('Unknown');
         setListSuccess(true);
         setCurrentStep('idle');
+
+        // Still invalidate even if we couldn't extract the listing ID
+        queryClient.invalidateQueries({ queryKey: ['readContract'] });
+        queryClient.invalidateQueries({ queryKey: ['readContracts'] });
       }
     }
-  }, [isListTxSuccess, listReceipt]);
+  }, [isListTxSuccess, listReceipt, queryClient]);
 
   // Handle approve success → trigger listNFT
   useEffect(() => {
