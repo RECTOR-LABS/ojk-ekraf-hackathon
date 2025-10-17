@@ -52,3 +52,7 @@ frontend/.env
 frontend/.env.local
 frontend/.env.production.local
 frontend/.env.development.local
+
+# Testing files and browser automation
+test-files/
+.playwright-mcp/
