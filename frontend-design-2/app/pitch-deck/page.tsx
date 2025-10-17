@@ -11,6 +11,9 @@ import { LanguageToggle } from './components/LanguageToggle';
 // since this is a 'use client' component. See: app/pitch-deck/layout.tsx
 
 export default function PitchDeckPage() {
+  // YouTube embed URL (converted from watch URL)
+  const demoVideoUrl = 'https://www.youtube.com/embed/cv9IiggtYO0';
+
   return (
     <div className="min-h-screen bg-background">
       {/* Language Toggle (Floating) */}
@@ -22,7 +25,7 @@ export default function PitchDeckPage() {
       {/* Tabbed Content */}
       <TabContainer
         slidesContent={<SlidePresentation />}
-        videoContent={<DemoVideoSection />}
+        videoContent={<DemoVideoSection videoUrl={demoVideoUrl} />}
         documentsContent={<DocumentsTab />}
       />
     </div>
