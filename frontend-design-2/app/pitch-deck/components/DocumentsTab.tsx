@@ -9,8 +9,9 @@ const documents = [
     title: 'Download Pitch Deck PDF',
     description: 'Download the complete pitch deck presentation',
     icon: Download,
-    href: '#', // TODO: Add actual PDF download link
+    href: '/pitch-deck/KaryaChain_Pitch_Deck.pdf',
     isPDF: true,
+    external: true,
   },
   {
     title: 'GitHub Repository',
