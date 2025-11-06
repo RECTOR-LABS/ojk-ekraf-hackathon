@@ -1,136 +1,100 @@
-# Karya Chain
+<div align="center">
 
-**Indonesian IP Protection & Royalty Platform**
+# ⛓️ Karya Chain
 
-Blockchain-verified copyright registration and automated lifetime royalties for Indonesia's creative economy.
+### Blockchain-Powered Copyright Protection for Indonesia's Creative Economy
+
+**Tamper-proof IP registration • Automated lifetime royalties • OJK-compliant marketplace**
+
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-karyachain.rectorspace.com-4F46E5?style=for-the-badge)](https://karyachain.rectorspace.com)
+[![Sepolia Testnet](https://img.shields.io/badge/Network-Sepolia_Testnet-00D4AA?style=for-the-badge)](https://sepolia.etherscan.io/)
+[![Verified Contracts](https://img.shields.io/badge/Contracts-Verified_✓-28A745?style=for-the-badge)](https://sepolia.etherscan.io/address/0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f#code)
+
+**Built for OJK-Ekraf Infinity Hackathon 2025** 🏆
+
+</div>
 
 ---
 
-## 📋 Overview
+## 🎯 The Problem
 
-Karya Chain addresses the critical problem that only 11% of Indonesian creators have IP protection, leading to widespread piracy and unfair compensation in a $12.36B creative export industry.
+Only **11% of Indonesian creators** have IP protection in a **$12.36B** creative export industry, leading to:
+- Widespread piracy and content theft
+- Lost royalties for original creators
+- No transparent proof of ownership
+- Manual, inefficient royalty distribution
 
-**Built for**: OJK-Ekraf Infinity Hackathon 2025
-**Sub-Theme**: Digital Rights & Authentication
-**Network**: Sepolia Testnet (Chain ID: 11155111)
+## 💡 Our Solution
+
+**Karya Chain** provides blockchain-verified copyright registration with automated, perpetual royalty distribution for Indonesia's 27.66M creative workers.
 
 ### Key Features
 
-- ✅ **Blockchain Copyright Registration** - Tamper-proof proof of ownership
-- ✅ **Automated Royalty Distribution** - Smart contract-enforced lifetime royalties
-- ✅ **Multi-Asset Support** - Art, Music, Writing, Photography, Design
-- ✅ **OJK-Compliant** - First regulatory-compliant IP platform in Indonesia
-- ✅ **Creator Marketplace** - Low fees (2.5%), direct sales
+🔒 **Immutable Copyright Registry** - Blockchain proof of ownership with IPFS metadata
+💰 **Automated Royalties** - Smart contract-enforced payments on every resale (ERC-2981)
+🎨 **Multi-Asset Support** - Art, Music, Writing, Photography, Design
+🛒 **Creator Marketplace** - Direct sales with 2.5% platform fee
+⚖️ **OJK-Compliant** - First regulatory-aligned IP platform in Indonesia
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-Frontend (Next.js + Tailwind)
-        │
-        ├── Wallet Connection (RainbowKit)
-        ├── IPFS Storage (Pinata)
-        │
-        └── Smart Contracts (Sepolia Testnet)
-            ├── CopyrightRegistry    (IP registration)
-            ├── KaryaNFT (ERC-721)   (Unique works)
-            ├── KaryaEditions (1155) (Limited editions)
-            ├── RoyaltyDistributor   (Payment splits)
-            ├── KaryaMarketplace     (Trading platform)
-            └── CreatorRegistry      (Profile & KYC)
+Next.js 14 + TypeScript + Tailwind CSS
+          ↓
+    wagmi v2 + RainbowKit (Web3)
+          ↓
+    Pinata IPFS (Metadata Storage)
+          ↓
+┌─────────────────────────────────────────┐
+│   Smart Contracts (Sepolia Testnet)    │
+├─────────────────────────────────────────┤
+│ • CopyrightRegistry - IP registration   │
+│ • KaryaNFT - ERC-721 + ERC-2981         │
+│ • KaryaMarketplace - Trading platform   │
+└─────────────────────────────────────────┘
 ```
 
-See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for detailed technical design.
+📚 **[Full Architecture Docs](./docs/ARCHITECTURE.md)**
+
+---
+
+## 📊 Project Stats
+
+| Metric | Value |
+|--------|-------|
+| **Smart Contract Tests** | 90 tests, 100% coverage |
+| **Security Audit** | ✅ Slither passed (0 critical) |
+| **Gas Efficiency** | ~412k registration, ~275k mint |
+| **Frontend Pages** | 9 pages, fully responsive |
+| **Blockchain Integration** | 100% (5 custom wagmi hooks) |
+| **Production Status** | ✅ Deployed & Verified |
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- Node.js >= 18.0.0
-- npm >= 8.0.0
-- MetaMask or compatible Web3 wallet
-
-### Installation
-
 ```bash
-# Clone repository
+# Clone and install
 git clone https://github.com/RECTOR-LABS/ojk-ekraf-hackathon.git
 cd ojk-ekraf-hackathon
-
-# Install dependencies
 npm install
 
-# Copy environment variables
-cp .env.example .env
+# Run tests (90 tests, 100% coverage)
+npm test
 
-# Edit .env with your private key and API keys
+# Deploy contracts
+cp .env.example .env  # Add your PRIVATE_KEY and ETHERSCAN_API_KEY
+npm run deploy:sepolia
+
+# Start frontend
+cd frontend-design-2
+npm install
+npm run dev  # Opens at localhost:3001
 ```
 
-### Configuration
-
-Edit `.env` file:
-
-```env
-SEPOLIA_RPC_URL=https://rpc.sepolia.dev
-PRIVATE_KEY=your_private_key_here
-ETHERSCAN_API_KEY=your_etherscan_api_key_here
-```
-
-**⚠️ IMPORTANT**: Never commit your `.env` file with real private keys!
-
----
-
-## 🛠️ Development
-
-### Compile Contracts
-
-```bash
-npx hardhat compile
-```
-
-### Run Tests
-
-```bash
-npx hardhat test
-```
-
-### Test Coverage
-
-```bash
-npx hardhat coverage
-```
-
-### Deploy to Local Network
-
-```bash
-# Start local Hardhat node
-npx hardhat node
-
-# In another terminal, deploy contracts
-npx hardhat run scripts/deploy.js --network localhost
-```
-
-### Deploy to Sepolia Testnet
-
-```bash
-# Ensure you have Sepolia ETH in your wallet
-npx hardhat run scripts/deploy.js --network sepolia
-
-# Verify contracts on Etherscan
-npx hardhat verify --network sepolia <CONTRACT_ADDRESS>
-```
-
----
-
-## 🧪 Testing Strategy
-
-- **Unit Tests**: Test individual contract functions
-- **Integration Tests**: Test contract interactions
-- **Security Audits**: Slither + MythX
-- **Gas Optimization**: Hardhat Gas Reporter
+**Live Demo**: [karyachain.rectorspace.com](https://karyachain.rectorspace.com)
 
 ---
 
@@ -138,179 +102,118 @@ npx hardhat verify --network sepolia <CONTRACT_ADDRESS>
 
 ```
 ojk-ekraf-hackathon/
-├── contracts/              # Solidity smart contracts
-│   ├── CopyrightRegistry.sol
-│   ├── KaryaNFT.sol
-│   ├── KaryaEditions.sol
-│   ├── RoyaltyDistributor.sol
-│   ├── KaryaMarketplace.sol
-│   └── CreatorRegistry.sol
-├── scripts/                # Deployment scripts
-│   └── deploy.js
-├── test/                   # Contract tests
-│   ├── CopyrightRegistry.test.js
-│   ├── KaryaNFT.test.js
-│   └── Marketplace.test.js
-├── frontend/               # Next.js DApp (future)
-├── docs/                   # Documentation
-│   ├── PRD.md              # Product Requirements
-│   ├── ARCHITECTURE.md     # Technical architecture
-│   └── SECURITY.md         # Security audit (future)
-├── hardhat.config.js       # Hardhat configuration
-├── package.json
-└── README.md
+├── contracts/                   # Smart contracts (Solidity 0.8.20)
+│   ├── CopyrightRegistry.sol   # 19 tests, 100% coverage
+│   ├── KaryaNFT.sol            # 32 tests, 100% coverage
+│   └── KaryaMarketplace.sol    # 39 tests, 100% coverage
+├── frontend-design-2/           # Production DApp (Next.js 14)
+│   ├── src/hooks/              # 5 custom wagmi hooks (~1000 lines)
+│   └── src/app/                # 9 pages, glassmorphism UI
+├── test/                        # 90 comprehensive tests
+├── docs/                        # Complete documentation
+│   ├── PRD.md                  # Product requirements
+│   ├── ARCHITECTURE.md         # Technical design
+│   ├── SECURITY-AUDIT.md       # Security analysis
+│   └── CONTRACT-API.md         # Smart contract API
+└── pitch-deck/                  # Hackathon submission materials
 ```
 
 ---
 
-## 🎯 Roadmap
+## 🔗 Deployed Contracts (Sepolia Testnet)
 
-### Phase 1: Core Development (Weeks 1-2)
-- [x] Project setup and documentation
-- [ ] Core smart contracts (Registry, NFT, Royalty)
-- [ ] Comprehensive unit tests
-- [ ] Security audit (Slither/MythX)
+| Contract | Address | Status |
+|----------|---------|--------|
+| **CopyrightRegistry** | [`0xa2e84f3c...9ca93f`](https://sepolia.etherscan.io/address/0xa2e84f3c2520b963E4EeCdB64d3B384f829ca93f#code) | ✅ Verified |
+| **KaryaNFT** | [`0xE7f3c9Bd...2b52Fa4`](https://sepolia.etherscan.io/address/0xE7f3c9BdAFd36050BdFAD3195dD7d0f4f2b52Fa4#code) | ✅ Verified |
+| **KaryaMarketplace** | [`0xb2430198...b4b8Ed10`](https://sepolia.etherscan.io/address/0xb2430198bF01a8ec5749424a4642F32eb4b8Ed10#code) | ✅ Verified |
 
-### Phase 2: Marketplace & Frontend (Weeks 3-4)
-- [ ] Marketplace contract
-- [ ] Creator registry & verification
-- [ ] Next.js frontend setup
-- [ ] Wallet integration
-- [ ] Copyright registration UI
-
-### Phase 3: Integration & Testing (Week 5)
-- [ ] Smart contract deployment to Sepolia
-- [ ] Etherscan verification
-- [ ] Frontend-contract integration
-- [ ] End-to-end testing
-
-### Phase 4: Submission (Week 6)
-- [ ] Pitch deck creation
-- [ ] Demo video
-- [ ] Final testing and bug fixes
-- [ ] Hackathon submission (by Oct 22)
+**Deployment Date**: October 13, 2025
+**Network**: Sepolia (Chain ID: 11155111)
 
 ---
 
-## 🔒 Security
+## 🔒 Security & Compliance
 
-### Implemented Protections
+✅ **ReentrancyGuard** on all value transfers
+✅ **OpenZeppelin** audited contract libraries
+✅ **Slither audit** passed (0 critical/high issues)
+✅ **100% test coverage** across all contracts
+✅ **Input validation** on external functions
+✅ **OJK-compliant** architecture
 
-- ✅ ReentrancyGuard on all value transfers
-- ✅ OpenZeppelin audited contracts
-- ✅ Access control with Ownable
-- ✅ Input validation on external functions
-- ✅ Safe external calls with checks
-- ✅ Solidity 0.8+ overflow protection
-
-### Audit Status
-
-- [ ] Slither static analysis
-- [ ] MythX security scan
-- [ ] Manual security review
-- [ ] Test coverage > 95%
-
-See [SECURITY.md](./docs/SECURITY.md) for full security documentation.
+📄 **[Full Security Audit Report](./docs/SECURITY-AUDIT.md)**
 
 ---
 
-## 📊 Market Opportunity
+## 💼 Market Impact
 
-- **Creative Economy Size**: $12.36B exports (Indonesia, 2024)
-- **Target Users**: 27.66M creative workers
-- **Current IP Protection**: Only 11% of creators protected
-- **Growth Rate**: 5.96% export growth, 8.08% investment growth
+| Metric | Value |
+|--------|-------|
+| Indonesia Creative Economy | $12.36B in exports |
+| Target Users | 27.66M creative workers |
+| Current IP Protection Rate | Only 11% |
+| Annual Growth Rate | 5.96% exports, 8.08% investment |
 
-### Key Pain Points Solved
-
-1. **IP Protection Crisis**: Only 11% have registered IP rights
-2. **Royalty Tracking**: Artists rarely receive deserved royalties
-3. **Piracy Epidemic**: Widespread theft across all creative sectors
-4. **Regulatory Compliance**: OJK-aligned, first compliant platform
+**Problem Solved**: First OJK-compliant blockchain platform addressing IP protection crisis and enabling automated royalty distribution for Indonesian creators.
 
 ---
 
-## 🏆 Hackathon Details
+## 🏆 OJK-Ekraf Infinity Hackathon 2025
 
-**Competition**: OJK-Ekraf Infinity Hackathon 2025
 **Theme**: Accelerating Creative Economy Through Digital Innovation
-**Prize Pool**: IDR 50,000,000
-**Submission Deadline**: October 22, 2025
-**Network**: Sepolia Testnet
+**Prize Pool**: IDR 50,000,000 | **Deadline**: October 22, 2025
 
-### Judging Criteria
-
-- Innovation & Originality: 30%
-- Security & Compliance: 25% ⭐
-- Implementation Feasibility: 20%
-- Technical Quality: 15%
-- Presentation: 10%
-
-**Target Score**: 95/100
+### Judging Criteria (Target: 95/100)
+- 🎯 Innovation & Originality: 30%
+- 🔐 Security & Compliance: 25% ⭐
+- ⚡ Implementation Feasibility: 20%
+- 💻 Technical Quality: 15%
+- 🎤 Presentation: 10%
 
 ---
 
-## 🔗 Resources
+## 🛠️ Technology Stack
 
-### Documentation
-- [Product Requirements (PRD)](./docs/PRD.md)
-- [Technical Architecture](./docs/ARCHITECTURE.md)
-- [Hackathon Overview](./docs/hackathon-overview.md)
-- [Sepolia Testnet Research](./docs/sepolia-testnet-research.md)
+**Blockchain**: Solidity 0.8.20, Hardhat, OpenZeppelin, ERC-721/2981
+**Frontend**: Next.js 14, TypeScript, Tailwind CSS, Framer Motion
+**Web3**: wagmi v2, viem, RainbowKit
+**Storage**: Pinata IPFS
+**Network**: Sepolia Testnet (Chain ID: 11155111)
 
-### Sepolia Testnet
-- **Chain ID**: 11155111
-- **RPC URL**: https://rpc.sepolia.dev
-- **Explorer**: https://sepolia.etherscan.io/
-- **Faucets**:
-  - Google Cloud Web3 Faucet
-  - Chainlink Faucet
-  - Alchemy Faucet
-  - QuickNode Faucet
+---
 
-### Technology Stack
-- **Smart Contracts**: Solidity 0.8.20, Hardhat
-- **Standards**: ERC-721, ERC-1155, ERC-2981
-- **Libraries**: OpenZeppelin Contracts
-- **Frontend**: Next.js 14, Tailwind CSS
-- **Web3**: wagmi, viem, RainbowKit
-- **Storage**: IPFS (Pinata)
+## 📚 Documentation
+
+- 📋 [Product Requirements (PRD)](./docs/PRD.md)
+- 🏗️ [Technical Architecture](./docs/ARCHITECTURE.md)
+- 🔒 [Security Audit Report](./docs/SECURITY-AUDIT.md)
+- 📖 [Smart Contract API](./docs/CONTRACT-API.md)
+- 📊 [Pitch Deck](./pitch-deck/KaryaChain_Pitch_Deck.pdf)
 
 ---
 
 ## 👥 Team
 
-**RECTOR** - Senior Developer
+**RECTOR** - Full-Stack Blockchain Developer
 
 ---
 
-## 📝 License
+## 📄 License
 
 ISC License
 
 ---
 
-## 🤝 Contributing
+<div align="center">
 
-This is a hackathon submission project. Contributions are welcome post-hackathon.
+### Built for Indonesia's Creative Economy 🇮🇩
 
----
+**[Live Demo](https://karyachain.rectorspace.com)** • **[Documentation](./docs/)** • **[Pitch Deck](./pitch-deck/KaryaChain_Pitch_Deck.pdf)**
 
-## 📧 Contact
+[![GitHub](https://img.shields.io/badge/GitHub-RECTOR--LABS-181717?style=flat-square&logo=github)](https://github.com/RECTOR-LABS/ojk-ekraf-hackathon)
+[![Sepolia](https://img.shields.io/badge/Sepolia-Verified-00D4AA?style=flat-square)](https://sepolia.etherscan.io/)
 
-- **Repository**: https://github.com/RECTOR-LABS/ojk-ekraf-hackathon
-- **Issues**: https://github.com/RECTOR-LABS/ojk-ekraf-hackathon/issues
+**Powered by OpenZeppelin • Ethereum Foundation • Pinata IPFS**
 
----
-
-## 🙏 Acknowledgments
-
-- **OJK** (Financial Services Authority Indonesia)
-- **EKRAF** (Creative Economy Agency Indonesia)
-- **BlockDevId** - Hackathon organizer
-- **OpenZeppelin** - Secure smart contract libraries
-- **Ethereum Foundation** - Sepolia testnet infrastructure
-
----
-
-**Built with ❤️ for Indonesia's Creative Economy**
+</div>
